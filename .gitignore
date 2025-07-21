@@ -1,1 +1,77 @@
-/.vs
+# Ignore Visual Studio files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Ignore build results
+bin/
+obj/
+[Bb]uild/
+[Bb]uild[Ll]og.*
+
+# Ignore NuGet packages
+*.nupkg
+packages/
+*.snupkg
+
+# Ignore test results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# Ignore publish output
+publish/
+out/
+
+# Ignore user-specific files
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Ignore Rider files
+.idea/
+*.sln.iml
+
+# Ignore Mac and Linux files
+.DS_Store
+*.swp
+*.swo
+
+# Ignore logs
+*.log
+
+# Ignore npm packages (if using Node.js)
+node_modules/
+
+# Ignore environment files
+.env
+.env.*
+
+# Ignore local tools
+.localhistory/
+.vscode/
+*.local
+
+# Ignore database files
+*.mdf
+*.ldf
+*.sqlite
+*.db
+
+# Ignore Recycle Bin used by VSCode
+.vscode/
+
+# Ignore JetBrains Rider
+.idea/
+
+# Ignore Windows thumbnail cache
+Thumbs.db
+ehthumbs.db
+
+# Ignore ASP.NET Scaffolding
+ScaffoldingReadMe.txt
