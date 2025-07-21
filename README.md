@@ -97,5 +97,5 @@ To get a local copy up and running, follow these simple steps.
 * [ ] Add more advanced product search and filtering capabilities.
 * [ ] Develop a RESTful API for potential mobile client consumption.
 * [ ] Containerize the application using Docker.
-* [ ] 
+
 ---
