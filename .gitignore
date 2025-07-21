@@ -75,3 +75,14 @@ ehthumbs.db
 
 # Ignore ASP.NET Scaffolding
 ScaffoldingReadMe.txt
+Presentation/bin/Debug/net8.0/Presentation.dll
+Presentation/bin/Debug/net8.0/Presentation.exe
+Presentation/bin/Debug/net8.0/Presentation.pdb
+Presentation/obj/Debug/net8.0/apphost.exe
+Presentation/obj/Debug/net8.0/Presentation.AssemblyInfo.cs
+Presentation/obj/Debug/net8.0/Presentation.AssemblyInfoInputs.cache
+Presentation/obj/Debug/net8.0/Presentation.dll
+Presentation/obj/Debug/net8.0/Presentation.pdb
+Presentation/obj/Debug/net8.0/Presentation.sourcelink.json
+Presentation/obj/Debug/net8.0/ref/Presentation.dll
+Presentation/obj/Debug/net8.0/refint/Presentation.dll
