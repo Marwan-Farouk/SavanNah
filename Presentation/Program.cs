@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Presentation.Data;
+
 namespace Presentation
 {
     public class Program
@@ -7,7 +10,14 @@ namespace Presentation
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<ApplicationDBContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerLocal"));
+            });
+
+
 
             var app = builder.Build();
 
