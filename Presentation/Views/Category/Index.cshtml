@@ -1,0 +1,33 @@
+@model List<Category>
+@{
+    ViewData["Title"] = "Categories";
+}
+<div style="text-align: center;">
+    <H1 style="color: darkgreen;">Categories List</H1>
+</div>
+
+<table class="table teble-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Display Order
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderBy(c => c.DisplayOrder))
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.DisplayOrder
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
