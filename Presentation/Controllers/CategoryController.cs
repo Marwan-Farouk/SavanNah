@@ -12,12 +12,12 @@ namespace Presentation.Controllers
             _dbContext = dbContext;
 
         }
-        [HttpGet]
-        public async Task<IActionResult> Index()
-        {
-            var cats = await _dbContext.Categories.ToListAsync();
-            return View(cats);
-        }
+        // [HttpGet]
+        // public async Task<IActionResult> Index()
+        // {
+        //     var cats = await _dbContext.Categories.ToListAsync();
+        //     return View(cats);
+        // }
 
     }
 }

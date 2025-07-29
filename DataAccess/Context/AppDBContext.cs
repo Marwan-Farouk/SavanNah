@@ -16,9 +16,9 @@ public class ApplicationDBContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<Category>().HasData([
-            new Category {id = 1 , Name = "Tech" , DisplayOrder = 1},
-            new Category {id = 2 , Name = "Food" , DisplayOrder = 2},
-            new Category {id = 3 , Name = "Fashion" , DisplayOrder = 3}
+            new Category {id = 1 , Name = "Tech" , imageLoc = "tech.webp"},
+            new Category {id = 2 , Name = "Food" , imageLoc = "food.jpg"},
+            new Category {id = 3 , Name = "Fashion" , imageLoc = "fashion.jpeg"}
         ]);
     }
 }
