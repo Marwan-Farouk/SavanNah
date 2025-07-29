@@ -1,8 +1,8 @@
 using System;
+using DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
-using Presentation.Models;
 
-namespace Presentation.Data;
+namespace DataAccess.Context;
 
 public class ApplicationDBContext : DbContext
 {

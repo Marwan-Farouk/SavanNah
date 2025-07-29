@@ -1,6 +1,6 @@
+using DataAccess.Context;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Presentation.Data;
 
 namespace Presentation.Controllers
 {
@@ -10,7 +10,7 @@ namespace Presentation.Controllers
         public CategoryController(ApplicationDBContext dbContext)
         {
             _dbContext = dbContext;
-            
+
         }
         [HttpGet]
         public async Task<IActionResult> Index()
