@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using DataAccess.Context;
+using DataAccess.Repositories;
+using Business.Managers;
 
 namespace Presentation
 {
@@ -17,6 +19,8 @@ namespace Presentation
                 options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerLocal"));
             });
 
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<ICategoryManager, CategoryManager>();
 
 
             var app = builder.Build();

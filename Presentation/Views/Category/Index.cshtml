@@ -1,7 +1,14 @@
-@* @model List<Category>
+@using Presentation.VMs
+@model List<AllCategoriesVM>
 @{
     ViewData["Title"] = "Categories";
 }
+<style>
+    img {
+        width: 200px;
+        height: auto;
+    }
+</style>
 <div style="text-align: center;">
     <H1 style="color: darkgreen;">Categories List</H1>
 </div>
@@ -18,16 +25,15 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.OrderBy(c => c.DisplayOrder))
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
                     @item.Name
-                </td>
                 <td>
-                    @item.DisplayOrder
+                    <img src="~/Images/Categories/@item.imageLoc" class="img-thumbnail" alt="Category Image">
                 </td>
             </tr>
         }
     </tbody>
-</table> *@
+</table>
