@@ -3,12 +3,8 @@ using DataAccess.Entities;
 
 namespace DataAccess.Repositories;
 
-public interface ICategoryRepository
+public interface ICategoryRepository : IRepository<Category>
 {
-    public Task<List<Category>> GetAllCategories();
-    public Task<Category?> GetCategoryById(int id);
-    public Task CreateCategory(Category category);
-    public Task UpdateCategory(Category category);
-    public Task DeleteCategory(Category category);
-
+    public void Update(Category category);
+    public Task Save();
 }

@@ -1,41 +1,27 @@
 using System;
+using System.Linq.Expressions;
 using DataAccess.Context;
 using DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repositories;
 
-public class CategoryRepository : ICategoryRepository
+public class CategoryRepository : Repository<Category>, ICategoryRepository
 {
     private readonly ApplicationDBContext _context;
 
-    public CategoryRepository(ApplicationDBContext context)
+    public CategoryRepository(ApplicationDBContext context) : base(context)
     {
         _context = context;
     }
-    public async Task CreateCategory(Category category)
+    public async Task Save()
     {
-        await _context.Categories.AddAsync(category);
         await _context.SaveChangesAsync();
-    }
-    public async Task<List<Category>> GetAllCategories()
-    {
-        return await _context.Categories.ToListAsync();
     }
 
-    public async Task<Category?> GetCategoryById(int _id)
+    public void Update(Category category)
     {
-        return await _context.Categories.FirstOrDefaultAsync(cat => cat.id == _id);
+        _context.Update(category);
     }
-    public async Task UpdateCategory(Category category)
-    {
-        _context.Categories.Update(category);
-        await _context.SaveChangesAsync();
-    }
-    public async Task DeleteCategory(Category category)
-    {
-        _context.Categories.Remove(category);
-        await _context.SaveChangesAsync();
 
-    }
 }
