@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using DataAccess.Context;
 using DataAccess.Repositories;
 using Business.Managers;
+using Microsoft.AspNetCore.Identity;
+using DataAccess.Entities;
 
 namespace Presentation
 {
@@ -17,6 +19,19 @@ namespace Presentation
             builder.Services.AddDbContext<ApplicationDBContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerLocal"));
+            });
+
+            builder.Services.AddIdentity<User, Role>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<ApplicationDBContext>();
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(120);
+                options.LoginPath = "/Acount/Login";
+                options.AccessDeniedPath = "/Acount/Denied";
             });
 
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -37,7 +52,7 @@ namespace Presentation
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
