@@ -1,0 +1,11 @@
+D:\Coding\.NET\E-Commerce MVC Project\Project\Business\bin\Debug\net10.0\Business.deps.json
+D:\Coding\.NET\E-Commerce MVC Project\Project\Business\bin\Debug\net10.0\Business.dll
+D:\Coding\.NET\E-Commerce MVC Project\Project\Business\bin\Debug\net10.0\Business.pdb
+D:\Coding\.NET\E-Commerce MVC Project\Project\Business\obj\Debug\net10.0\Business.GeneratedMSBuildEditorConfig.editorconfig
+D:\Coding\.NET\E-Commerce MVC Project\Project\Business\obj\Debug\net10.0\Business.AssemblyInfoInputs.cache
+D:\Coding\.NET\E-Commerce MVC Project\Project\Business\obj\Debug\net10.0\Business.AssemblyInfo.cs
+D:\Coding\.NET\E-Commerce MVC Project\Project\Business\obj\Debug\net10.0\Business.csproj.CoreCompileInputs.cache
+D:\Coding\.NET\E-Commerce MVC Project\Project\Business\obj\Debug\net10.0\Business.dll
+D:\Coding\.NET\E-Commerce MVC Project\Project\Business\obj\Debug\net10.0\refint\Business.dll
+D:\Coding\.NET\E-Commerce MVC Project\Project\Business\obj\Debug\net10.0\Business.pdb
+D:\Coding\.NET\E-Commerce MVC Project\Project\Business\obj\Debug\net10.0\ref\Business.dll
