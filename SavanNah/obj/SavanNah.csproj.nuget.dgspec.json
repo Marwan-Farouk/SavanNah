@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Coding\\.NET\\E-Commerce MVC Project\\Project\\savannah\\SavanNah.csproj": {}
+    "D:\\Coding\\.NET\\E-Commerce MVC Project\\Project\\SavanNah\\SavanNah.csproj": {}
   },
   "projects": {
-    "D:\\Coding\\.NET\\E-Commerce MVC Project\\Project\\savannah\\SavanNah.csproj": {
+    "D:\\Coding\\.NET\\E-Commerce MVC Project\\Project\\SavanNah\\SavanNah.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Coding\\.NET\\E-Commerce MVC Project\\Project\\savannah\\SavanNah.csproj",
+        "projectUniqueName": "D:\\Coding\\.NET\\E-Commerce MVC Project\\Project\\SavanNah\\SavanNah.csproj",
         "projectName": "SavanNah",
-        "projectPath": "D:\\Coding\\.NET\\E-Commerce MVC Project\\Project\\savannah\\SavanNah.csproj",
+        "projectPath": "D:\\Coding\\.NET\\E-Commerce MVC Project\\Project\\SavanNah\\SavanNah.csproj",
         "packagesPath": "C:\\Users\\Marwan\\.nuget\\packages\\",
-        "outputPath": "D:\\Coding\\.NET\\E-Commerce MVC Project\\Project\\savannah\\obj\\",
+        "outputPath": "D:\\Coding\\.NET\\E-Commerce MVC Project\\Project\\SavanNah\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

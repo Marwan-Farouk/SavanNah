@@ -1,6 +1,6 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using SavanNah.Models;
+using System.Diagnostics;
 
 namespace SavanNah.Controllers;
 
