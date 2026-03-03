@@ -1,0 +1,10 @@
+﻿@model List<Category>
+
+<h1>Categories</h1>
+
+<ol>
+    @foreach (var cat in Model)
+    {
+        <li>@cat.Name</li>
+    }
+</ol>

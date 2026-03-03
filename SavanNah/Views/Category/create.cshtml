@@ -1,0 +1,10 @@
+﻿@model Category
+
+<h1>Create Category</h1>
+
+<form asp-action="Create" asp-controller="Category" method="post" enctype="multipart/form-data">
+    <input type="text" name="name" value="" placeholder="Name"/>
+    <input type="number" name="DisplayOrder" value="" placeholder="Display Order" />
+    <input type="submit"/>
+</form>
+  
