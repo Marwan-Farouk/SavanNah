@@ -1,0 +1,35 @@
+﻿@model List<Category>
+
+<div class="header-container">
+    <h1>Categories</h1>
+    <a class="btn btn-success" asp-action="Create" asp-controller="Category">
+        <i class="bi bi-plus-circle"></i> Add Categories
+    </a>
+</div>
+<link rel="stylesheet" href="~/css/Category/index.css" />
+
+<div class="table-container">
+    <table class="table table-hover table-bordered">
+        <thead class="table-active">
+            <tr>
+                <th>
+                    <h4>Category Name</h4>
+                </th>
+                <th>
+                    <h4>Display Order</h4>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var cat in Model)
+            {
+                <tr>
+                    <th scope="row">@cat.Name</th>
+                    <td>@cat.DisplayOrder</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>

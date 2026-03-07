@@ -1,10 +1,17 @@
-﻿@model Category
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Category
 
-<h1>Create Category</h1>
+<link rel="stylesheet" href="~/css/Category/create.css">
 
-<form asp-action="Create" asp-controller="Category" method="post" enctype="multipart/form-data">
-    <input type="text" name="name" value="" placeholder="Name"/>
-    <input type="number" name="DisplayOrder" value="" placeholder="Display Order" />
-    <input type="submit"/>
-</form>
-  
+
+    <div class="card mb-3" style="max-width: 20rem;">
+        <div class="card-header">Create Category</div>
+        <div class="card-body">
+            <form asp-action="Create" asp-controller="Category" method="post" enctype="multipart/form-data">
+                <input type="text" name="name" value="" placeholder="Name" />
+                <input type="number" name="DisplayOrder" value="" placeholder="Display Order" />
+                <input type="submit" />
+            </form>
+        </div>
+    </div>
+

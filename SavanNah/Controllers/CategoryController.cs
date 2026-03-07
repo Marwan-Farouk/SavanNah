@@ -17,7 +17,7 @@ namespace SavanNah.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View(await context.Categories.OrderBy(c => c.DisplayOrder).ToListAsync());
+            return View("CategoryIndex",await context.Categories.OrderBy(c => c.DisplayOrder).ToListAsync());
         }
         [HttpGet]
         public IActionResult Create()
