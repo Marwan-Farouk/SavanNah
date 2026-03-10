@@ -23,3 +23,11 @@ tbody tr:hover {
 .btn:hover {
     transform: scale(1.1);
 }
+
+.alert {
+    position: fixed;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: 0.5s;
+}
