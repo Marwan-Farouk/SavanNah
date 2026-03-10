@@ -17,7 +17,7 @@ namespace SavanNah.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View("CategoryIndex",await context.Categories.OrderBy(c => c.DisplayOrder).ToListAsync());
+            return View("CategoryIndex", await context.Categories.OrderBy(c => c.DisplayOrder).ToListAsync());
         }
         [HttpGet]
         public IActionResult Create()
@@ -27,6 +27,15 @@ namespace SavanNah.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Category category)
         {
+            if (category.Name is not null && category.Name == category.DisplayOrder.ToString())
+            {
+                ModelState.AddModelError("name", "The Name Can't match the display Order");
+            }
+            if (category.Name is not null && category.Name.ToLower() == "test")
+            {
+                ModelState.AddModelError("", "'Test' Is an Invalid Value");
+            }
+
             if (ModelState.IsValid)
             {
                 await context.Categories.AddAsync(category);
@@ -35,7 +44,7 @@ namespace SavanNah.Controllers
             }
             else
             {
-                return NotFound();
+                return View(category);
             }
         }
     }
