@@ -14,5 +14,8 @@ window.addEventListener("load", function () {
     let alert = document.querySelector(".alert");
     if (alert) {
         alert.style.top = "50px";
+        this.setTimeout(function () {
+            alert.style.top = "-100px";
+        }, 2000);
     }
 });
