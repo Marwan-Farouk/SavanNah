@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SavanNah.Models;
+using SavanNah.Models.Models;
 
-namespace SavanNah.Contexts
+namespace SavanNah.DataAccess.Contexts
 {
     public class AppDbContext : DbContext
     {

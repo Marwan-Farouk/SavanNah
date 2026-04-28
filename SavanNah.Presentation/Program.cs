@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using SavanNah.Contexts;
+using SavanNah.DataAccess.Contexts;
 
-namespace SavanNah;
+namespace SavanNah.Presentation;
 
 public class Program
 {

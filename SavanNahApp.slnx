@@ -1,4 +1,6 @@
 <Solution>
-  <Project Path="Business/Business.csproj" />
-  <Project Path="SavanNah/SavanNah.csproj" />
+  <Project Path="SavanNah.Business/SavanNah.Business.csproj" />
+  <Project Path="SavanNah.DataAccess/SavanNah.DataAccess.csproj" Id="d8464c1b-c045-43ec-8180-9182d58ed01f" />
+  <Project Path="SavanNah.Models/SavanNah.Models.csproj" Id="40d54f1c-c4a6-4685-a3fc-fc5f4d4155ed" />
+  <Project Path="SavanNah.Presentation/SavanNah.Presentation.csproj" />
 </Solution>

@@ -1,10 +1,9 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SavanNah.Contexts;
-using SavanNah.Models;
+using SavanNah.DataAccess.Contexts;
+using SavanNah.Models.Models;
 
-namespace SavanNah.Controllers
+namespace SavanNah.Presentation.Controllers
 {
     public class CategoryController : Controller
     {

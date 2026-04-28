@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
 
-namespace SavanNah.Models
+namespace SavanNah.Models.Models
 {
     public class Category
     {

@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
 
-namespace SavanNah.Migrations
+namespace SavanNah.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class createcategorytable : Migration

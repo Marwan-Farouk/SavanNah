@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using SavanNah.Models;
+using SavanNah.Models.Models;
 using System.Diagnostics;
 
-namespace SavanNah.Controllers;
+namespace SavanNah.Presentation.Controllers;
 
 public class HomeController : Controller
 {

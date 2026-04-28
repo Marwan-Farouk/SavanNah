@@ -3,18 +3,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SavanNah.Contexts;
+using SavanNah.DataAccess.Contexts;
 
-#nullable disable
 
-namespace SavanNah.Migrations
+
+namespace SavanNah.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
-#pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "10.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
@@ -41,7 +40,6 @@ namespace SavanNah.Migrations
 
                     b.ToTable("Categories");
                 });
-#pragma warning restore 612, 618
         }
     }
 }

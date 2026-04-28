@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SavanNah.Models;
+using SavanNah.Models.Models;
 
-namespace SavanNah.Contexts.Configurations
+namespace SavanNah.DataAccess.Contexts.Configurations
 {
     public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {
