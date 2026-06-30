@@ -6,6 +6,7 @@ namespace SavanNah.DataAccess.Contexts
     public class AppDbContext : DbContext
     {
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Brand> Brands { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         { }
 

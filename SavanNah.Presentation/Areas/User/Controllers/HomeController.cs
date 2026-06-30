@@ -2,8 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using SavanNah.Models.Models;
 using System.Diagnostics;
 
-namespace SavanNah.Presentation.Controllers;
+namespace SavanNah.Presentation.Areas.User.Controllers;
 
+[Area("User")]
+//[Route("Home/[action]")]
 public class HomeController : Controller
 {
     public IActionResult Index()

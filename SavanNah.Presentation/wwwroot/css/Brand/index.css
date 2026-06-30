@@ -1,0 +1,33 @@
+﻿main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+
+
+table * {
+    transition: 0.3s;
+}
+
+tbody tr:hover {
+    scale: 1.009;
+}
+
+.btn {
+    border-radius: 20px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    transform: scale(1.1);
+}
+
+.alert {
+    position: fixed;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: 0.5s;
+}

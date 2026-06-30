@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SavanNah.DataAccess.Contexts;
+using SavanNah.DataAccess.Repositories.Brands;
+using SavanNah.DataAccess.Repositories.Categories;
 
 namespace SavanNah.Presentation;
 
@@ -16,6 +18,10 @@ public class Program
             options
             .UseSqlServer(builder.Configuration.GetConnectionString("Savanah"));
         });
+
+        builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+        builder.Services.AddScoped<IBrandRepository, BrandRepository>();
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -32,8 +38,9 @@ public class Program
         app.UseAuthorization();
 
         app.MapStaticAssets();
-        app.MapControllerRoute(
+        app.MapAreaControllerRoute(
             name: "default",
+            areaName: "User",
             pattern: "{controller=Home}/{action=Index}/{id?}")
             .WithStaticAssets();
 

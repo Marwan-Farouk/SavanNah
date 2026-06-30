@@ -1,0 +1,58 @@
+﻿@model List<Brand>
+
+<link rel="stylesheet" href="~/css/Brand/index.css" />
+
+
+<div class="header-container w-75 col-12 d-flex justify-content-between align-items-center">
+    <h1 class="col-6 col-md-4">Brands</h1>
+    <a class="btn btn-success col-5 col-sm-3" asp-action="Create" asp-controller="Brand">
+        <i class="bi bi-plus-circle"></i>
+        Add Brands
+    </a>
+</div>
+
+
+<div class="table-container w-75">
+    <table class="table table-hover table-bordered">
+        <thead class="table-active">
+            <tr>
+                <th>
+                    <h4>Brand Name</h4>
+                </th>
+                <th>
+                    <h4>Description</h4>
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var brand in Model)
+            {
+                <tr>
+                    <th scope="row">@brand.Name</th>
+                    <td>@brand.Description</td>
+                    <td class="text-center">
+                        <a asp-controller="Brand" asp-action="Edit" class="btn btn-primary" asp-route-id="@brand.Id">
+                            <i class="bi bi-pencil-square"></i>
+                            Edit
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        <form asp-controller="Brand" asp-action="Delete" asp-route-id="@brand.Id" method="post">
+                            <button type="submit" class="btn btn-danger del-btn">
+                                <i class="bi bi-trash3"></i>
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+</div>
+
+<script src="/js/Brand/index.js"></script>

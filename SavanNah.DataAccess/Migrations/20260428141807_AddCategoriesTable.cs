@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
 
 namespace SavanNah.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class createcategorytable : Migration
+    public partial class AddCategoriesTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

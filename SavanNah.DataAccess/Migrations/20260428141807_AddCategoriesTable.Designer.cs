@@ -6,14 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SavanNah.DataAccess.Contexts;
 
-
 #nullable disable
 
-namespace SavanNah.Migrations
+namespace SavanNah.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260302221104_create-category-table")]
-    partial class createcategorytable
+    [Migration("20260428141807_AddCategoriesTable")]
+    partial class AddCategoriesTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +24,7 @@ namespace SavanNah.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("SavanNah.Models.Category", b =>
+            modelBuilder.Entity("SavanNah.Models.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

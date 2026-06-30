@@ -14,5 +14,10 @@
     <ProjectReference Include="..\SavanNah.DataAccess\SavanNah.DataAccess.csproj" />
     <ProjectReference Include="..\SavanNah.Models\SavanNah.Models.csproj" />
   </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
   
 </Project>

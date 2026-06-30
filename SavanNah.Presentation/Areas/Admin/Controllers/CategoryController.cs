@@ -1,23 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SavanNah.DataAccess.Contexts;
+using SavanNah.DataAccess.Repositories.Categories;
 using SavanNah.Models.Models;
 
-namespace SavanNah.Presentation.Controllers
+namespace SavanNah.Presentation.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+    [Route("[controller]/[action]/{id?}")]
     public class CategoryController : Controller
     {
-        private readonly AppDbContext context;
+        private readonly ICategoryRepository repository;
 
-        public CategoryController(AppDbContext context)
+        public CategoryController(ICategoryRepository repository)
         {
-            this.context = context;
+            this.repository = repository;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View("CategoryIndex", await context.Categories.OrderBy(c => c.DisplayOrder).ToListAsync());
+            return View("CategoryIndex", await repository.GetAll(null));
         }
         [HttpGet]
         public IActionResult Create()
@@ -38,9 +39,11 @@ namespace SavanNah.Presentation.Controllers
 
             if (ModelState.IsValid)
             {
-                await context.Categories.AddAsync(category);
-                await context.SaveChangesAsync();
-                TempData["success"] = "Category created successfully";
+                var success = await repository.Create(category);
+                if (success)
+                    TempData["success"] = "Category created successfully";
+                else
+                    TempData["error"] = "Couldn't Create Category";
                 return RedirectToAction(nameof(Index));
             }
             else
@@ -51,7 +54,7 @@ namespace SavanNah.Presentation.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit([FromRoute] int id)
         {
-            var cat = await context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+            var cat = await repository.Get(c => c.Id == id);
             if (cat is not null)
             {
                 return View(cat);
@@ -61,6 +64,7 @@ namespace SavanNah.Presentation.Controllers
                 return NotFound();
             }
         }
+
         [HttpPost]
         public async Task<IActionResult> Edit(Category category)
         {
@@ -78,9 +82,12 @@ namespace SavanNah.Presentation.Controllers
             }
             if (ModelState.IsValid)
             {
-                context.Categories.Update(category);
-                await context.SaveChangesAsync();
-                TempData["success"] = "Category edited successfully";
+                var success = await repository.Update(category);
+                if (success)
+                    TempData["success"] = "Category Updated successfully";
+                else
+                    TempData["error"] = "Couldn't Update Category";
+
                 return RedirectToAction(nameof(Index));
             }
             else
@@ -91,12 +98,15 @@ namespace SavanNah.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var category = await context.Categories.FirstAsync(cat => cat.Id == id);
-            context.Categories.Remove(category);
-            await context.SaveChangesAsync();
-            TempData["success"] = "Category deleted successfully";
+            var category = await repository.Get(cat => cat.Id == id);
+
+            var success = await repository.Delete(category);
+            if (success)
+                TempData["success"] = "Category Deleted successfully";
+            else
+                TempData["error"] = "Couldn't Delete Category";
+
             return RedirectToAction(nameof(Index));
         }
-
     }
 }
