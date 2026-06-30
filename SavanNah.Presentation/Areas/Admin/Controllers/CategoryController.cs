@@ -8,17 +8,17 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
     [Route("[controller]/[action]/{id?}")]
     public class CategoryController : Controller
     {
-        private readonly ICategoryRepository repository;
+        private readonly ICategoryRepository _repository;
 
         public CategoryController(ICategoryRepository repository)
         {
-            this.repository = repository;
+            _repository = repository;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View("CategoryIndex", await repository.GetAll(null));
+            return View("CategoryIndex", await _repository.GetAll(null));
         }
         [HttpGet]
         public IActionResult Create()
@@ -28,18 +28,18 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Category category)
         {
-            if (category.Name is not null && category.Name == category.DisplayOrder.ToString())
+            if (category.Name == category.DisplayOrder.ToString())
             {
                 ModelState.AddModelError("name", "The Name Can't match the display Order");
             }
-            if (category.Name is not null && category.Name.ToLower() == "test")
+            if (category.Name.ToLower() == "test")
             {
                 ModelState.AddModelError("", "'Test' Is an Invalid Value");
             }
 
             if (ModelState.IsValid)
             {
-                var success = await repository.Create(category);
+                var success = await _repository.Create(category);
                 if (success)
                     TempData["success"] = "Category created successfully";
                 else
@@ -54,15 +54,11 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit([FromRoute] int id)
         {
-            var cat = await repository.Get(c => c.Id == id);
-            if (cat is not null)
-            {
-                return View(cat);
-            }
-            else
-            {
+            var cat = await _repository.Get(c => c.Id == id);
+            if (cat is null)
                 return NotFound();
-            }
+            else
+                return View(cat);
         }
 
         [HttpPost]
@@ -82,7 +78,7 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
-                var success = await repository.Update(category);
+                var success = await _repository.Update(category);
                 if (success)
                     TempData["success"] = "Category Updated successfully";
                 else
@@ -98,9 +94,9 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var category = await repository.Get(cat => cat.Id == id);
+            var category = await _repository.Get(cat => cat.Id == id);
 
-            var success = await repository.Delete(category);
+            var success = await _repository.Delete(category);
             if (success)
                 TempData["success"] = "Category Deleted successfully";
             else

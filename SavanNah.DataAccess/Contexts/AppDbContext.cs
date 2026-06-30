@@ -7,13 +7,14 @@ namespace SavanNah.DataAccess.Contexts
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<Brand> Brands { get; set; }
+        public DbSet<Product> Products { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         { }
 
         /*
-         OnConfiguring method is a fallback that's called when:
-            •	The DbContext is created without dependency injection
-            •	No configuration has been provided yet
+            OnConfiguring method is a fallback that's called when:
+                •	The DbContext is created without dependency injection
+                •	No configuration has been provided yet
         */
         /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

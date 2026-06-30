@@ -9,6 +9,8 @@ namespace SavanNah.Models.Models
 
         public required string Name { get; set; }
         [DisplayName("Description")]
-        public required string Description { get; set; }
+        public string? Description { get; set; }
+
+        public IEnumerable<Product> Products { get; set; } = [];
     }
 }

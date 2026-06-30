@@ -12,6 +12,9 @@ namespace SavanNah.DataAccess.Contexts.Configurations
             builder.Property(c => c.Name)
                 .IsRequired()
                 .HasMaxLength(100);
+
+            builder.HasMany(c => c.Products)
+                .WithMany(p => p.Categories);
         }
     }
 }

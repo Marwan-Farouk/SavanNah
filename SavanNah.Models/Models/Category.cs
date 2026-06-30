@@ -7,10 +7,11 @@ namespace SavanNah.Models.Models
     {
         public int Id { get; set; }
         [DisplayName("Name")]
-        [MaxLength(30)]
         public required string Name { get; set; }
         [DisplayName("Display Order")]
         [Range(0, 200)]
         public int DisplayOrder { get; set; }
+
+        public IEnumerable<Product> Products { get; set; } = [];
     }
 }

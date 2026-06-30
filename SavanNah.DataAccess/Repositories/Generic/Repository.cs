@@ -6,13 +6,13 @@ namespace SavanNah.DataAccess.Repositories.Generic
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly AppDbContext context;
-        private readonly DbSet<T> dbSet;
+        private readonly AppDbContext _context;
+        private readonly DbSet<T> _dbSet;
 
         public Repository(AppDbContext context)
         {
-            this.context = context;
-            this.dbSet = context.Set<T>();
+            _context = context;
+            _dbSet = context.Set<T>();
         }
 
 
@@ -20,8 +20,8 @@ namespace SavanNah.DataAccess.Repositories.Generic
         {
             try
             {
-                await dbSet.AddAsync(entity);
-                await context.SaveChangesAsync();
+                await _dbSet.AddAsync(entity);
+                await _context.SaveChangesAsync();
                 return true;
             }
             catch (Exception)
@@ -36,8 +36,8 @@ namespace SavanNah.DataAccess.Repositories.Generic
         {
             try
             {
-                dbSet.Remove(entity);
-                await context.SaveChangesAsync();
+                _dbSet.Remove(entity);
+                await _context.SaveChangesAsync();
                 return true;
             }
             catch (Exception)
@@ -48,11 +48,11 @@ namespace SavanNah.DataAccess.Repositories.Generic
 
         public async Task<bool> DeleteRange(Expression<Func<T, bool>> filter)
         {
-            var filteredEntities = await dbSet.Where(filter).ToListAsync();
+            var filteredEntities = await _dbSet.Where(filter).ToListAsync();
             try
             {
-                dbSet.RemoveRange(filteredEntities);
-                await context.SaveChangesAsync();
+                _dbSet.RemoveRange(filteredEntities);
+                await _context.SaveChangesAsync();
                 return true;
             }
             catch (Exception)
@@ -63,23 +63,23 @@ namespace SavanNah.DataAccess.Repositories.Generic
 
         public async Task<T> Get(Expression<Func<T, bool>> filter)
         {
-            return await dbSet.FirstAsync(filter);
+            return await _dbSet.FirstAsync(filter);
         }
 
         public async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>>? filter)
         {
             if (filter is null)
-                return await dbSet.ToListAsync();
+                return await _dbSet.ToListAsync();
             else
-                return await dbSet.Where(filter).ToListAsync();
+                return await _dbSet.Where(filter).ToListAsync();
         }
 
         public async Task<bool> Update(T entity)
         {
             try
             {
-                dbSet.Update(entity);
-                await context.SaveChangesAsync();
+                _dbSet.Update(entity);
+                await _context.SaveChangesAsync();
                 return true;
             }
             catch (Exception)
@@ -91,11 +91,11 @@ namespace SavanNah.DataAccess.Repositories.Generic
 
         public async Task<bool> UpdateRange(Expression<Func<T, bool>> filter)
         {
-            var filteredEntities = await dbSet.Where(filter).ToListAsync();
+            var filteredEntities = await _dbSet.Where(filter).ToListAsync();
             try
             {
-                dbSet.UpdateRange(filteredEntities);
-                await context.SaveChangesAsync();
+                _dbSet.UpdateRange(filteredEntities);
+                await _context.SaveChangesAsync();
                 return true;
             }
             catch (Exception)

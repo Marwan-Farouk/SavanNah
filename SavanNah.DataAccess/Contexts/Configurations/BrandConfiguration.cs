@@ -19,6 +19,9 @@ namespace SavanNah.DataAccess.Contexts.Configurations
                 .Property(b => b.Description)
                 .HasMaxLength(300)
                 .IsRequired(false);
+            
+            builder.HasMany(b => b.Products)
+                .WithOne(p => p.Brand);
         }
     }
 }
