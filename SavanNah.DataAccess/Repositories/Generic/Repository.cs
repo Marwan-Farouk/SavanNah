@@ -21,28 +21,31 @@ namespace SavanNah.DataAccess.Repositories.Generic
             try
             {
                 await _dbSet.AddAsync(entity);
-                await _context.SaveChangesAsync();
                 return true;
             }
             catch (Exception)
             {
                 return false;
             }
-
-
         }
 
-        public async Task<bool> Delete(T entity)
+        public Task<bool> Delete(T entity)
         {
             try
             {
-                _dbSet.Remove(entity);
-                await _context.SaveChangesAsync();
-                return true;
+                try
+                {
+                    _dbSet.Remove(entity);
+                    return Task.FromResult(true);
+                }
+                catch (Exception)
+                {
+                    return Task.FromResult(false);
+                }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                return false;
+                return Task.FromException<bool>(exception);
             }
         }
 
@@ -52,13 +55,17 @@ namespace SavanNah.DataAccess.Repositories.Generic
             try
             {
                 _dbSet.RemoveRange(filteredEntities);
-                await _context.SaveChangesAsync();
                 return true;
             }
             catch (Exception)
             {
                 return false;
             }
+        }
+
+        public async Task<int> Save()
+        {
+            return await _context.SaveChangesAsync();
         }
 
         public async Task<T> Get(Expression<Func<T, bool>> filter)
@@ -74,19 +81,24 @@ namespace SavanNah.DataAccess.Repositories.Generic
                 return await _dbSet.Where(filter).ToListAsync();
         }
 
-        public async Task<bool> Update(T entity)
+        public Task<bool> Update(T entity)
         {
             try
             {
-                _dbSet.Update(entity);
-                await _context.SaveChangesAsync();
-                return true;
+                try
+                {
+                    _dbSet.Update(entity);
+                    return Task.FromResult(true);
+                }
+                catch (Exception)
+                {
+                    return Task.FromResult(false);
+                }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                return false;
+                return Task.FromException<bool>(exception);
             }
-
         }
 
         public async Task<bool> UpdateRange(Expression<Func<T, bool>> filter)
@@ -95,7 +107,6 @@ namespace SavanNah.DataAccess.Repositories.Generic
             try
             {
                 _dbSet.UpdateRange(filteredEntities);
-                await _context.SaveChangesAsync();
                 return true;
             }
             catch (Exception)

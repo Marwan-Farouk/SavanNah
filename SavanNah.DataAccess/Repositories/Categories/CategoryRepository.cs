@@ -6,8 +6,6 @@ namespace SavanNah.DataAccess.Repositories.Categories
 {
     public class CategoryRepository : Repository<Category>, ICategoryRepository
     {
-        public CategoryRepository(AppDbContext context) : base(context)
-        {
-        }
+        public CategoryRepository(AppDbContext context) : base(context) { }
     }
 }

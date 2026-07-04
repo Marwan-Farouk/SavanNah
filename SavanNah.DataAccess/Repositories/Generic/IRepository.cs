@@ -11,5 +11,6 @@ namespace SavanNah.DataAccess.Repositories.Generic
         Task<bool> UpdateRange(Expression<Func<T, bool>> filter);
         Task<bool> Delete(T entity);
         Task<bool> DeleteRange(Expression<Func<T, bool>> filter);
+        Task<int> Save();
     }
 }

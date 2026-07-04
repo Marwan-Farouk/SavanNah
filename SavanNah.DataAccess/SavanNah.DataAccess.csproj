@@ -21,10 +21,4 @@
     <ProjectReference Include="..\SavanNah.Models\SavanNah.Models.csproj" />
   </ItemGroup>
 
-
-
-  <ItemGroup>
-    <Folder Include="Repositories\Products\" />
-  </ItemGroup>
-
 </Project>

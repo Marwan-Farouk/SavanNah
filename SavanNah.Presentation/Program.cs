@@ -1,7 +1,12 @@
 using Microsoft.EntityFrameworkCore;
+using SavanNah.Business.Managers;
+using SavanNah.Business.Managers.Brand;
+using SavanNah.Business.Managers.Category;
 using SavanNah.DataAccess.Contexts;
 using SavanNah.DataAccess.Repositories.Brands;
 using SavanNah.DataAccess.Repositories.Categories;
+using SavanNah.DataAccess.Repositories.CategoryProducts;
+using SavanNah.DataAccess.Repositories.Products;
 
 namespace SavanNah.Presentation;
 
@@ -16,11 +21,16 @@ public class Program
         builder.Services.AddDbContext<AppDbContext>(options =>
         {
             options
-            .UseSqlServer(builder.Configuration.GetConnectionString("Savanah"));
+                .UseSqlServer(builder.Configuration.GetConnectionString("Savanah"));
         });
 
         builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
         builder.Services.AddScoped<IBrandRepository, BrandRepository>();
+        builder.Services.AddScoped<IProductRepository, ProductRepository>();
+        builder.Services.AddScoped<ICategoryProductRepository, CategoryProductRepository>();
+        builder.Services.AddScoped<IProductManager, ProductManager>();
+        builder.Services.AddScoped<IBrandManager, BrandManager>();
+        builder.Services.AddScoped<ICategoryManager, CategoryManager>();
 
         var app = builder.Build();
 
@@ -39,9 +49,9 @@ public class Program
 
         app.MapStaticAssets();
         app.MapAreaControllerRoute(
-            name: "default",
-            areaName: "User",
-            pattern: "{controller=Home}/{action=Index}/{id?}")
+                name: "default",
+                areaName: "User",
+                pattern: "{controller=Home}/{action=Index}/{id?}")
             .WithStaticAssets();
 
         app.Run();
