@@ -15,10 +15,10 @@
         <thead class="table-active">
             <tr>
                 <th>
-                    <h4>Category Name</h4>
+                    <h4>Category</h4>
                 </th>
                 <th>
-                    <h4>Display Order</h4>
+                    <h4>Description</h4>
                 </th>
                 <th></th>
                 <th></th>
@@ -30,7 +30,7 @@
             {
                 <tr>
                     <th scope="row">@cat.Name</th>
-                    <td>@cat.DisplayOrder</td>
+                    <th scope="row">@cat.Description</th>
                     <td class="text-center">
                         <a asp-area="Admin" asp-controller="Category" asp-action="Edit" class="btn btn-primary" asp-route-id="@cat.Id">
                             <i class="bi bi-pencil-square"></i>

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SavanNah.DataAccess.Contexts;
 
@@ -10,9 +11,11 @@ using SavanNah.DataAccess.Contexts;
 namespace SavanNah.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260630230758_UpdateCategoriesTable")]
+    partial class UpdateCategoriesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,6 +23,21 @@ namespace SavanNah.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CategoryProduct", b =>
+                {
+                    b.Property<int>("CategoriesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CategoriesId", "ProductsId");
+
+                    b.HasIndex("ProductsId");
+
+                    b.ToTable("CategoryProduct");
+                });
 
             modelBuilder.Entity("SavanNah.Models.Models.Brand", b =>
                 {
@@ -73,18 +91,6 @@ namespace SavanNah.DataAccess.Migrations
                             Id = 5,
                             Description = "German multinational sportswear and clothing brand",
                             Name = "Adidas"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Description = "Japanese multinational automotive manufacturer",
-                            Name = "Toyota"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Description = "Leading international book publisher",
-                            Name = "Penguin"
                         });
                 });
 
@@ -141,78 +147,6 @@ namespace SavanNah.DataAccess.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SavanNah.Models.Models.CategoryProduct", b =>
-                {
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CategoryId", "ProductsId");
-
-                    b.HasIndex("ProductsId");
-
-                    b.ToTable("CategoryProducts");
-
-                    b.HasData(
-                        new
-                        {
-                            CategoryId = 1,
-                            ProductsId = 1
-                        },
-                        new
-                        {
-                            CategoryId = 1,
-                            ProductsId = 2
-                        },
-                        new
-                        {
-                            CategoryId = 2,
-                            ProductsId = 3
-                        },
-                        new
-                        {
-                            CategoryId = 2,
-                            ProductsId = 4
-                        },
-                        new
-                        {
-                            CategoryId = 3,
-                            ProductsId = 5
-                        },
-                        new
-                        {
-                            CategoryId = 3,
-                            ProductsId = 6
-                        },
-                        new
-                        {
-                            CategoryId = 4,
-                            ProductsId = 7
-                        },
-                        new
-                        {
-                            CategoryId = 4,
-                            ProductsId = 8
-                        },
-                        new
-                        {
-                            CategoryId = 3,
-                            ProductsId = 8
-                        },
-                        new
-                        {
-                            CategoryId = 5,
-                            ProductsId = 9
-                        },
-                        new
-                        {
-                            CategoryId = 5,
-                            ProductsId = 10
-                        });
-                });
-
             modelBuilder.Entity("SavanNah.Models.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -222,6 +156,9 @@ namespace SavanNah.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("BrandId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -252,6 +189,7 @@ namespace SavanNah.DataAccess.Migrations
                         {
                             Id = 1,
                             BrandId = 4,
+                            CategoryId = 1,
                             Description = "Comfortable cotton T-shirt",
                             Discount = 0m,
                             Name = "T-Shirt",
@@ -261,6 +199,7 @@ namespace SavanNah.DataAccess.Migrations
                         {
                             Id = 2,
                             BrandId = 5,
+                            CategoryId = 1,
                             Description = "Stylish denim jeans",
                             Discount = 0m,
                             Name = "Jeans",
@@ -269,7 +208,8 @@ namespace SavanNah.DataAccess.Migrations
                         new
                         {
                             Id = 3,
-                            BrandId = 6,
+                            BrandId = 1,
+                            CategoryId = 2,
                             Description = "Fast and luxurious sports car",
                             Discount = 0m,
                             Name = "Sports Car",
@@ -278,7 +218,8 @@ namespace SavanNah.DataAccess.Migrations
                         new
                         {
                             Id = 4,
-                            BrandId = 6,
+                            BrandId = 3,
+                            CategoryId = 2,
                             Description = "Reliable family car",
                             Discount = 0m,
                             Name = "Family Sedan",
@@ -288,6 +229,7 @@ namespace SavanNah.DataAccess.Migrations
                         {
                             Id = 5,
                             BrandId = 1,
+                            CategoryId = 3,
                             Description = "Large capacity refrigerator",
                             Discount = 0m,
                             Name = "Refrigerator",
@@ -297,6 +239,7 @@ namespace SavanNah.DataAccess.Migrations
                         {
                             Id = 6,
                             BrandId = 1,
+                            CategoryId = 3,
                             Description = "Efficient washing machine",
                             Discount = 0m,
                             Name = "Washing Machine",
@@ -306,6 +249,7 @@ namespace SavanNah.DataAccess.Migrations
                         {
                             Id = 7,
                             BrandId = 2,
+                            CategoryId = 4,
                             Description = "Latest model smartphone",
                             Discount = 0m,
                             Name = "Smartphone",
@@ -315,6 +259,7 @@ namespace SavanNah.DataAccess.Migrations
                         {
                             Id = 8,
                             BrandId = 3,
+                            CategoryId = 4,
                             Description = "High performance laptop",
                             Discount = 0m,
                             Name = "Laptop",
@@ -323,7 +268,8 @@ namespace SavanNah.DataAccess.Migrations
                         new
                         {
                             Id = 9,
-                            BrandId = 7,
+                            BrandId = 4,
+                            CategoryId = 5,
                             Description = "Bestselling novel",
                             Discount = 0m,
                             Name = "Fiction Book",
@@ -332,7 +278,8 @@ namespace SavanNah.DataAccess.Migrations
                         new
                         {
                             Id = 10,
-                            BrandId = 7,
+                            BrandId = 5,
+                            CategoryId = 5,
                             Description = "Educational science book",
                             Discount = 0m,
                             Name = "Science Book",
@@ -340,23 +287,19 @@ namespace SavanNah.DataAccess.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SavanNah.Models.Models.CategoryProduct", b =>
+            modelBuilder.Entity("CategoryProduct", b =>
                 {
-                    b.HasOne("SavanNah.Models.Models.Category", "Category")
-                        .WithMany("CategoryProducts")
-                        .HasForeignKey("CategoryId")
+                    b.HasOne("SavanNah.Models.Models.Category", null)
+                        .WithMany()
+                        .HasForeignKey("CategoriesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SavanNah.Models.Models.Product", "Products")
-                        .WithMany("CategoryProducts")
+                    b.HasOne("SavanNah.Models.Models.Product", null)
+                        .WithMany()
                         .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("SavanNah.Models.Models.Product", b =>
@@ -373,16 +316,6 @@ namespace SavanNah.DataAccess.Migrations
             modelBuilder.Entity("SavanNah.Models.Models.Brand", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("SavanNah.Models.Models.Category", b =>
-                {
-                    b.Navigation("CategoryProducts");
-                });
-
-            modelBuilder.Entity("SavanNah.Models.Models.Product", b =>
-                {
-                    b.Navigation("CategoryProducts");
                 });
 #pragma warning restore 612, 618
         }

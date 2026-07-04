@@ -20,18 +20,21 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
         {
             return View("CategoryIndex", await _repository.GetAll(null));
         }
+
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Create(Category category)
         {
-            if (category.Name == category.DisplayOrder.ToString())
+            if (category.Name == category.Description)
             {
-                ModelState.AddModelError("name", "The Name Can't match the display Order");
+                ModelState.AddModelError("name", "The Name Can't match the Description");
             }
+
             if (category.Name.ToLower() == "test")
             {
                 ModelState.AddModelError("", "'Test' Is an Invalid Value");
@@ -51,6 +54,7 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
                 return View(category);
             }
         }
+
         [HttpGet]
         public async Task<IActionResult> Edit([FromRoute] int id)
         {
@@ -64,18 +68,21 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Category category)
         {
-            if (category.Name is not null && category.Name == category.DisplayOrder.ToString())
+            if (category.Name is not null && category.Name == category.Description)
             {
-                ModelState.AddModelError("name", "The Name Can't match the display Order");
+                ModelState.AddModelError("name", "The Name Can't match the Description");
             }
+
             if (category.Name is not null && category.Name.ToLower() == "test")
             {
                 ModelState.AddModelError("", "'Test' Is an Invalid Value");
             }
+
             if (category.Name is null)
             {
                 ModelState.AddModelError("name", "The Name Can't be empty");
             }
+
             if (ModelState.IsValid)
             {
                 var success = await _repository.Update(category);
@@ -91,6 +98,7 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
                 return View(category);
             }
         }
+
         [HttpPost]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {

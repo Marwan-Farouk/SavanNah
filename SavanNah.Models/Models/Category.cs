@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 
 namespace SavanNah.Models.Models
 {
@@ -8,10 +7,7 @@ namespace SavanNah.Models.Models
         public int Id { get; set; }
         [DisplayName("Name")]
         public required string Name { get; set; }
-        [DisplayName("Display Order")]
-        [Range(0, 200)]
-        public int DisplayOrder { get; set; }
-
-        public IEnumerable<Product> Products { get; set; } = [];
+        public string? Description { get; set; }
+        public ICollection<CategoryProduct> CategoryProducts { get; set; } = [];
     }
 }
