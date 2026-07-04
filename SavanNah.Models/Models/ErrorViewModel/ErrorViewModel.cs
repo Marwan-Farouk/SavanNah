@@ -1,4 +1,4 @@
-namespace SavanNah.Models.Models;
+namespace SavanNah.Models.Models.ErrorViewModel;
 
 public class ErrorViewModel
 {

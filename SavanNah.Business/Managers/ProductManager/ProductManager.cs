@@ -4,9 +4,9 @@ using SavanNah.DataAccess.Repositories.Brands;
 using SavanNah.DataAccess.Repositories.Categories;
 using SavanNah.DataAccess.Repositories.CategoryProducts;
 using SavanNah.DataAccess.Repositories.Products;
-using SavanNah.Models.Models;
+using SavanNah.Models.Models.ProductModel;
 
-namespace SavanNah.Business.Managers;
+namespace SavanNah.Business.Managers.ProductManager;
 
 public class ProductManager : IProductManager
 {
@@ -57,7 +57,7 @@ public class ProductManager : IProductManager
 
     public async Task<Product> Get(Expression<Func<Product, bool>> filter)
     {
-        throw new NotImplementedException();
+        return await _productRepository.Get(filter);
     }
 
     public async Task<IEnumerable<Product>> GetAll(Expression<Func<Product, bool>>? filter)

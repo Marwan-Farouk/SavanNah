@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
-using SavanNah.Models.Models;
+using SavanNah.Models.Models.ProductModel;
 
-namespace SavanNah.Business.Managers;
+namespace SavanNah.Business.Managers.ProductManager;
 
 public interface IProductManager
 {

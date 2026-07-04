@@ -1,5 +1,5 @@
 using SavanNah.DataAccess.Repositories.Generic;
-using SavanNah.Models.Models;
+using SavanNah.Models.Models.CategoryProductModel;
 
 namespace SavanNah.DataAccess.Repositories.CategoryProducts;
 

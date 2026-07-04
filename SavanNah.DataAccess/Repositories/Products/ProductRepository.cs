@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SavanNah.DataAccess.Contexts;
 using SavanNah.DataAccess.Repositories.Generic;
-using SavanNah.Models.Models;
+using SavanNah.Models.Models.ProductModel;
 
 namespace SavanNah.DataAccess.Repositories.Products;
 

@@ -1,6 +1,6 @@
-﻿using SavanNah.DataAccess.Contexts;
+using SavanNah.DataAccess.Contexts;
 using SavanNah.DataAccess.Repositories.Generic;
-using SavanNah.Models.Models;
+using SavanNah.Models.Models.CategoryModel;
 
 namespace SavanNah.DataAccess.Repositories.Categories
 {

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using SavanNah.Business.Managers;
-using SavanNah.Business.Managers.Brand;
-using SavanNah.Business.Managers.Category;
+using SavanNah.Business.Managers.BrandManager;
+using SavanNah.Business.Managers.CategoryManager;
+using SavanNah.Business.Managers.ProductManager;
 using SavanNah.DataAccess.Contexts;
 using SavanNah.DataAccess.Repositories.Brands;
 using SavanNah.DataAccess.Repositories.Categories;

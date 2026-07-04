@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using SavanNah.Models.Models;
+using SavanNah.Models.Models.ErrorViewModel;
 using System.Diagnostics;
 
 namespace SavanNah.Presentation.Areas.User.Controllers;

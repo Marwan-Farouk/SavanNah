@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SavanNah.Models.Models;
+using SavanNah.Models.Models.BrandModel;
+using SavanNah.Models.Models.CategoryProductModel;
+using SavanNah.Models.Models.ProductModel;
 
 namespace SavanNah.DataAccess.Contexts.Configurations;
 

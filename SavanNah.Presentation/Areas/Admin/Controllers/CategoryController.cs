@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using SavanNah.DataAccess.Repositories.Categories;
-using SavanNah.Models.Models;
+using SavanNah.Models.Models.CategoryModel;
 
 namespace SavanNah.Presentation.Areas.Admin.Controllers
 {
