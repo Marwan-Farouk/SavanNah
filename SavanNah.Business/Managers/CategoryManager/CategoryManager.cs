@@ -25,7 +25,10 @@ public class CategoryManager : ICategoryManager
 
     public async Task<bool> Create(Category entity)
     {
-        return await _categoryRepository.Create(entity);
+        if (await _categoryRepository.Create(entity) is not null)
+            return true;
+        else
+            return false;
     }
 
     public async Task<bool> Update(Category entity)

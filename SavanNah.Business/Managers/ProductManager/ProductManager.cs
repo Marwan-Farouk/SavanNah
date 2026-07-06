@@ -1,10 +1,13 @@
-using System.Linq.Expressions;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using SavanNah.Business.DTOs.Products;
 using SavanNah.DataAccess.Contexts;
 using SavanNah.DataAccess.Repositories.Brands;
 using SavanNah.DataAccess.Repositories.Categories;
 using SavanNah.DataAccess.Repositories.CategoryProducts;
 using SavanNah.DataAccess.Repositories.Products;
+using SavanNah.Models.Models.CategoryProductModel;
 using SavanNah.Models.Models.ProductModel;
+using System.Linq.Expressions;
 
 namespace SavanNah.Business.Managers.ProductManager;
 
@@ -25,9 +28,28 @@ public class ProductManager : IProductManager
         _categoryProductRepository = categoryProductRepository;
     }
 
-    public async Task<bool> Create(Product product)
+    public async Task<bool> Create(CreateProductDTO productDto)
     {
-        return await _productRepository.Create(product);
+        var product = productDto.ToEntity();
+        var created = await _productRepository.Create(product);
+        await _productRepository.Save();
+        if (created is not null)
+        {
+            foreach (var catId in productDto.CategoryIds)
+            {
+                await _categoryProductRepository.Create(new CategoryProduct
+
+                {
+                    CategoryId = catId,
+                    ProductsId = created.Id
+                });
+            }
+
+            await Save();
+            return true;
+        }
+
+        return false;
     }
 
     public Task<bool> Update(Product product)
@@ -64,4 +86,10 @@ public class ProductManager : IProductManager
     {
         return await _productRepository.GetAll(filter);
     }
+
+    public async Task<List<SelectListItem>> GetBrands() => (await _brandRepository.GetAll(null))
+        .Select(b => new SelectListItem { Value = b.Id.ToString(), Text = b.Name }).ToList();
+
+    public async Task<List<SelectListItem>> GetCategories() => (await _categoryRepository.GetAll(null))
+        .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }).ToList();
 }

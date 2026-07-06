@@ -53,6 +53,11 @@ public class Program
                 areaName: "User",
                 pattern: "{controller=Home}/{action=Index}/{id?}")
             .WithStaticAssets();
+        app.MapAreaControllerRoute(
+                name: "admin",
+                areaName: "Admin",
+                pattern: "{area=Admin}/{controller=Home}/{action=Index}/{id?}")
+            .WithStaticAssets();
 
         app.Run();
     }

@@ -25,7 +25,10 @@ public class BrandManager : IBrandManager
 
     public async Task<bool> Create(Brand entity)
     {
-        return await _brandRepository.Create(entity);
+        if (await _brandRepository.Create(entity) is not null)
+            return true;
+        else
+            return false;
     }
 
     public async Task<bool> Update(Brand entity)

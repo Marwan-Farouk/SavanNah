@@ -42,8 +42,8 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                var success = await _repository.Create(category);
-                if (success)
+                var createdCategory = await _repository.Create(category);
+                if (createdCategory is not null)
                     TempData["success"] = "Category created successfully";
                 else
                     TempData["error"] = "Couldn't Create Category";

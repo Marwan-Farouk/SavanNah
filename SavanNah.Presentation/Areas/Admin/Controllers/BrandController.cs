@@ -33,8 +33,8 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var success = await brandRepository.Create(brand);
-                if (success)
+                var createdBrand = await brandRepository.Create(brand);
+                if (createdBrand is not null)
                     TempData["success"] = "Brand Was Created Successfully";
                 else
                     TempData["error"] = "Couldn't Create Brand";

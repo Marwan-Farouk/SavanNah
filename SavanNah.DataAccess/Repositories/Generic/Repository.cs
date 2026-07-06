@@ -16,16 +16,16 @@ namespace SavanNah.DataAccess.Repositories.Generic
         }
 
 
-        public async Task<bool> Create(T entity)
+        public async Task<T> Create(T entity)
         {
             try
             {
                 await _dbSet.AddAsync(entity);
-                return true;
+                return entity;
             }
             catch (Exception)
             {
-                return false;
+                return null;
             }
         }
 

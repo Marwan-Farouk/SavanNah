@@ -1,0 +1,74 @@
+@{
+    ViewData["Title"] = "Products";
+}
+@model List<SavanNah.Models.Models.ProductModel.Product>
+
+<style>
+    #update-btn {
+        background-color: #2563ebff;
+    }
+
+    #update-btn:hover {
+        background-color: #1e40af;
+    }
+</style>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Products</h2>
+    <div class="d-flex gap-2 justify-content-end align-items-center">
+        <span class="badge bg-secondary fs-6">@Model.Count item@(Model.Count != 1 ? "s" : "")</span>
+        <a class="btn btn-success" asp-area="User" asp-controller="Product" asp-action="Create">
+            <i class="bi bi-plus-circle "></i>
+            Add Product
+        </a>
+    </div>
+    @* <div>
+        <form asp-controller="Product" asp-action="Index" method="get" class="d-flex gap-2">
+            <input type="text" name="search" class="form-control" placeholder="Search"/>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div> *@
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No products found.</div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+        @foreach (var prod in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">@prod.Name</h5>
+                        <p class="card-text text-muted fw-semibold small mb-3">@(prod.Description ?? "No description available.")</p>
+
+                        <ul class="list-unstyled mb-0">
+                            <li class="d-flex justify-content-between py-1 border-bottom">
+                                <span class="text-muted fw-semibold">Price</span>
+                                <strong>$@prod.Price.ToString("0.00")</strong>
+                            </li>
+                            <li class="d-flex justify-content-between py-1 border-bottom">
+                                <span class="text-muted fw-semibold">Discount</span>
+                                <strong>@prod.Discount.ToString("0.##")%</strong>
+                            </li>
+                            <li class="d-flex justify-content-between py-1">
+                                <span class="text-muted fw-semibold">Brand</span>
+                                <strong>@(prod.Brand?.Name ?? $"Brand #{prod.BrandId}")</strong>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-footer bg-black d-flex justify-content-between align-items-center">
+                        <span class="text-white small">ID: @prod.Id</span>
+                        <div class="d-flex gap-2">
+                            <a id="update-btn" asp-action="Edit" asp-route-id="@prod.Id" class="btn btn-primary btn-sm">Update</a>
+                            <a asp-action="Delete" asp-route-id="@prod.Id" class="btn btn-danger btn-sm">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

@@ -6,7 +6,7 @@ namespace SavanNah.DataAccess.Repositories.Generic
     {
         Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>>? filter);
         Task<T> Get(Expression<Func<T, bool>> filter);
-        Task<bool> Create(T entity);
+        Task<T> Create(T entity);
         Task<bool> Update(T entity);
         Task<bool> UpdateRange(Expression<Func<T, bool>> filter);
         Task<bool> Delete(T entity);
