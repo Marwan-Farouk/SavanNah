@@ -1,0 +1,140 @@
+.validation-summary-valid {
+    display: none !important;
+}
+
+.create-card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+}
+
+.create-card .card-header {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    border-bottom: none;
+    padding: 1.75rem 2rem;
+}
+
+.create-card .card-body {
+    padding: 2rem;
+    background: #fff;
+}
+
+.form-label {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #374151;
+    margin-bottom: 0.4rem;
+}
+
+.form-control,
+.form-select {
+    border-radius: 10px;
+    border: 1.5px solid #e5e7eb;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.form-control.is-invalid,
+.form-select.is-invalid {
+    border-color: #dc3545;
+    box-shadow: none;
+}
+
+.form-control.is-invalid:focus,
+.form-select.is-invalid:focus {
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.12);
+}
+
+/* Multi-select categories */
+#CategoryIds {
+    min-height: 150px;
+    border-radius: 10px;
+}
+
+#CategoryIds option {
+    padding: 0.45rem 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+#CategoryIds option:checked {
+    background-color: #2563eb;
+    color: #fff;
+}
+
+.category-hint {
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-top: 0.35rem;
+}
+
+/* Input group for price / discount */
+.input-group-text {
+    border-radius: 10px 0 0 10px;
+    border: 1.5px solid #e5e7eb;
+    background-color: #f9fafb;
+    color: #6b7280;
+    font-weight: 600;
+}
+
+.input-group .form-control {
+    border-radius: 0 10px 10px 0;
+}
+
+.input-group:focus-within .input-group-text {
+    border-color: #2563eb;
+}
+
+.input-group .form-control.is-invalid {
+    border-left-color: #e5e7eb;
+}
+
+/* Buttons */
+#btn-create,
+#btn-save {
+    border: none;
+    border-radius: 10px;
+    padding: 0.65rem 2rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+#btn-create:hover,
+#btn-save:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+}
+
+#btn-cancel {
+    border-radius: 10px;
+    padding: 0.65rem 1.5rem;
+    font-weight: 600;
+    border: 1.5px solid #d1d5db;
+    color: #374151;
+    transition: background-color 0.15s, border-color 0.15s;
+}
+
+#btn-cancel:hover {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+.section-divider {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #9ca3af;
+    border-bottom: 1px solid #f3f4f6;
+    padding-bottom: 0.4rem;
+    margin-bottom: 1.25rem;
+}

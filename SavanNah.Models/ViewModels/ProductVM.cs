@@ -3,7 +3,7 @@ using SavanNah.Models.Models.ProductModel;
 
 namespace SavanNah.Models.ViewModels;
 
-public class CreateProductVM
+public class ProductVM
 {
     public Product Product { get; set; }
 

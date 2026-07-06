@@ -62,9 +62,15 @@ public class ProductManager : IProductManager
         throw new NotImplementedException();
     }
 
-    public Task<bool> Delete(Product entity)
+    public async Task<bool> Delete(Product entity)
     {
-        throw new NotImplementedException();
+        var sucssess = await _productRepository.Delete(entity);
+        if (sucssess)
+        {
+            await Save();
+            return true;
+        }
+        return false;
     }
 
     public Task<bool> DeleteRange(Expression<Func<Product, bool>> filter)

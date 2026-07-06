@@ -63,8 +63,10 @@ else
                     <div class="card-footer bg-black d-flex justify-content-between align-items-center">
                         <span class="text-white small">ID: @prod.Id</span>
                         <div class="d-flex gap-2">
-                            <a id="update-btn" asp-action="Edit" asp-route-id="@prod.Id" class="btn btn-primary btn-sm">Update</a>
-                            <a asp-action="Delete" asp-route-id="@prod.Id" class="btn btn-danger btn-sm">Delete</a>
+                            <a id="update-btn" asp-area="User" asp-controller="Product" asp asp-action="Edit" asp-route-id="@prod.Id" class="btn btn-primary btn-sm">Edit</a>
+                            <form method="Post" asp-area="User" asp-controller="Product"  asp-action="Delete" asp-route-id="@prod.Id">
+                                <input type="submit" class="btn btn-danger btn-sm del-btn" value="Delete" />
+                            </form>
                         </div>
                     </div>
                 </div>

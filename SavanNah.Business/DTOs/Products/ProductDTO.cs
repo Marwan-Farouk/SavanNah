@@ -31,7 +31,7 @@ public class CreateProductDTO : ProductDTO
 {
     public List<int> CategoryIds { get; set; }
 
-    public static CreateProductDTO ToDTO(CreateProductVM vm)
+    public static CreateProductDTO ToDTO(ProductVM vm)
     {
         return new CreateProductDTO
         {

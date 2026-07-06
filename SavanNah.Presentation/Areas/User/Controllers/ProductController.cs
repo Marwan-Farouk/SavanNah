@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using SavanNah.Business.DTOs.Products;
 using SavanNah.Business.Managers.ProductManager;
 using SavanNah.Models.ViewModels;
@@ -26,7 +25,7 @@ public class ProductController : Controller
     [HttpGet]
     public async Task<IActionResult> Create()
     {
-        var productVM = new CreateProductVM
+        var productVM = new ProductVM
         {
             Brands = await _productManager.GetBrands(),
             Categories = await _productManager.GetCategories()
@@ -36,7 +35,7 @@ public class ProductController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(CreateProductVM productVm)
+    public async Task<IActionResult> Create(ProductVM productVm)
     {
         if (ModelState.IsValid)
         {
@@ -56,14 +55,41 @@ public class ProductController : Controller
         productVm.Categories = await _productManager.GetCategories();
         return View(productVm);
     }
-    // [HttpGet]
-    // public async Task<IActionResult> Edit(int id)
-    // {
-    //     // var prod = await _productManager.Get(p => p.Id == id);
-    //     // if(prod is null)
-    //     // {
-    //     //     return NotFound();
-    //     // }
-    //     // return View(prod);
-    // }
+    [HttpPost]
+    public async Task<IActionResult> Delete([FromRoute] int id)
+    {
+        var product = await _productManager.Get(p => p.Id == id);
+        if (product is not null)
+        {
+            var success = await _productManager.Delete(product);
+            if (success)
+                TempData["success"] = "Product Deleted successfully";
+            else
+                TempData["error"] = "Couldn't Delete Product";
+
+            return RedirectToAction(nameof(Index));
+        }
+        else
+        {
+            TempData["error"] = "Product Was not found";
+            return RedirectToAction(nameof(Index));
+        }
+    }
+    [HttpGet]
+    public async Task<IActionResult> Edit(int id)
+    {
+        var prod = await _productManager.Get(p => p.Id == id);
+        if (prod is null)
+        {
+            return NotFound();
+        }
+        var productVM = new ProductVM
+        {
+            Product = prod,
+            Brands = await _productManager.GetBrands(),
+            Categories = await _productManager.GetCategories()
+        };
+
+        return View(productVM);
+    }
 }
