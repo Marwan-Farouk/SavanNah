@@ -8,7 +8,9 @@ public class ProductDTO
     public required string Name { get; set; }
     public decimal Price { get; set; }
     public string? Description { get; set; }
+    public string? Image { get; set; }
     public decimal Discount { get; set; }
+    
     public int BrandId { get; set; }
 
     public Product ToEntity()
@@ -24,13 +26,13 @@ public class ProductDTO
     }
 }
 
-public class CreateProductDTO : ProductDTO
+public class CreateProductDto : ProductDTO
 {
     public List<int> CategoryIds { get; set; }
 
-    public static CreateProductDTO ToDTO(ProductVM vm)
+    public static CreateProductDto ToDto(ProductVM vm)
     {
-        return new CreateProductDTO
+        return new CreateProductDto
         {
             Name = vm.Product.Name,
             Price = vm.Product.Price,
@@ -42,7 +44,7 @@ public class CreateProductDTO : ProductDTO
     }
 }
 
-public class UpdateProductDTO : CreateProductDTO
+public class UpdateProductDTO : CreateProductDto
 {
     public int Id { get; set; }
     public static new UpdateProductDTO ToDTO(ProductVM vm)

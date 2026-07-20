@@ -41,6 +41,14 @@ else
         {
             <div class="col">
                 <div class="card h-100 shadow-sm">
+                    @if (!string.IsNullOrEmpty(prod.Image))
+                    {
+                        <img src="@Url.Content(prod.Image)" class="card-img-top" alt="@prod.Name" style="width: 100%; height: 200px; object-fit: cover;"/>
+                    }
+                    else
+                    {
+                        <img src="~/images/Products/Product_placeholder.avif" class="card-img-top" alt="@prod.Name" style="width: 100%; height: 200px; object-fit: cover;"/>
+                    }
                     <div class="card-body">
                         <h5 class="card-title">@prod.Name</h5>
                         <p class="card-text text-muted fw-semibold small mb-3">@(prod.Description ?? "No description available.")</p>
@@ -63,7 +71,7 @@ else
                                 @for (int i = 0; i < prod.CategoryProducts.Count; i++)
                                 {
                                     var cp = prod.CategoryProducts.ElementAt(i);
-                                    <strong class="justify-content-around">@(cp.Category!.Name+(i == prod.CategoryProducts.Count - 1 ? "" : ","))</strong>
+                                    <strong class="justify-content-around">@(cp.Category!.Name + (i == prod.CategoryProducts.Count - 1 ? "" : ","))</strong>
                                 }
                             </li>
                         </ul>
@@ -73,7 +81,7 @@ else
                         <div class="d-flex gap-2">
                             <a id="update-btn" asp-area="User" asp-controller="Product" asp asp-action="Edit" asp-route-id="@prod.Id" class="btn btn-primary btn-sm">Edit</a>
                             <form method="Post" asp-area="User" asp-controller="Product" asp-action="Delete" asp-route-id="@prod.Id">
-                                <input type="submit" class="btn btn-danger btn-sm del-btn" value="Delete" />
+                                <input type="submit" class="btn btn-danger btn-sm del-btn" value="Delete"/>
                             </form>
                         </div>
                     </div>
