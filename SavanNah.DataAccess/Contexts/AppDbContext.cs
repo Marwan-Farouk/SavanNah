@@ -42,7 +42,8 @@ namespace SavanNah.DataAccess.Contexts
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Clothes", Description = "Apparel and fashion items" },
                 new Category { Id = 2, Name = "Cars", Description = "Automobiles and automotive accessories" },
-                new Category { Id = 3, Name = "Home Appliances", Description = "Essential appliances for the modern home" },
+                new Category
+                    { Id = 3, Name = "Home Appliances", Description = "Essential appliances for the modern home" },
                 new Category { Id = 4, Name = "Electronics", Description = "Consumer electronics and gadgets" },
                 new Category { Id = 5, Name = "Books", Description = "Books across all genres and disciplines" }
             );
@@ -68,7 +69,10 @@ namespace SavanNah.DataAccess.Contexts
                     Description = "Japanese conglomerate specialising in electronics and entertainment"
                 },
                 new Brand { Id = 4, Name = "Nike", Description = "American sportswear and athletic footwear brand" },
-                new Brand { Id = 5, Name = "Adidas", Description = "German multinational sportswear and clothing brand" },
+                new Brand
+                {
+                    Id = 5, Name = "Adidas", Description = "German multinational sportswear and clothing brand"
+                },
                 new Brand { Id = 6, Name = "Toyota", Description = "Japanese multinational automotive manufacturer" },
                 new Brand { Id = 7, Name = "Penguin", Description = "Leading international book publisher" }
             );
@@ -82,7 +86,8 @@ namespace SavanNah.DataAccess.Contexts
                     Description = "Comfortable cotton T-shirt",
                     Price = 19.99m,
                     Discount = 0m,
-                    BrandId = 4
+                    BrandId = 4,
+                    Image = ""
                 },
                 new Product
                 {
@@ -91,7 +96,8 @@ namespace SavanNah.DataAccess.Contexts
                     Description = "Stylish denim jeans",
                     Price = 49.99m,
                     Discount = 0m,
-                    BrandId = 5
+                    BrandId = 5,
+                    Image = ""
                 },
                 new Product
                 {
@@ -100,7 +106,8 @@ namespace SavanNah.DataAccess.Contexts
                     Description = "Fast and luxurious sports car",
                     Price = 75000.00m,
                     Discount = 0m,
-                    BrandId = 6
+                    BrandId = 6,
+                    Image = ""
                 },
                 new Product
                 {
@@ -109,7 +116,8 @@ namespace SavanNah.DataAccess.Contexts
                     Description = "Reliable family car",
                     Price = 25000.00m,
                     Discount = 0m,
-                    BrandId = 6
+                    BrandId = 6,
+                    Image = ""
                 },
                 new Product
                 {
@@ -118,7 +126,8 @@ namespace SavanNah.DataAccess.Contexts
                     Description = "Large capacity refrigerator",
                     Price = 899.00m,
                     Discount = 0m,
-                    BrandId = 1
+                    BrandId = 1,
+                    Image = ""
                 },
                 new Product
                 {
@@ -127,7 +136,8 @@ namespace SavanNah.DataAccess.Contexts
                     Description = "Efficient washing machine",
                     Price = 599.00m,
                     Discount = 0m,
-                    BrandId = 1
+                    BrandId = 1,
+                    Image = ""
                 },
                 new Product
                 {
@@ -136,7 +146,8 @@ namespace SavanNah.DataAccess.Contexts
                     Description = "Latest model smartphone",
                     Price = 999.00m,
                     Discount = 0m,
-                    BrandId = 2
+                    BrandId = 2,
+                    Image = ""
                 },
                 new Product
                 {
@@ -145,7 +156,8 @@ namespace SavanNah.DataAccess.Contexts
                     Description = "High performance laptop",
                     Price = 1200.00m,
                     Discount = 0m,
-                    BrandId = 3
+                    BrandId = 3,
+                    Image = ""
                 },
                 new Product
                 {
@@ -154,7 +166,8 @@ namespace SavanNah.DataAccess.Contexts
                     Description = "Bestselling novel",
                     Price = 15.00m,
                     Discount = 0m,
-                    BrandId = 7
+                    BrandId = 7,
+                    Image = ""
                 },
                 new Product
                 {
@@ -163,7 +176,8 @@ namespace SavanNah.DataAccess.Contexts
                     Description = "Educational science book",
                     Price = 25.00m,
                     Discount = 0m,
-                    BrandId = 7
+                    BrandId = 7,
+                    Image = ""
                 }
             );
 

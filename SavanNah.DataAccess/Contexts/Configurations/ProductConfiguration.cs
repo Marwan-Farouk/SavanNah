@@ -26,6 +26,8 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(p => p.Discount)
             .HasColumnType("decimal(18,2)")
             .HasDefaultValue(0);
+        builder.Property(p => p.Image)
+            .HasDefaultValue("");
 
         builder.HasMany(p => p.CategoryProducts)
             .WithOne(cp => cp.Products)
