@@ -1,7 +1,7 @@
 using SavanNah.Models.Models.ProductModel;
 using SavanNah.Models.ViewModels;
 
-namespace SavanNah.Business.DTOs.Products;
+namespace SavanNah.Models.DTOs.Products;
 
 public class ProductDTO
 {

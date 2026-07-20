@@ -6,7 +6,9 @@ namespace SavanNah.DataAccess.Repositories.CategoryProducts;
 
 public class CategoryProductRepository : Repository<CategoryProduct>, ICategoryProductRepository
 {
+
     public CategoryProductRepository(AppDbContext context) : base(context)
     {
+
     }
 }

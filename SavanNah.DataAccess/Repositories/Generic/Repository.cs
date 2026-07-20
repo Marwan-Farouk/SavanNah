@@ -68,36 +68,57 @@ namespace SavanNah.DataAccess.Repositories.Generic
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<T> Get(Expression<Func<T, bool>> filter)
+        public async Task<T> Get(Expression<Func<T, bool>> filter, string[]? includes)
         {
-            return await _dbSet.FirstAsync(filter);
+
+            var query = _dbSet.Where(filter);
+            if (includes is not null && includes.Length > 0)
+            {
+                foreach (var prop in includes)
+                {
+                    query.Include(prop);
+                }
+            }
+            return await query.FirstAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>>? filter)
+        public async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>>? filter, string[]? includes)
         {
+            IQueryable<T> query;
             if (filter is null)
                 return await _dbSet.ToListAsync();
             else
-                return await _dbSet.Where(filter).ToListAsync();
+            {
+
+                query = _dbSet.Where(filter);
+                if (includes is not null && includes.Length > 0)
+                {
+                    foreach (var prop in includes)
+                    {
+                        query = query.Include(prop);
+                    }
+                }
+            }
+            return await query.ToListAsync();
         }
 
-        public Task<bool> Update(T entity)
+        public T Update(T entity)
         {
             try
             {
                 try
                 {
-                    _dbSet.Update(entity);
-                    return Task.FromResult(true);
+
+                    return _dbSet.Update(entity).Entity;
                 }
                 catch (Exception)
                 {
-                    return Task.FromResult(false);
+                    throw;
                 }
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                return Task.FromException<bool>(exception);
+                throw;
             }
         }
 

@@ -18,7 +18,7 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View("CategoryIndex", await _repository.GetAll(null));
+            return View("CategoryIndex", await _repository.GetAll(c => true, []));
         }
 
         [HttpGet]
@@ -58,7 +58,7 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit([FromRoute] int id)
         {
-            var cat = await _repository.Get(c => c.Id == id);
+            var cat = await _repository.Get(c => c.Id == id, []);
             if (cat is null)
                 return NotFound();
             else
@@ -85,8 +85,8 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                var success = await _repository.Update(category);
-                if (success)
+                var updated = _repository.Update(category);
+                if (updated is not null)
                     TempData["success"] = "Category Updated successfully";
                 else
                     TempData["error"] = "Couldn't Update Category";
@@ -102,7 +102,7 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var category = await _repository.Get(cat => cat.Id == id);
+            var category = await _repository.Get(cat => cat.Id == id, []);
 
             var success = await _repository.Delete(category);
             if (success)

@@ -1,7 +1,7 @@
 @{
     ViewData["Title"] = "Products";
 }
-@model List<SavanNah.Models.Models.ProductModel.Product>
+@model List<Product>
 
 <style>
     #update-btn {
@@ -56,7 +56,15 @@ else
                             </li>
                             <li class="d-flex justify-content-between py-1">
                                 <span class="text-muted fw-semibold">Brand</span>
-                                <strong>@(prod.Brand?.Name ?? $"Brand #{prod.BrandId}")</strong>
+                                <strong>@(prod.Brand?.Name ?? $"{prod.Brand!.Name}")</strong>
+                            </li>
+                            <li class="d-flex justify-content-between py-1">
+                                <span class="text-muted fw-semibold">Category</span>
+                                @for (int i = 0; i < prod.CategoryProducts.Count; i++)
+                                {
+                                    var cp = prod.CategoryProducts.ElementAt(i);
+                                    <strong class="justify-content-around">@(cp.Category!.Name+(i == prod.CategoryProducts.Count - 1 ? "" : ","))</strong>
+                                }
                             </li>
                         </ul>
                     </div>
@@ -64,7 +72,7 @@ else
                         <span class="text-white small">ID: @prod.Id</span>
                         <div class="d-flex gap-2">
                             <a id="update-btn" asp-area="User" asp-controller="Product" asp asp-action="Edit" asp-route-id="@prod.Id" class="btn btn-primary btn-sm">Edit</a>
-                            <form method="Post" asp-area="User" asp-controller="Product"  asp-action="Delete" asp-route-id="@prod.Id">
+                            <form method="Post" asp-area="User" asp-controller="Product" asp-action="Delete" asp-route-id="@prod.Id">
                                 <input type="submit" class="btn btn-danger btn-sm del-btn" value="Delete" />
                             </form>
                         </div>

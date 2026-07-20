@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using SavanNah.Business.DTOs.Products;
+using SavanNah.Business.Managers.BrandManager;
+using SavanNah.Business.Managers.CategoryManager;
 using SavanNah.Business.Managers.ProductManager;
+using SavanNah.Models.DTOs.Products;
 using SavanNah.Models.ViewModels;
 
 namespace SavanNah.Presentation.Areas.User.Controllers;
@@ -9,27 +11,32 @@ namespace SavanNah.Presentation.Areas.User.Controllers;
 public class ProductController : Controller
 {
     private readonly IProductManager _productManager;
+    private readonly IBrandManager _brandManager;
+    private readonly ICategoryManager _categoryManager;
 
-    public ProductController(IProductManager productManager)
+    public ProductController(IProductManager productManager, IBrandManager brandManager, ICategoryManager categoryManager)
     {
         _productManager = productManager;
+        this._brandManager = brandManager;
+        this._categoryManager = categoryManager;
     }
 
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var prods = await _productManager.GetAll(null);
+        var prods = await _productManager.GetAll(p => true, ["Brand", "CategoryProducts.Category"]);
         return View(prods.ToList());
     }
 
     [HttpGet]
     public async Task<IActionResult> Create()
     {
-        var productVM = new ProductVM
-        {
-            Brands = await _productManager.GetBrands(),
-            Categories = await _productManager.GetCategories()
-        };
+        var brands = await _brandManager.GetAll(b => true, []);
+        var cats = await _categoryManager.GetAll(c => true, []);
+        var productVM = new ProductVM();
+        productVM.AddBrands(brands);
+        productVM.AddCategories(cats);
+
         return View(productVM);
     }
 
@@ -50,15 +57,16 @@ public class ProductController : Controller
                 TempData["error"] = "Failed to create product";
             }
         }
-
-        productVm.Brands = await _productManager.GetBrands();
-        productVm.Categories = await _productManager.GetCategories();
+        var brands = await _brandManager.GetAll(b => true, []);
+        var cats = await _categoryManager.GetAll(c => true, []);
+        productVm.AddBrands(brands);
+        productVm.AddCategories(cats);
         return View(productVm);
     }
     [HttpPost]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
-        var product = await _productManager.Get(p => p.Id == id);
+        var product = await _productManager.Get(p => p.Id == id, []);
         if (product is not null)
         {
             var success = await _productManager.Delete(product);
@@ -78,18 +86,40 @@ public class ProductController : Controller
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
-        var prod = await _productManager.Get(p => p.Id == id);
+        var prod = await _productManager.Get(p => p.Id == id, []);
         if (prod is null)
         {
             return NotFound();
         }
+        var brands = await _brandManager.GetAll(b => true, []);
+        var cats = await _categoryManager.GetAll(c => true, []);
         var productVM = new ProductVM
         {
             Product = prod,
-            Brands = await _productManager.GetBrands(),
-            Categories = await _productManager.GetCategories()
         };
-
+        productVM.AddBrands(brands);
+        productVM.AddCategories(cats);
         return View(productVM);
+    }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(ProductVM productVm)
+    {
+        if (ModelState.IsValid)
+        {
+            var productDto = UpdateProductDTO.ToDTO(productVm);
+            var updated = await _productManager.Update(productDto);
+            if (updated is not null)
+                TempData["success"] = "Product Updated Successfuly";
+            else
+                TempData["error"] = "Couldn't Update Product";
+
+            return RedirectToAction(nameof(Index));
+        }
+        var brands = await _brandManager.GetAll(b => true, []);
+        var cats = await _categoryManager.GetAll(c => true, []);
+        productVm.AddBrands(brands);
+        productVm.AddCategories(cats);
+        return View(productVm);
     }
 }

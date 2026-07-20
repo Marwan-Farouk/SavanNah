@@ -1,6 +1,6 @@
-using System.Linq.Expressions;
 using SavanNah.DataAccess.Repositories.Categories;
 using SavanNah.Models.Models.CategoryModel;
+using System.Linq.Expressions;
 
 namespace SavanNah.Business.Managers.CategoryManager;
 
@@ -13,14 +13,14 @@ public class CategoryManager : ICategoryManager
         _categoryRepository = categoryRepository;
     }
 
-    public async Task<IEnumerable<Category>> GetAll(Expression<Func<Category, bool>>? filter)
+    public async Task<IEnumerable<Category>> GetAll(Expression<Func<Category, bool>>? filter, string[]? includes)
     {
-        return await _categoryRepository.GetAll(filter);
+        return await _categoryRepository.GetAll(filter, includes);
     }
 
-    public async Task<Category> Get(Expression<Func<Category, bool>> filter)
+    public async Task<Category> Get(Expression<Func<Category, bool>> filter, string[]? includes)
     {
-        return await _categoryRepository.Get(filter);
+        return await _categoryRepository.Get(filter, includes);
     }
 
     public async Task<bool> Create(Category entity)
@@ -31,9 +31,11 @@ public class CategoryManager : ICategoryManager
             return false;
     }
 
-    public async Task<bool> Update(Category entity)
+    public async Task<Category> Update(Category entity)
     {
-        return await _categoryRepository.Update(entity);
+        var updated = _categoryRepository.Update(entity);
+        await Save();
+        return updated;
     }
 
     public async Task<bool> UpdateRange(Expression<Func<Category, bool>> filter)

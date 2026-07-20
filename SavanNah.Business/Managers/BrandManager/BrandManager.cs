@@ -1,6 +1,6 @@
-using System.Linq.Expressions;
 using SavanNah.DataAccess.Repositories.Brands;
 using SavanNah.Models.Models.BrandModel;
+using System.Linq.Expressions;
 
 namespace SavanNah.Business.Managers.BrandManager;
 
@@ -13,14 +13,14 @@ public class BrandManager : IBrandManager
         _brandRepository = brandRepository;
     }
 
-    public async Task<IEnumerable<Brand>> GetAll(Expression<Func<Brand, bool>>? filter)
+    public async Task<IEnumerable<Brand>> GetAll(Expression<Func<Brand, bool>>? filter, string[]? includes)
     {
-        return await _brandRepository.GetAll(filter);
+        return await _brandRepository.GetAll(filter, includes);
     }
 
-    public async Task<Brand> Get(Expression<Func<Brand, bool>> filter)
+    public async Task<Brand> Get(Expression<Func<Brand, bool>> filter, string[]? includes)
     {
-        return await _brandRepository.Get(filter);
+        return await _brandRepository.Get(filter, includes);
     }
 
     public async Task<bool> Create(Brand entity)
@@ -31,9 +31,11 @@ public class BrandManager : IBrandManager
             return false;
     }
 
-    public async Task<bool> Update(Brand entity)
+    public async Task<Brand> Update(Brand entity)
     {
-        return await _brandRepository.Update(entity);
+        var updated = _brandRepository.Update(entity);
+        await Save();
+        return updated;
     }
 
     public async Task<bool> UpdateRange(Expression<Func<Brand, bool>> filter)

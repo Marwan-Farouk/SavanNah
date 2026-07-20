@@ -1,20 +1,19 @@
-using System.Linq.Expressions;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using SavanNah.Business.DTOs.Products;
+using SavanNah.Models.DTOs.Products;
 using SavanNah.Models.Models.ProductModel;
+using System.Linq.Expressions;
 
 namespace SavanNah.Business.Managers.ProductManager;
 
 public interface IProductManager
 {
-    Task<IEnumerable<Product>> GetAll(Expression<Func<Product, bool>>? filter);
-    Task<Product> Get(Expression<Func<Product, bool>> filter);
+    Task<IEnumerable<Product>> GetAll(Expression<Func<Product, bool>>? filter, string[]? includes);
+    Task<Product> Get(Expression<Func<Product, bool>> filter, string[]? includes);
     Task<bool> Create(CreateProductDTO entity);
-    Task<bool> Update(Product entity);
-    Task<bool> UpdateRange(Expression<Func<Product, bool>> filter);
+    Task<Product> Update(UpdateProductDTO entity);
     Task<bool> Delete(Product entity);
-    Task<bool> DeleteRange(Expression<Func<Product, bool>> filter);
     Task<int> Save();
-    Task<List<SelectListItem>> GetCategories();
-    Task<List<SelectListItem>> GetBrands();
+    //Task<List<SelectListItem>> GetCategories();
+    //Task<List<SelectListItem>> GetBrands();
+    //public Task<List<AllProductsVM>> CreateIndexVMs();
+
 }

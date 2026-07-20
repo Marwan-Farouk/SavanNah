@@ -18,7 +18,7 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var brands = await brandRepository.GetAll(null);
+            var brands = await brandRepository.GetAll(b => true, []);
             return View(brands.ToList());
         }
 
@@ -49,7 +49,7 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit([FromRoute] int id)
         {
-            var brand = await brandRepository.Get(b => b.Id == id);
+            var brand = await brandRepository.Get(b => b.Id == id, []);
             if (brand is not null)
                 return View(brand);
             else
@@ -60,12 +60,12 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Brand brand)
+        public IActionResult Edit(Brand brand)
         {
             if (ModelState.IsValid)
             {
-                var success = await brandRepository.Update(brand);
-                if (success)
+                var updated = brandRepository.Update(brand);
+                if (updated is not null)
                     TempData["success"] = "Brand Was Updated Successfully";
                 else
                     TempData["error"] = "Couldn't Update Brand";
@@ -80,7 +80,7 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var brand = await brandRepository.Get(b => b.Id == id);
+            var brand = await brandRepository.Get(b => b.Id == id, []);
             if (brand is not null)
             {
                 var success = await brandRepository.Delete(brand);
