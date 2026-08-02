@@ -4,6 +4,7 @@ using SavanNah.Business.Managers.BrandManager;
 using SavanNah.Business.Managers.CategoryManager;
 using SavanNah.Business.Managers.ProductManager;
 using SavanNah.Models.ViewModels;
+using System.Text.Json.Serialization;
 
 namespace SavanNah.Presentation.Areas.Admin.Controllers;
 
@@ -24,7 +25,28 @@ public class ProductController : Controller
         _webHostEnvironment = webHostEnvironment;
     }
 
-    [HttpPost]
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var prods = await _productManager.GetAll(p => true, ["Brand", "CategoryProducts.Category"]);
+        var options = new System.Text.Json.JsonSerializerOptions
+        {
+            ReferenceHandler = ReferenceHandler.IgnoreCycles
+        };
+
+        return Json(prods, options);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Index()
+    {
+        var prods = await _productManager.GetAll(p => true, ["Brand", "CategoryProducts.Category"]);
+        return View(prods.ToList());
+    }
+
+
+    [HttpDelete]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
         var product = await _productManager.Get(p => p.Id == id, []);
@@ -32,16 +54,24 @@ public class ProductController : Controller
         {
             var success = await _productManager.Delete(product);
             if (success)
-                TempData["success"] = "Product Deleted successfully";
-            else
-                TempData["error"] = "Couldn't Delete Product";
+            {
+                if (!String.IsNullOrEmpty(product.Image))
+                {
+                    var wwwroot = _webHostEnvironment.WebRootPath;
+                    var ImageToDelete = Path.Combine(wwwroot, product.Image);
+                    if (System.IO.File.Exists(ImageToDelete))
+                    {
+                        System.IO.File.Delete(ImageToDelete);
+                    }
+                }
+            }
 
-            return RedirectToAction("Index", "Product", new { area = "User" });
+            return Json(new { success = true, message = "Your Product has been deleted." });
         }
         else
         {
             TempData["error"] = "Product Was not found";
-            return RedirectToAction("Index", "Product", new { area = "User" });
+            return Json(new { success = false, message = "Couldn't delete your Product." });
         }
     }
 

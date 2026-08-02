@@ -3,7 +3,7 @@
 }
 @model ProductVM
 
-<link rel="stylesheet" href="~/css/product/product-form.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/product/product-form.css" asp-append-version="true"/>
 
 
 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -36,12 +36,12 @@
             </div>
 
             <div class="card-body">
-                <form asp-area="User" asp-controller="Product" asp-action="Edit" method="post" enctype="multipart/form-data" novalidate>
+                <form asp-area="Admin" asp-controller="Product" asp-action="Edit" method="post" enctype="multipart/form-data" novalidate>
                     @Html.AntiForgeryToken()
 
                     @* Hidden ID field to identify the product being edited *@
-                    <input asp-for="Product.Id" type="hidden" />
-                    <input asp-for="Product.Image" type="hidden" value="@Model.Product.Image" />
+                    <input asp-for="Product.Id" type="hidden"/>
+                    <input asp-for="Product.Image" type="hidden" value="@Model.Product.Image"/>
                     @* Global validation summary *@
                     <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 rounded-3"></div>
 
@@ -133,7 +133,7 @@
                         @if (!string.IsNullOrWhiteSpace(Model?.Product?.Image))
                         {
                             <div class="mt-2">
-                                <img src="@Url.Content("~/" + Model.Product.Image)" alt="Product image" class="img-fluid img-thumbnail" style="max-width:240px;" />
+                                <img src="@Url.Content("~/" + Model.Product.Image)" alt="Product image" class="img-fluid img-thumbnail" style="max-width:240px;"/>
                             </div>
                         }
                         else
@@ -144,7 +144,7 @@
 
                     @* — Actions — *@
                     <div class="d-flex gap-2 justify-content-end pt-2 border-top">
-                        <a id="btn-cancel" asp-area="User" asp-controller="Product" asp-action="Index" class="btn">
+                        <a id="btn-cancel" asp-area="Admin" asp-controller="Product" asp-action="Index" class="btn">
                             <i class="bi bi-x-circle me-1"></i> Cancel
                         </a>
                         <button id="btn-save" type="submit" class="btn btn-primary">
@@ -156,29 +156,29 @@
         </div>
     </div>
 </div>
-               
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial"/>
     <script>
         tinymce.init({
-          selector: 'textarea',
-          plugins: [
-            // Core editing features
-            'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-            // Premium features
-          ],
-          toolbar: 'undo redo |bold italic underline strikethrough | blocks fontfamily fontsize |  spellcheckdialog a11ycheck typography uploadcare | numlist bullist indent outdent |',
-          tinycomments_mode: 'embedded',
-          tinycomments_author: 'Author name',
-          mergetags_list: [
-            { value: 'First.Name', title: 'First Name' },
-            { value: 'Email', title: 'Email' },
-          ],
-          tinymceai_token_provider: async () => {
-            await fetch(`https://demo.api.tiny.cloud/1/yu2fuakzhixci1g9b09y8g8o4ka1v1trmjc7lquf3z0kbk2f/auth/random`, { method: "POST", credentials: "include" });
-            return { token: await fetch(`https://demo.api.tiny.cloud/1/yu2fuakzhixci1g9b09y8g8o4ka1v1trmjc7lquf3z0kbk2f/jwt/tinymceai`, { credentials: "include" }).then(r => r.text()) };
-          },
-          uploadcare_public_key: 'de4f1c619c79d544888b',
+            selector: 'textarea',
+            plugins: [
+                // Core editing features
+                'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+                // Premium features
+            ],
+            toolbar: 'undo redo |bold italic underline strikethrough | blocks fontfamily fontsize |  spellcheckdialog a11ycheck typography uploadcare | numlist bullist indent outdent |',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            mergetags_list: [
+                { value: 'First.Name', title: 'First Name' },
+                { value: 'Email', title: 'Email' },
+            ],
+            tinymceai_token_provider: async () => {
+                await fetch(`https://demo.api.tiny.cloud/1/yu2fuakzhixci1g9b09y8g8o4ka1v1trmjc7lquf3z0kbk2f/auth/random`, { method: "POST", credentials: "include" });
+                return { token: await fetch(`https://demo.api.tiny.cloud/1/yu2fuakzhixci1g9b09y8g8o4ka1v1trmjc7lquf3z0kbk2f/jwt/tinymceai`, { credentials: "include" }).then(r => r.text()) };
+            },
+            uploadcare_public_key: 'de4f1c619c79d544888b',
         });
     </script>
 }
