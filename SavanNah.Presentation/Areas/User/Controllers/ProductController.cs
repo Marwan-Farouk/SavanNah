@@ -15,7 +15,8 @@ public class ProductController : Controller
     private readonly ICategoryManager _categoryManager;
     private readonly IWebHostEnvironment _webHostEnvironment;
 
-    public ProductController(IProductManager productManager, IBrandManager brandManager, ICategoryManager categoryManager, IWebHostEnvironment webHostEnvironment)
+    public ProductController(IProductManager productManager, IBrandManager brandManager,
+        ICategoryManager categoryManager, IWebHostEnvironment webHostEnvironment)
     {
         _productManager = productManager;
         this._brandManager = brandManager;
@@ -35,11 +36,11 @@ public class ProductController : Controller
     {
         var brands = await _brandManager.GetAll(b => true, []);
         var cats = await _categoryManager.GetAll(c => true, []);
-        var productVM = new ProductVM();
-        productVM.AddBrands(brands, []);
-        productVM.AddCategories(cats, []);
+        var productVm = new ProductVM();
+        productVm.AddBrands(brands, []);
+        productVm.AddCategories(cats, []);
 
-        return View(productVM);
+        return View(productVm);
     }
 
     [HttpPost]
@@ -52,12 +53,13 @@ public class ProductController : Controller
             {
                 var wwwRootPath = _webHostEnvironment.WebRootPath;
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                var productPath = Path.Combine(wwwRootPath, @"images/Products");
-                using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                var productPath = Path.Combine(wwwRootPath, "images/Products");
+                await using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
                 {
-                    file.CopyTo(fileStream);
+                    await file.CopyToAsync(fileStream);
                 }
-                productVm.Product.Image = @"images/Products/" + fileName;
+
+                productVm.Product.Image = "images/Products/" + fileName;
             }
 
             var created = await _productManager.Create(CreateProductDTO.ToDTO(productVm));
@@ -71,94 +73,13 @@ public class ProductController : Controller
                 TempData["error"] = "Failed to create product";
             }
         }
+
         var brands = await _brandManager.GetAll(b => true, []);
         var cats = await _categoryManager.GetAll(c => true, []);
         productVm.AddBrands(brands, []);
         productVm.AddCategories(cats, []);
         return View(productVm);
     }
-    [HttpPost]
-    public async Task<IActionResult> Delete([FromRoute] int id)
-    {
-        var product = await _productManager.Get(p => p.Id == id, []);
-        if (product is not null)
-        {
-            var success = await _productManager.Delete(product);
-            if (success)
-                TempData["success"] = "Product Deleted successfully";
-            else
-                TempData["error"] = "Couldn't Delete Product";
 
-            return RedirectToAction(nameof(Index));
-        }
-        else
-        {
-            TempData["error"] = "Product Was not found";
-            return RedirectToAction(nameof(Index));
-        }
-    }
-    [HttpGet]
-    public async Task<IActionResult> Edit(int id)
-    {
-        var prod = await _productManager.Get(p => p.Id == id, new[] { "CategoryProducts" });
-        if (prod is null)
-        {
-            return NotFound();
-        }
-        var brands = await _brandManager.GetAll(b => true, Array.Empty<string>());
-        var cats = await _categoryManager.GetAll(c => true, Array.Empty<string>());
-        var productVM = new ProductVM { Product = prod };
-
-        var selectedCategoryIds = prod.CategoryProducts.Select(cp => cp.CategoryId).ToArray() ?? Array.Empty<int>();
-
-        productVM.CategoryIds = selectedCategoryIds.ToList();
-        productVM.AddBrands(brands, new[] { prod.BrandId });
-        productVM.AddCategories(cats, selectedCategoryIds);
-        return View(productVM);
-    }
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(ProductVM productVm, IFormFile? file)
-    {
-        if (ModelState.IsValid)
-        {
-            if (file is not null)
-            {
-                var wwwRootPath = _webHostEnvironment.WebRootPath;
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                var productPath = Path.Combine(wwwRootPath, @"images/Products");
-                using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
-                {
-                    file.CopyTo(fileStream);
-                }
-                if (!string.IsNullOrEmpty(productVm.Product.Image))
-                {
-                    var oldImage = Path.Combine(wwwRootPath, productVm.Product.Image);
-                    if (System.IO.File.Exists(oldImage))
-                    {
-                        System.IO.File.Delete(oldImage);
-
-                    }
-                }
-                productVm.Product.Image = @"images/products/" + fileName;
-            }
-            var productDto = UpdateProductDTO.ToDTO(productVm);
-            var updated = await _productManager.Update(productDto);
-            if (updated is not null)
-                TempData["success"] = "Product Updated Successfuly";
-            else
-                TempData["error"] = "Couldn't Update Product";
-
-            return RedirectToAction(nameof(Index));
-        }
-        var brands = await _brandManager.GetAll(b => true, Array.Empty<string>());
-        var cats = await _categoryManager.GetAll(c => true, Array.Empty<string>());
-
-        var selectedCategoryIds = productVm.Product.CategoryProducts.Select(cp => cp.CategoryId).ToArray() ?? Array.Empty<int>();
-
-        productVm.CategoryIds = selectedCategoryIds.ToList();
-        productVm.AddBrands(brands, new[] { productVm.Product.BrandId });
-        productVm.AddCategories(cats, selectedCategoryIds);
-        return View(productVm);
-    }
+    
 }
