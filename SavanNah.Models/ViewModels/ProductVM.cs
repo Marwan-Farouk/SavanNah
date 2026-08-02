@@ -9,26 +9,28 @@ public class ProductVM
 {
     public Product Product { get; set; }
 
-    public List<int> CategoryIds { get; set; } = [];
+    public List<int> CategoryIds { get; set; } = new();
 
-    public List<SelectListItem> Brands { get; set; } = [];
+    public List<SelectListItem> Brands { get; set; } = new();
 
-    public List<SelectListItem> Categories { get; set; } = [];
+    public List<SelectListItem> Categories { get; set; } = new();
 
-    public void AddBrands(IEnumerable<Brand> brands)
+    public void AddBrands(IEnumerable<Brand> brands, int[] selectedIds)
     {
         this.Brands = brands.Select(b => new SelectListItem
         {
             Value = b.Id.ToString(),
-            Text = b.Name
+            Text = b.Name,
+            Selected = selectedIds.Contains(b.Id)
         }).ToList();
     }
-    public void AddCategories(IEnumerable<Category> categories)
+    public void AddCategories(IEnumerable<Category> categories, int[] selectedIds)
     {
         this.Categories = categories.Select(c => new SelectListItem
         {
             Value = c.Id.ToString(),
-            Text = c.Name
+            Text = c.Name,
+            Selected = selectedIds.Contains(c.Id)
         }).ToList();
     }
 }

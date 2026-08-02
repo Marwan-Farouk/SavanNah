@@ -13,12 +13,14 @@ public class ProductController : Controller
     private readonly IProductManager _productManager;
     private readonly IBrandManager _brandManager;
     private readonly ICategoryManager _categoryManager;
+    private readonly IWebHostEnvironment _webHostEnvironment;
 
-    public ProductController(IProductManager productManager, IBrandManager brandManager, ICategoryManager categoryManager)
+    public ProductController(IProductManager productManager, IBrandManager brandManager, ICategoryManager categoryManager, IWebHostEnvironment webHostEnvironment)
     {
         _productManager = productManager;
         this._brandManager = brandManager;
         this._categoryManager = categoryManager;
+        _webHostEnvironment = webHostEnvironment;
     }
 
     [HttpGet]
@@ -34,18 +36,30 @@ public class ProductController : Controller
         var brands = await _brandManager.GetAll(b => true, []);
         var cats = await _categoryManager.GetAll(c => true, []);
         var productVM = new ProductVM();
-        productVM.AddBrands(brands);
-        productVM.AddCategories(cats);
+        productVM.AddBrands(brands, []);
+        productVM.AddCategories(cats, []);
 
         return View(productVM);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(ProductVM productVm)
+    public async Task<IActionResult> Create(ProductVM productVm, IFormFile? file)
     {
         if (ModelState.IsValid)
         {
+            if (file is not null)
+            {
+                var wwwRootPath = _webHostEnvironment.WebRootPath;
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                var productPath = Path.Combine(wwwRootPath, @"images/Products");
+                using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+                productVm.Product.Image = @"images/Products/" + fileName;
+            }
+
             var created = await _productManager.Create(CreateProductDTO.ToDTO(productVm));
             if (created)
             {
@@ -59,8 +73,8 @@ public class ProductController : Controller
         }
         var brands = await _brandManager.GetAll(b => true, []);
         var cats = await _categoryManager.GetAll(c => true, []);
-        productVm.AddBrands(brands);
-        productVm.AddCategories(cats);
+        productVm.AddBrands(brands, []);
+        productVm.AddCategories(cats, []);
         return View(productVm);
     }
     [HttpPost]
@@ -86,27 +100,48 @@ public class ProductController : Controller
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
-        var prod = await _productManager.Get(p => p.Id == id, []);
+        var prod = await _productManager.Get(p => p.Id == id, new[] { "CategoryProducts" });
         if (prod is null)
         {
             return NotFound();
         }
-        var brands = await _brandManager.GetAll(b => true, []);
-        var cats = await _categoryManager.GetAll(c => true, []);
-        var productVM = new ProductVM
-        {
-            Product = prod,
-        };
-        productVM.AddBrands(brands);
-        productVM.AddCategories(cats);
+        var brands = await _brandManager.GetAll(b => true, Array.Empty<string>());
+        var cats = await _categoryManager.GetAll(c => true, Array.Empty<string>());
+        var productVM = new ProductVM { Product = prod };
+
+        var selectedCategoryIds = prod.CategoryProducts.Select(cp => cp.CategoryId).ToArray() ?? Array.Empty<int>();
+
+        productVM.CategoryIds = selectedCategoryIds.ToList();
+        productVM.AddBrands(brands, new[] { prod.BrandId });
+        productVM.AddCategories(cats, selectedCategoryIds);
         return View(productVM);
     }
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(ProductVM productVm)
+    public async Task<IActionResult> Edit(ProductVM productVm, IFormFile? file)
     {
         if (ModelState.IsValid)
         {
+            if (file is not null)
+            {
+                var wwwRootPath = _webHostEnvironment.WebRootPath;
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                var productPath = Path.Combine(wwwRootPath, @"images/Products");
+                using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+                if (!string.IsNullOrEmpty(productVm.Product.Image))
+                {
+                    var oldImage = Path.Combine(wwwRootPath, productVm.Product.Image);
+                    if (System.IO.File.Exists(oldImage))
+                    {
+                        System.IO.File.Delete(oldImage);
+
+                    }
+                }
+                productVm.Product.Image = @"images/products/" + fileName;
+            }
             var productDto = UpdateProductDTO.ToDTO(productVm);
             var updated = await _productManager.Update(productDto);
             if (updated is not null)
@@ -116,10 +151,14 @@ public class ProductController : Controller
 
             return RedirectToAction(nameof(Index));
         }
-        var brands = await _brandManager.GetAll(b => true, []);
-        var cats = await _categoryManager.GetAll(c => true, []);
-        productVm.AddBrands(brands);
-        productVm.AddCategories(cats);
+        var brands = await _brandManager.GetAll(b => true, Array.Empty<string>());
+        var cats = await _categoryManager.GetAll(c => true, Array.Empty<string>());
+
+        var selectedCategoryIds = productVm.Product.CategoryProducts.Select(cp => cp.CategoryId).ToArray() ?? Array.Empty<int>();
+
+        productVm.CategoryIds = selectedCategoryIds.ToList();
+        productVm.AddBrands(brands, new[] { productVm.Product.BrandId });
+        productVm.AddCategories(cats, selectedCategoryIds);
         return View(productVm);
     }
 }

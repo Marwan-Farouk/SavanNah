@@ -38,7 +38,6 @@
             <div class="card-body">
                 <form asp-area="User" asp-controller="Product" asp-action="Create" enctype="multipart/form-data" method="post" novalidate>
                     @Html.AntiForgeryToken()
-
                     @* Global validation summary *@
                     <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 rounded-3"></div>
 
@@ -121,7 +120,7 @@
 
                     <div>
                         <label for="Image">Image</label>
-                        <input type="file" class="form-control" id="Image" name="Image">
+                        <input type="file" name="file" class="form-control" id="Image">
                     </div>
                     @* — Actions — *@
                     <div class="d-flex gap-2 justify-content-end pt-2 border-top">
@@ -140,24 +139,27 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial"/>
-
     <script>
-        // Description character counter
-        const descArea = document.getElementById('Description');
-        const counter = document.getElementById('desc-counter');
-        if (descArea && counter) {
-            const update = () => counter.textContent = `${descArea.value.length} / 1000`;
-            descArea.addEventListener('input', update);
-            update();
-        }
-
-        // Highlight the multi-select on focus/blur
-        const categorySelect = document.getElementById('CategoryIds');
-        if (categorySelect) {
-            categorySelect.addEventListener('focus', () =>
-                categorySelect.style.borderColor = '#2563eb');
-            categorySelect.addEventListener('blur', () =>
-                categorySelect.style.borderColor = '');
-        }
+        tinymce.init({
+          selector: 'textarea',
+          plugins: [
+            // Core editing features
+            'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+            // Premium features
+          ],
+          toolbar: 'undo redo |bold italic underline strikethrough | blocks fontfamily fontsize |  spellcheckdialog a11ycheck typography uploadcare | numlist bullist indent outdent |',
+          tinycomments_mode: 'embedded',
+          tinycomments_author: 'Author name',
+          mergetags_list: [
+            { value: 'First.Name', title: 'First Name' },
+            { value: 'Email', title: 'Email' },
+          ],
+          tinymceai_token_provider: async () => {
+            await fetch(`https://demo.api.tiny.cloud/1/yu2fuakzhixci1g9b09y8g8o4ka1v1trmjc7lquf3z0kbk2f/auth/random`, { method: "POST", credentials: "include" });
+            return { token: await fetch(`https://demo.api.tiny.cloud/1/yu2fuakzhixci1g9b09y8g8o4ka1v1trmjc7lquf3z0kbk2f/jwt/tinymceai`, { credentials: "include" }).then(r => r.text()) };
+          },
+          uploadcare_public_key: 'de4f1c619c79d544888b',
+        });
     </script>
+
 }

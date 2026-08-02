@@ -76,10 +76,10 @@ namespace SavanNah.DataAccess.Repositories.Generic
             {
                 foreach (var prop in includes)
                 {
-                    query.Include(prop);
+                    query = query.Include(prop);
                 }
             }
-            return await query.FirstAsync();
+            return await query.FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>>? filter, string[]? includes)

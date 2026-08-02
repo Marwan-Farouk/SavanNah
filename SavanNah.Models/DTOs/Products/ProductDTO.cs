@@ -10,6 +10,7 @@ public class ProductDTO
     public string? Description { get; set; }
     public decimal Discount { get; set; }
     public int BrandId { get; set; }
+    public string? Image { get; set; }
 
     public Product ToEntity()
     {
@@ -19,7 +20,8 @@ public class ProductDTO
             Price = this.Price,
             Description = this.Description,
             Discount = this.Discount,
-            BrandId = this.BrandId
+            BrandId = this.BrandId,
+            Image = this.Image
         };
     }
 }
@@ -37,7 +39,9 @@ public class CreateProductDTO : ProductDTO
             Description = vm.Product.Description,
             Discount = vm.Product.Discount,
             BrandId = vm.Product.BrandId,
-            CategoryIds = vm.CategoryIds
+            CategoryIds = vm.CategoryIds,
+            Image = vm.Product.Image
+
         };
     }
 }
@@ -55,7 +59,9 @@ public class UpdateProductDTO : CreateProductDTO
             Description = vm.Product.Description,
             Discount = vm.Product.Discount,
             BrandId = vm.Product.BrandId,
-            CategoryIds = vm.CategoryIds
+            CategoryIds = vm.CategoryIds,
+            Image = vm.Product.Image
+
         };
     }
     public new Product ToEntity()
@@ -67,7 +73,8 @@ public class UpdateProductDTO : CreateProductDTO
             Price = this.Price,
             Description = this.Description,
             Discount = this.Discount,
-            BrandId = this.BrandId
+            BrandId = this.BrandId,
+            Image = this.Image
         };
     }
 }
