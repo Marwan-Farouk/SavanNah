@@ -9,12 +9,12 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="mb-3">
                 <label asp-for="Name" class="form-label p-0 mb-1"></label>
-                <input class="form-control" asp-for="Name" name="name"/>
+                <input class="form-control" asp-for="Name"/>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="Description" class="p-0 mb-1 form-label"></label>
-                <textArea asp-for="Description" class="form-control" name="Description" />
+                <textArea asp-for="Description" class="form-control" ></textArea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
         </div>
@@ -30,5 +30,5 @@
 </form>
 
 @section Scripts {
-    <partial action="_ValidationScriptsPartial"/>
+    @Html.Partial("_ValidationScriptsPartial");
 }
