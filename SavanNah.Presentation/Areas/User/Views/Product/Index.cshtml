@@ -51,12 +51,12 @@ else
                     }
                     <div class="card-body">
                         <h5 class="card-title">@prod.Name</h5>
-                        <p class="card-text text-muted fw-semibold small mb-3">@(prod.Description ?? "No description available.")</p>
+                        <p class="card-text text-muted fw-semibold small mb-3">@Html.Raw(prod.Description ?? "No description available.")</p>
 
                         <ul class="list-unstyled mb-0">
                             <li class="d-flex justify-content-between py-1 border-bottom">
                                 <span class="text-muted fw-semibold">Price</span>
-                                <strong>$@prod.Price.ToString("0.00")</strong>
+                                <strong>@prod.Price.ToString("c") </strong>
                             </li>
                             <li class="d-flex justify-content-between py-1 border-bottom">
                                 <span class="text-muted fw-semibold">Discount</span>
@@ -71,7 +71,7 @@ else
                                 @for (int i = 0; i < prod.CategoryProducts.Count; i++)
                                 {
                                     var cp = prod.CategoryProducts.ElementAt(i);
-                                    <strong class="justify-content-around">@(cp.Category!.Name + (i == prod.CategoryProducts.Count - 1 ? "" : ","))</strong>
+                                    <strong class="justify-content-center">@(cp.Category!.Name + (i == prod.CategoryProducts.Count - 1 ? "" : ","))</strong>
                                 }
                             </li>
                         </ul>

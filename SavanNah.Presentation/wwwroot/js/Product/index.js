@@ -8,7 +8,6 @@ function LoadDataTable() {
         ajax: { url: "/admin/product/GetAll", dataSrc: "" },
         columns: [
             { data: "Name", width: "15%" },
-            { data: "Description", width: "25%" },
             { data: "Price", width: "10%" },
             { data: "Discount", width: "10%" },
             { data: "Brand.Name", width: "10%" },
