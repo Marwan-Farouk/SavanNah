@@ -1,0 +1,49 @@
+@model ProductVM
+
+
+<div class="card h-100 shadow-sm" style="width:50%;">
+    @if (!string.IsNullOrEmpty(Model.Product.Image))
+    {
+        <img src="~/@Model.Product.Image" class="card-img-top" alt="@Model.Product.Name" style="width: 100%; height: 200px; object-fit: cover;"/>
+    }
+    else
+    {
+        <img src="~/images/Products/Product_placeholder.avif" class="card-img-top" alt="@Model.Product.Name" style="width: 100%; height: 200px; object-fit: cover;"/>
+    }
+    <div class="card-body">
+        <h5 class="card-title">@Model.Product.Name</h5>
+        <p class="card-text text-muted fw-semibold small mb-3">@Html.Raw(Model.Product.Description ?? "No description available.")</p>
+
+        <ul class="list-unstyled mb-0">
+            <li class="d-flex justify-content-between py-1 border-bottom">
+                <span class="text-muted fw-semibold">Price</span>
+                <strong>@Model.Product.Price.ToString("c") </strong>
+            </li>
+            <li class="d-flex justify-content-between py-1 border-bottom">
+                <span class="text-muted fw-semibold">Discount</span>
+                <strong>@Model.Product.Discount.ToString("0.##")%</strong>
+            </li>
+            <li class="d-flex justify-content-between py-1">
+                <span class="text-muted fw-semibold">Brand</span>
+                <strong>@(Model.Product.Brand?.Name ?? $"{Model.Product.Brand!.Name}")</strong>
+            </li>
+            <li class="d-flex justify-content-between py-1">
+                <span class="text-muted fw-semibold">Category</span>
+                @for (int i = 0; i < Model.Product.CategoryProducts.Count; i++)
+                {
+                    var cp = Model.Product.CategoryProducts.ElementAt(i);
+                    <strong class="justify-content-center">@(cp.Category!.Name + (i == Model.Product.CategoryProducts.Count - 1 ? "" : ","))</strong>
+                }
+            </li>
+        </ul>
+    </div>
+    <div class="card-footer bg-black d-flex justify-content-between align-items-center">
+        <span class="text-white small">ID: @Model.Product.Id</span>
+        <div class="d-flex gap-2">
+            <a class="btn btn-info" asp-area="Admin" asp-controller="Product" asp asp-action="Edit" asp-route-id="@Model.Product.Id">Edit</a>
+            <form method="Post" asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@Model.Product.Id">
+                <input type="submit" class="btn btn-danger" value="Delete"/>
+            </form>
+        </div>
+    </div>
+</div>

@@ -3,16 +3,6 @@
 }
 @model List<Product>
 
-<style>
-    #update-btn {
-        background-color: #2563ebff;
-    }
-
-    #update-btn:hover {
-        background-color: #1e40af;
-    }
-</style>
-
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="mb-0">Products</h2>
     <div class="d-flex gap-2 justify-content-end align-items-center">
@@ -38,69 +28,19 @@ else
 {
     <table id="myTable" class="table table-bordered table-hover" style="width:100%;">
         <thead class="thead-dark">
-            <tr>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Discount</th>
-                <th>Brand</th>
-                <th>Category</th>
-                <th></th>
-            </tr>
-        </thead>    
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Discount</th>
+            <th>Brand</th>
+            <th>Category</th>
+            <th></th>
+        </tr>
+        </thead>
     </table>
-    @* <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
-        @foreach (var prod in Model)
-        {
-            <div class="col">
-                <div class="card h-100 shadow-sm">
-                    @if (!string.IsNullOrEmpty(prod.Image))
-                    {
-                        <img src="~/@prod.Image" class="card-img-top" alt="@prod.Name" style="width: 100%; height: 200px; object-fit: cover;"/>
-                    }
-                    else
-                    {
-                        <img src="~/images/Products/Product_placeholder.avif" class="card-img-top" alt="@prod.Name" style="width: 100%; height: 200px; object-fit: cover;"/>
-                    }
-                    <div class="card-body">
-                        <h5 class="card-title">@prod.Name</h5>
-                        <p class="card-text text-muted fw-semibold small mb-3">@(prod.Description ?? "No description available.")</p>
+    <div class="partial-container d-flex justify-content-center" style="width: 100%;">
 
-                        <ul class="list-unstyled mb-0">
-                            <li class="d-flex justify-content-between py-1 border-bottom">
-                                <span class="text-muted fw-semibold">Price</span>
-                                <strong>$@prod.Price.ToString("0.00")</strong>
-                            </li>
-                            <li class="d-flex justify-content-between py-1 border-bottom">
-                                <span class="text-muted fw-semibold">Discount</span>
-                                <strong>@prod.Discount.ToString("0.##")%</strong>
-                            </li>
-                            <li class="d-flex justify-content-between py-1">
-                                <span class="text-muted fw-semibold">Brand</span>
-                                <strong>@(prod.Brand?.Name ?? $"{prod.Brand!.Name}")</strong>
-                            </li>
-                            <li class="d-flex justify-content-between py-1">
-                                <span class="text-muted fw-semibold">Category</span>
-                                @for (int i = 0; i < prod.CategoryProducts.Count; i++)
-                                {
-                                    var cp = prod.CategoryProducts.ElementAt(i);
-                                    <strong class="justify-content-around">@(cp.Category!.Name + (i == prod.CategoryProducts.Count - 1 ? "" : ","))</strong>
-                                }
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="card-footer bg-black d-flex justify-content-between align-items-center">
-                        <span class="text-white small">ID: @prod.Id</span>
-                        <div class="d-flex gap-2">
-                            <a id="update-btn" asp-area="Admin" asp-controller="Product" asp asp-action="Edit" asp-route-id="@prod.Id" class="btn btn-primary btn-sm">Edit</a>
-                            <form method="Post" asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@prod.Id">
-                                <input type="submit" class="btn btn-danger btn-sm del-btn" value="Delete"/>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-    </div> *@
+    </div>
 }
 
 @section Scripts

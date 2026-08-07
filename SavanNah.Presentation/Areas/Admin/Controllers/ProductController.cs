@@ -145,4 +145,15 @@ public class ProductController : Controller
         productVm.AddCategories(cats, selectedCategoryIds);
         return View(productVm);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetProductPartial(int id)
+    {
+        var prod = await _productManager.Get(p => p.Id == id, ["Brand", "CategoryProducts.Category"]);
+        var vm = new ProductVM
+        {
+            Product = prod
+        };
+        return PartialView("_ProductPartial", vm);
+    }
 }

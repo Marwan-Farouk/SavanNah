@@ -26,7 +26,8 @@ function LoadDataTable() {
                 width: "10%",
                 render: function (data) {
                     return `<div class="d-flex gap-2">
-                            <a id="update-btn" href="/admin/product/Edit/${data}" class="btn btn-primary btn-sm">Edit</a>
+                            <a onClick="Details('${data}')" class="btn btn-outline-info btn-sm">Details</a>
+                            <a href="/admin/product/Edit/${data}" class="btn btn-outline-warning btn-sm">Edit</a>
                             <a onClick="Delete('/admin/product/Delete/${data}')" class="btn btn-danger btn-sm del-btn">Delete</a>
                         </div>`;
                 },
@@ -35,6 +36,18 @@ function LoadDataTable() {
     });
 }
 
+async function Details(id) {
+    const response = await fetch(`/admin/product/GetProductPartial/${id}`, {
+        method: "GET",
+    });
+
+    const result = await response.text();
+
+    document.querySelector(".partial-container").innerHTML = result;
+
+    // let text = response.text();
+    // console.log(text);
+}
 function Delete(url) {
     Swal.fire({
         title: "Are you sure?",
@@ -61,9 +74,3 @@ function Delete(url) {
         }
     });
 }
-
-// <th>Description</th>
-//             <th>Price</th>
-//             <th>Discount</th>
-//             <th>Brand</th>
-//             <th>Category</th>
