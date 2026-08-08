@@ -49,7 +49,7 @@ public class CreateProductDTO : ProductDTO
 public class UpdateProductDTO : CreateProductDTO
 {
     public int Id { get; set; }
-    public static new UpdateProductDTO ToDTO(ProductVM vm)
+    public static new UpdateProductDTO VmToDto(ProductVM vm)
     {
         return new UpdateProductDTO
         {
@@ -75,6 +75,22 @@ public class UpdateProductDTO : CreateProductDTO
             Discount = this.Discount,
             BrandId = this.BrandId,
             Image = this.Image
+        };
+    }
+}
+
+public static class ProductDtoExtensions
+{
+    public static ProductDTO EntityToDto(Product product)
+    {
+        return new ProductDTO
+        {
+            Name = product.Name,
+            Price = product.Price,
+            Description = product.Description,
+            Discount = product.Discount,
+            BrandId = product.BrandId,
+            Image = product.Image
         };
     }
 }

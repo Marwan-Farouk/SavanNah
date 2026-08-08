@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using SavanNah.Models.DTOs.Products;
 using SavanNah.Business.Managers.BrandManager;
 using SavanNah.Business.Managers.CategoryManager;
 using SavanNah.Business.Managers.ProductManager;
+using SavanNah.Models.DTOs.Products;
 using SavanNah.Models.ViewModels;
 using System.Text.Json.Serialization;
 
@@ -123,8 +123,8 @@ public class ProductController : Controller
 
                 productVm.Product.Image = "images/products/" + fileName;
             }
-
-            var productDto = UpdateProductDTO.ToDTO(productVm);
+            productVm.Product.Image = string.Empty;
+            var productDto = UpdateProductDTO.VmToDto(productVm);
             var updated = await _productManager.Update(productDto);
             if (updated is not null)
                 TempData["success"] = "Product Updated Successfuly";

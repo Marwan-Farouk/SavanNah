@@ -44,9 +44,6 @@ async function Details(id) {
     const result = await response.text();
 
     document.querySelector(".partial-container").innerHTML = result;
-
-    // let text = response.text();
-    // console.log(text);
 }
 function Delete(url) {
     Swal.fire({

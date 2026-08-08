@@ -1,4 +1,4 @@
-﻿main {
+main {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -23,4 +23,3 @@ tbody tr:hover {
 .btn:hover {
     transform: scale(1.1);
 }
-

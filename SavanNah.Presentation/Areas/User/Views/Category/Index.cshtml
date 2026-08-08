@@ -1,0 +1,55 @@
+@{
+    ViewData["Title"] = "Categories";
+}
+@model IEnumerable<Category>
+
+<link rel="stylesheet" href="~/css/Category/User/index.css"/>
+
+<main>
+    <h2 class="page-title">All Categories</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info w-100 text-center">No categories found.</div>
+    }
+    else
+    {
+        <div class="categories-container w-100">
+            @foreach (var category in Model)
+            {
+                <div class="category-card card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <div class="category-header d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="card-title mb-1">@category.Name</h5>
+                                <p class="card-text text-muted mb-0">
+                                    @Html.Raw(string.IsNullOrWhiteSpace(category.Description) ? "No description available." : category.Description)
+                                </p>
+                            </div>
+                            <button class="btn btn-primary show-products-btn"
+                                    data-category-id="@category.Id"
+                                    data-target="products-panel-@category.Id">
+                                <span class="btn-label">Show Products</span>
+                                <i class="chevron-icon ms-2">&#x25BC;</i>
+                            </button>
+                        </div>
+
+                        <div class="products-panel collapse mt-3" id="products-panel-@category.Id">
+                            <hr/>
+                            <div class="products-content" id="products-content-@category.Id">
+                                <div class="text-center text-muted py-2 loading-indicator">
+                                    <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+                                    Loading products...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</main>
+
+@section Scripts {
+    <script src="~/js/Category/User/index.js"></script>
+}

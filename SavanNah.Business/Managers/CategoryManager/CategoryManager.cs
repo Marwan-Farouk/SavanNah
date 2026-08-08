@@ -1,4 +1,7 @@
 using SavanNah.DataAccess.Repositories.Categories;
+using SavanNah.DataAccess.Repositories.CategoryProducts;
+using SavanNah.DataAccess.Repositories.Products;
+using SavanNah.Models.DTOs.Products;
 using SavanNah.Models.Models.CategoryModel;
 using System.Linq.Expressions;
 
@@ -7,10 +10,14 @@ namespace SavanNah.Business.Managers.CategoryManager;
 public class CategoryManager : ICategoryManager
 {
     private readonly ICategoryRepository _categoryRepository;
+    private readonly IProductRepository _productRepository;
+    private readonly ICategoryProductRepository _categoryProductRepository;
 
-    public CategoryManager(ICategoryRepository categoryRepository)
+    public CategoryManager(ICategoryRepository categoryRepository, IProductRepository productRepository, ICategoryProductRepository categoryProductRepository)
     {
         _categoryRepository = categoryRepository;
+        _productRepository = productRepository;
+        this._categoryProductRepository = categoryProductRepository;
     }
 
     public async Task<IEnumerable<Category>> GetAll(Expression<Func<Category, bool>>? filter, string[]? includes)
@@ -52,7 +59,12 @@ public class CategoryManager : ICategoryManager
     {
         return await _categoryRepository.DeleteRange(filter);
     }
-
+    public async Task<IEnumerable<ProductDTO>> GetCategoryProducts(int categoryId)
+    {
+        var categoryProducts = await _categoryProductRepository.GetAll(cp => cp.CategoryId == categoryId, ["Category", "Products"]);
+        var products = categoryProducts.Select(cp => ProductDtoExtensions.EntityToDto(cp.Products));
+        return products;
+    }
     public async Task<int> Save()
     {
         return await _categoryRepository.Save();
