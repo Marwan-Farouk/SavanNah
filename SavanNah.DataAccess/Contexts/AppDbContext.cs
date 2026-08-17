@@ -1,12 +1,15 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SavanNah.Models.Models.BrandModel;
 using SavanNah.Models.Models.CategoryModel;
 using SavanNah.Models.Models.CategoryProductModel;
 using SavanNah.Models.Models.ProductModel;
+using SavanNah.Models.Models.RoleModel;
+using SavanNah.Models.Models.UserModel;
 
 namespace SavanNah.DataAccess.Contexts
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<User, Role, Guid>
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<Brand> Brands { get; set; }
@@ -43,7 +46,7 @@ namespace SavanNah.DataAccess.Contexts
                 new Category { Id = 1, Name = "Clothes", Description = "Apparel and fashion items" },
                 new Category { Id = 2, Name = "Cars", Description = "Automobiles and automotive accessories" },
                 new Category
-                    { Id = 3, Name = "Home Appliances", Description = "Essential appliances for the modern home" },
+                { Id = 3, Name = "Home Appliances", Description = "Essential appliances for the modern home" },
                 new Category { Id = 4, Name = "Electronics", Description = "Consumer electronics and gadgets" },
                 new Category { Id = 5, Name = "Books", Description = "Books across all genres and disciplines" }
             );
@@ -71,7 +74,9 @@ namespace SavanNah.DataAccess.Contexts
                 new Brand { Id = 4, Name = "Nike", Description = "American sportswear and athletic footwear brand" },
                 new Brand
                 {
-                    Id = 5, Name = "Adidas", Description = "German multinational sportswear and clothing brand"
+                    Id = 5,
+                    Name = "Adidas",
+                    Description = "German multinational sportswear and clothing brand"
                 },
                 new Brand { Id = 6, Name = "Toyota", Description = "Japanese multinational automotive manufacturer" },
                 new Brand { Id = 7, Name = "Penguin", Description = "Leading international book publisher" }

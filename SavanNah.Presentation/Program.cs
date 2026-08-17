@@ -7,6 +7,8 @@ using SavanNah.DataAccess.Repositories.Brands;
 using SavanNah.DataAccess.Repositories.Categories;
 using SavanNah.DataAccess.Repositories.CategoryProducts;
 using SavanNah.DataAccess.Repositories.Products;
+using SavanNah.Models.Models.RoleModel;
+using SavanNah.Models.Models.UserModel;
 
 namespace SavanNah.Presentation;
 
@@ -31,6 +33,23 @@ public class Program
         builder.Services.AddScoped<IProductManager, ProductManager>();
         builder.Services.AddScoped<IBrandManager, BrandManager>();
         builder.Services.AddScoped<ICategoryManager, CategoryManager>();
+
+
+        builder.Services.AddIdentity<User, Role>(options =>
+        {
+            options.Password.RequireUppercase = false;
+            options.User.RequireUniqueEmail = true;
+        }).AddEntityFrameworkStores<AppDbContext>();
+
+
+        builder.Services.ConfigureApplicationCookie(options =>
+        {
+            options.Cookie.Expiration = TimeSpan.FromHours(1);
+            options.LoginPath = "/Account/Login";
+            options.AccessDeniedPath = "/Acount/DeniedAccess";
+            options.LogoutPath = "/Home";
+        });
+
 
         var app = builder.Build();
 

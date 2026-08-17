@@ -49,7 +49,7 @@ public class CreateProductDTO : ProductDTO
 public class UpdateProductDTO : CreateProductDTO
 {
     public int Id { get; set; }
-    public static new UpdateProductDTO VmToDto(ProductVM vm)
+    public static UpdateProductDTO VmToDto(ProductVM vm)
     {
         return new UpdateProductDTO
         {
