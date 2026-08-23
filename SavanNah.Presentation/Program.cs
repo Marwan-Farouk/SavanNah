@@ -44,9 +44,9 @@ public class Program
 
         builder.Services.ConfigureApplicationCookie(options =>
         {
-            options.Cookie.Expiration = TimeSpan.FromHours(1);
+            options.ExpireTimeSpan = TimeSpan.FromHours(1);
             options.LoginPath = "/Account/Login";
-            options.AccessDeniedPath = "/Acount/DeniedAccess";
+            options.AccessDeniedPath = "/Account/DeniedAccess";
             options.LogoutPath = "/Home";
         });
 
