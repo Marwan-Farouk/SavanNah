@@ -31,42 +31,46 @@ document.addEventListener("DOMContentLoaded", function () {
                 const contentDiv = document.getElementById(
                     "products-content-" + categoryId,
                 );
+
                 if (contentDiv && contentDiv.dataset.loaded !== "true") {
-                    fetch(`/category/GetCategoryProducts/${categoryId}`)
-                        .then(function (response) {
-                            if (response.ok) return response.json();
-                            else throw new Error("Error Loading The Product");
-                        })
-                        .then(function (products) {
-                            contentDiv.dataset.loaded = "true";
-                            if (!products || products.length === 0) {
-                                contentDiv.innerHTML =
-                                    '<p class="no-products-msg">No products in this category.</p>';
-                                return;
-                            }
-                            const list = document.createElement("ul");
-                            list.className = "list-unstyled mb-0";
+                    
+                                fetch(`/category/GetCategoryProducts/${categoryId}`)
+                                .then(function (response) {
+                                    if (response.ok) return response.json();
+                                    else throw new Error("Error Loading The Product");
+                                })
+                                .then(function (products) {
+                                    contentDiv.dataset.loaded = "true";
+                                   setTimeout(function() {
+                                        if (!products || products.length === 0) {
+                                        contentDiv.innerHTML =
+                                            '<p class="no-products-msg">No products in this category.</p>';
+                                        return;
+                                    }
+                                    const list = document.createElement("ul");
+                                    list.className = "list-unstyled mb-0";
 
-                            products.forEach(function (product) {
-                                const item = document.createElement("li");
-                                item.className = "product-item";
-                                item.innerHTML =
-                                    '<span class="product-badge"></span>' +
-                                    "<span>" +
-                                    (product.name ||
-                                        product.Name ||
-                                        "Unnamed Product") +
-                                    "</span>";
-                                list.appendChild(item);
-                            });
+                                    products.forEach(function (product) {
+                                        const item = document.createElement("li");
+                                        item.className = "product-item";
+                                        item.innerHTML =
+                                            '<span class="product-badge"></span>' +
+                                            "<span>" +
+                                            (product.name ||
+                                                product.Name ||
+                                                "Unnamed Product") +
+                                            "</span>";
+                                        list.appendChild(item);
+                                    });
 
-                            contentDiv.innerHTML = "";
-                            contentDiv.appendChild(list);
-                        })
-                        .catch(function () {
-                            contentDiv.innerHTML =
-                                '<p class="text-danger">Failed to load products.</p>';
-                        });
+                                    contentDiv.innerHTML = "";
+                                    contentDiv.appendChild(list)
+                                   },1000)
+                                })
+                                .catch(function () {
+                                    contentDiv.innerHTML =
+                                        '<p class="text-danger">Failed to load products.</p>';
+                                })
                 }
             }
         });

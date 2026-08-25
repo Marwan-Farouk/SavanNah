@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SavanNah.Business.Managers.BrandManager;
 using SavanNah.Business.Managers.CategoryManager;
@@ -24,6 +25,7 @@ public class ProductController : Controller
         _webHostEnvironment = webHostEnvironment;
     }
 
+    [Authorize]
     [HttpGet]
     public async Task<IActionResult> Index()
     {
@@ -81,5 +83,5 @@ public class ProductController : Controller
         return View(productVm);
     }
 
-    
+
 }
