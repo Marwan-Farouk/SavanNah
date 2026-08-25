@@ -1,0 +1,20 @@
+@model List<Role>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_admin";
+}
+
+<div class="d-flex justify-content-between align-items-center">
+
+    <h1>Roles</h1>
+    <a class="btn btn-success" asp-area="Admin" asp-controller="Role" asp-action="Create">
+        <i class="bi bi-plus-circle "></i>
+        Create new Role
+    </a>
+</div>
+
+@foreach (var role in Model)
+{
+    <h3>@role.Name</h3>
+}
