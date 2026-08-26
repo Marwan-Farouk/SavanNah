@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SavanNah.Models.Models.RoleModel;
+using SavanNah.Models.ViewModels;
 
 namespace SavanNah.Presentation.Areas.Admin.Controllers
 {
@@ -11,7 +12,8 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
         private readonly UserManager<Models.Models.UserModel.User> _userManager;
         private readonly RoleManager<Role> _roleManager;
 
-        public UserController(UserManager<SavanNah.Models.Models.UserModel.User> userManager, RoleManager<Role> roleManager)
+        public UserController(UserManager<SavanNah.Models.Models.UserModel.User> userManager,
+            RoleManager<Role> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -20,9 +22,18 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var users = await _userManager.Users.ToListAsync();
-            return View(users);
-            //var user = await _userManager.FindByIdAsync("1");
-            //user.UserName
+
+            var vms = users.Select(user => new UserVM
+            {
+                Id = user.Id.ToString(),
+                Name = user.UserName!,
+                Email = user.Email!,
+                Role = string.Join(",", _userManager.GetRolesAsync(user).Result.ToList()) // _userManager.GetRolesAsync(user).Result.First() ==> if only one role   
+            }).ToList();
+
+            return View(vms);
+            
         }
+
     }
 }

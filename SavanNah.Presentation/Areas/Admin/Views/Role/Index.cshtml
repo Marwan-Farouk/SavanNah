@@ -14,7 +14,20 @@
     </a>
 </div>
 
-@foreach (var role in Model)
-{
-    <h3>@role.Name</h3>
-}
+<div class="table-responsive mt-4">
+    <table class="table table-striped table-hover table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Role Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var role in Model)
+            {
+                <tr>
+                    <td class="align-middle">@role.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
