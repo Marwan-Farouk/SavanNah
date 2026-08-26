@@ -1,0 +1,94 @@
+@model CreateUserActionRequest
+@{
+    ViewData["Title"] = "Create User";
+    Layout = "_admin";
+}
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-header text-bg-dark text-white">
+                    <h4 class="mb-0"><i class="me-2 bi bi-person-plus-fill"></i>Create New User</h4>
+                </div>
+                <div class="p-4 card-body">
+                    <form method="post" asp-area="Admin" asp-controller="User" asp-action="Create" novalidate>
+                        <!-- Validation Errors -->
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            <div asp-validation-summary="All" class="pb-0 alert alert-danger"></div>
+                        }
+
+                        <!-- Name Field -->
+                        <div class="mb-3">
+                            <label for="Name" class="form-label fw-bold">User Name</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="Name"
+                                   name="Name"
+                                   asp-for="Name"
+                                   placeholder="Enter user name">
+                            <span asp-validation-for="Name" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Email Field -->
+                        <div class="mb-3">
+                            <label for="Email" class="form-label fw-bold">Email Address</label>
+                            <input type="email"
+                                   class="form-control"
+                                   id="Email"
+                                   name="Email"
+                                   asp-for="Email"
+                                   placeholder="Enter email address"
+                                   value="@Model?.Email"
+                                   required>
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="mb-3">
+                            <label for="Password" class="form-label fw-bold">Password</label>
+                            <input type="password"
+                                   class="form-control"
+                                   id="Password"
+                                   name="Password"
+                                   asp-for="Password"
+                                   placeholder="Enter password"
+                                   required>
+                            <span asp-validation-for="Password" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Role Selection -->
+                        <div class="mb-3">
+                            <label asp-for="RoleNames" class="form-label fw-bold">Roles</label>
+                            <select class="form-select" asp-items="@Model?.Roles" asp-for="RoleNames"></select>
+                            <span asp-validation-for="RoleNames" class="text-danger small"></span>
+                            <div class="form-text">Hold Ctrl (or Cmd on Mac) to select multiple roles.</div>
+                        </div>
+
+                        <!-- Remember Me Checkbox -->
+                        <div class="mb-4 form-check">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   id="RememberMe"
+                                   name="RememberMe"
+                                   asp-for="Remember"
+                                   value="true">
+                            <label class="form-check-label" for="RememberMe">
+                                Remember me
+                            </label>
+                        </div>
+
+                        <hr class="my-4"/>
+
+                        <!-- Action Buttons -->
+                        <div class="d-flex gap-2 justify-content-end">
+                            <a asp-action="Index" class="btn btn-light border">Cancel</a>
+                            <button type="submit" class="px-4 btn btn-dark">Create User</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

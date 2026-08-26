@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SavanNah.Models.Models.RoleModel;
+using SavanNah.Models.ViewModels;
 
 namespace SavanNah.Presentation.Areas.Admin.Controllers;
 
@@ -55,4 +57,51 @@ public class RoleController : Controller
 
         return View(request);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> AssignRole()
+    {
+        var users = await _userManager.Users.ToListAsync();
+        var roles = await _roleManager.Roles.ToListAsync();
+
+        var vm = new UserRoleVM()
+        {
+            Users = users.Select(user => new SelectListItem { Value = user.Id.ToString(), Text = user.UserName })
+                .ToList(),
+            Roles = roles.Select(role => new SelectListItem { Value = role.Name, Text = role.Name }).ToList()
+        };
+
+        return View(vm);
+    }
+    [HttpPost]
+    public async Task<IActionResult> AssignRole(UserRoleVM request)
+    {
+        var user = await _userManager.FindByIdAsync(request.UserId);
+        if (user is null)
+        {
+            ModelState.AddModelError("User", "User is invalid");
+            return View(request);
+        }
+
+        if (ModelState.IsValid)
+        {
+
+            var result = await _userManager.AddToRolesAsync(user, request.RoleNames);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "User");
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(error.Code, error.Description);
+            }
+        }
+
+        return View(request);
+
+    }
+
+
+
 }

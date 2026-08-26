@@ -8,10 +8,16 @@
 <div class="d-flex justify-content-between align-items-center">
 
     <h1>Roles</h1>
-    <a class="btn btn-success" asp-area="Admin" asp-controller="Role" asp-action="Create">
-        <i class="bi bi-plus-circle "></i>
-        Create new Role
-    </a>
+    <div>
+        <a class="btn btn-success" asp-area="Admin" asp-controller="Role" asp-action="Create">
+            <i class="bi bi-plus-circle "></i>
+            Create new Role
+        </a>
+        <a class="btn btn-primary" asp-area="Admin" asp-controller="Role" asp-action="AssignRole">
+            <i class="bi bi-pencil-square"></i>
+            Assign Roles
+        </a>
+    </div>
 </div>
 
 <div class="table-responsive mt-4">
