@@ -98,6 +98,13 @@ public class RoleController : Controller
             }
         }
 
+        var users = await _userManager.Users.ToListAsync();
+        var roles = await _roleManager.Roles.ToListAsync();
+
+        request.Users = users.Select(user => new SelectListItem { Value = user.Id.ToString(), Text = user.UserName })
+                .ToList();
+        request.Roles = roles.Select(role => new SelectListItem { Value = role.Name, Text = role.Name }).ToList();
+
         return View(request);
 
     }

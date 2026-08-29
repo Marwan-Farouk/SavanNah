@@ -46,7 +46,7 @@ public class Program
         {
             options.ExpireTimeSpan = TimeSpan.FromHours(1);
             options.LoginPath = "/Admin/Account/Login";
-            options.AccessDeniedPath = "/Account/DeniedAccess";
+            options.AccessDeniedPath = "/Admin/Account/DeniedAccess";
             options.LogoutPath = "/Home";
         });
 

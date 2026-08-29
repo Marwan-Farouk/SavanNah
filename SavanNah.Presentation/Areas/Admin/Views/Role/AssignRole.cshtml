@@ -12,6 +12,7 @@
             </div>
             <div class="card-body">
                 <form method="post" asp-action="AssignRole">
+                    <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="mb-3">
                         <label class="form-label">Select User</label>
                         <select asp-items="@Model.Users" class="form-select" asp-for="UserId">

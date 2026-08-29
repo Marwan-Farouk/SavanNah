@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SavanNah.DataAccess.Repositories.Brands;
 using SavanNah.Models.Models.BrandModel;
@@ -5,6 +6,7 @@ using SavanNah.Models.Models.BrandModel;
 namespace SavanNah.Presentation.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin, Owner")]
     [Route("[controller]/[action]/{id?}")]
     public class BrandController : Controller
     {

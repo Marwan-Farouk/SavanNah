@@ -1,17 +1,18 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SavanNah.Models.ActionRequests;
 
 namespace SavanNah.Presentation.Areas.Admin.Controllers
 {
     [Area("Admin")]
-
     public class AccountController : Controller
     {
         private readonly UserManager<SavanNah.Models.Models.UserModel.User> _userManager;
         private readonly SignInManager<SavanNah.Models.Models.UserModel.User> _signInManager;
 
-        public AccountController(UserManager<SavanNah.Models.Models.UserModel.User> userManager, SignInManager<SavanNah.Models.Models.UserModel.User> signInManager)
+        public AccountController(UserManager<SavanNah.Models.Models.UserModel.User> userManager,
+            SignInManager<SavanNah.Models.Models.UserModel.User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -40,11 +41,14 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
                         {
                             return Redirect(returnUrl);
                         }
+
                         return RedirectToAction("Index", "Home");
                     }
                 }
+
                 ModelState.AddModelError("Invalid Credintials", "Email or Password is incorrect");
             }
+
             return View(request);
         }
 
@@ -55,6 +59,7 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
             {
                 await _signInManager.SignOutAsync();
             }
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -63,6 +68,7 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Register(RegisterActionRequest request)
         {
@@ -74,7 +80,6 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
                     UserName = request.Name,
                     Email = request.Email,
                     PasswordHash = request.Password
-
                 };
                 var result = await _userManager.CreateAsync(user, request.Password);
                 if (result.Succeeded)
@@ -90,8 +95,14 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
                     }
                 }
             }
+
             return View(request);
         }
 
+        [HttpGet]
+        public IActionResult DeniedAccess()
+        {
+            return View();
+        }
     }
 }

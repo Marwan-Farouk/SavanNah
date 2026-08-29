@@ -21,6 +21,8 @@
             <th>Username</th>
             <th>Email</th>
             <th>Role</th>
+            <th></th>
+
         </tr>
         </thead>
         <tbody>
@@ -31,6 +33,15 @@
                 <td class="align-middle">@user.Name</td>
                 <td class="align-middle" style="width: 200px ;">@user.Email</td>
                 <td class="align-middle">@user.Role</td>
+                <td class="align-middle">
+                    <form method="post" asp-area="Admin" asp-controller="User" asp-action="Delete" enctype="application/x-www-form-urlencoded" novalidate>
+                        <input type="hidden" name="id" value='@user.Id'>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash3-fill"></i>
+                            Delete
+                        </button>
+                    </form>
+                </td>
             </tr>
         }
         </tbody>

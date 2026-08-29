@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using SavanNah.Models.ActionRequests;
 using SavanNah.Models.Models.RoleModel;
 using SavanNah.Models.ViewModels;
@@ -61,26 +62,37 @@ namespace SavanNah.Presentation.Areas.Admin.Controllers
                     Email = request.Email,
                     PasswordHash = request.Password
                 };
-                var result = await _userManager.CreateAsync(user);
+                var result = await _userManager.CreateAsync(user, request.Password);
                 if (result.Succeeded)
                 {
-                    var roleResult = await _userManager.AddToRolesAsync(user, request.RoleNames);
-                    if (roleResult.Succeeded)
+                    if (!request.RoleNames.IsNullOrEmpty())
                     {
-                        return RedirectToAction("Index", "User");
-                    }
-                    foreach (var error in roleResult.Errors)
-                    {
-                        ModelState.AddModelError(error.Code, error.Description);
+                        var roleResult = await _userManager.AddToRolesAsync(user, request.RoleNames!);
+                        if (roleResult.Succeeded)
+                            return RedirectToAction("Index", "User");
+
+                        foreach (var error in roleResult.Errors)
+                            ModelState.AddModelError(error.Code, error.Description);
                     }
                 }
+
                 foreach (var error in result.Errors)
-                {
                     ModelState.AddModelError(error.Code, error.Description);
-                }
             }
+
+            var roles = await _roleManager.Roles.ToListAsync();
+            request.Roles = roles.Select(role => new SelectListItem { Value = role.Name, Text = role.Name }).ToList();
             return View(request);
         }
 
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user is not null)
+            {
+                var result = await _userManager.DeleteAsync(user);
+            }
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

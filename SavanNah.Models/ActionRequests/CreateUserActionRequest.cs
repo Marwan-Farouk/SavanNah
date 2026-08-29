@@ -1,5 +1,5 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace SavanNah.Models.ActionRequests;
 
@@ -13,6 +13,7 @@ public class CreateUserActionRequest
     [Required]
     public string Password { get; set; }
     public bool Remember { get; set; }
-    public List<SelectListItem> Roles { get; set; }
-    public List<string> RoleNames { get; set; }
+
+    public List<SelectListItem>? Roles { get; set; }
+    public List<string>? RoleNames { get; set; }
 }
