@@ -1,0 +1,101 @@
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_admin";
+}
+
+<h1 class="mt-4">Dashboard</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Overview</li>
+</ol>
+
+<div class="row">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card bg-primary text-white h-100 shadow">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="me-3">
+                        <div class="text-white-75 small">User Configuration</div>
+                        <div class="fs-4 fw-bold">Users</div>
+                    </div>
+                    <i class="bi bi-person-fill fs-1 text-white-50"></i>
+                </div>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between border-top border-white-50">
+                <a class="small text-white stretched-link text-decoration-none" asp-controller="User" asp-action="Index">View Details</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card bg-warning text-white h-100 shadow">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="me-3">
+                        <div class="text-white-75 small">User Configuration</div>
+                        <div class="fs-4 fw-bold">Roles</div>
+                    </div>
+                    <i class="bi bi-sliders2 fs-1 text-white-50"></i>
+                </div>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between border-top border-white-50">
+                <a class="small text-white stretched-link text-decoration-none" asp-controller="Role" asp-action="Index">View Details</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card bg-success text-white h-100 shadow">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="me-3">
+                        <div class="text-white-75 small">Management</div>
+                        <div class="fs-4 fw-bold">Products</div>
+                    </div>
+                    <i class="bi bi-bag-fill fs-1 text-white-50"></i>
+                </div>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between border-top border-white-50">
+                <a class="small text-white stretched-link text-decoration-none" asp-area="Admin" asp-controller="Product" asp-action="Index">View Details</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card bg-danger text-white h-100 shadow">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="me-3">
+                        <div class="text-white-75 small">Management</div>
+                        <div class="fs-4 fw-bold">Categories</div>
+                    </div>
+                    <i class="bi bi-shop fs-1 text-white-50"></i>
+                </div>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between border-top border-white-50">
+                <a class="small text-white stretched-link text-decoration-none" asp-area="Admin" asp-controller="Category" asp-action="Index">View Details</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card bg-info text-white h-100 shadow">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="me-3">
+                        <div class="text-white-75 small">Management</div>
+                        <div class="fs-4 fw-bold">Brands</div>
+                    </div>
+                    <i class="bi bi-alexa fs-1 text-white-50"></i>
+                </div>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between border-top border-white-50">
+                <a class="small text-white stretched-link text-decoration-none" asp-area="Admin" asp-controller="Brand" asp-action="Index">View Details</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+</div>

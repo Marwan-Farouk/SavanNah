@@ -1,20 +1,21 @@
 @{
     ViewData["Title"] = "Access Denied";
+    Layout = "_Layout";
 }
 
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-6 text-center mt-5">
-            <h1 class="display-1 text-danger fw-bold">403</h1>
+        <div class="col-md-6 mt-5 text-center">
+            <h1 class="text-danger fw-bold display-1">403</h1>
             <h2 class="mb-4">Access Denied</h2>
-            <p class="lead mb-5 text-muted">
+            <p class="mb-5 text-muted lead">
                 Sorry, you do not have permission to access this page or perform this action. 
             </p>
-            <div class="d-flex justify-content-center gap-3">
-                <button type="button" onclick="history.back()" class="btn btn-outline-secondary btn-lg px-4">
+            <div class="d-flex gap-3 justify-content-center">
+                <button type="button" onclick="history.back()" class="px-4 btn btn-outline-secondary btn-lg">
                     Go Back
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-primary btn-lg px-4">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="px-4 btn btn-primary btn-lg">
                     Go to Home
                 </a>
             </div>
