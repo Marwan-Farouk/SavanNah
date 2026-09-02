@@ -34,6 +34,7 @@
                 <td class="align-middle" style="width: 200px ;">@user.Email</td>
                 <td class="align-middle">@user.Role</td>
                 <td class="align-middle">
+                    <div class="d-flex justify-content-evenly">
                     <form method="post" asp-area="Admin" asp-controller="User" asp-action="Delete" enctype="application/x-www-form-urlencoded" novalidate>
                         <input type="hidden" name="id" value='@user.Id'>
                         <button type="submit" class="btn btn-danger">
@@ -41,6 +42,11 @@
                             Delete
                         </button>
                     </form>
+                    <a class="btn btn-dark" asp-area="User" asp-controller="Customer" asp-action="Profile" asp-route-id="@user.Id.ToString()">
+                        <i class="bi bi-person-circle"></i>
+                         Profile
+                    </a>
+                    </div>
                 </td>
             </tr>
         }
