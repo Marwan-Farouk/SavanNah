@@ -82,6 +82,22 @@ public class ProductController : Controller
         productVm.AddCategories(cats, []);
         return View(productVm);
     }
+    [HttpGet]
+    public async Task<IActionResult> Details(int id)
+    {
+        var product = await _productManager.Get(prod => prod.Id == id, ["Brand", "CategoryProducts.Category"]);
+        if (product is null)
+        {
+            return NotFound();
+        }
+
+        var vm = new ProductVM
+        {
+            Product = product
+        };
+
+        return View(vm);
+    }
 
 
 }

@@ -1,0 +1,132 @@
+﻿@model ProductVM
+
+@{
+    var product = Model.Product;
+    var hasDiscount = product.Discount > 0;
+    var discountedPrice = product.Price * (1 - product.Discount / 100m);
+
+    ViewData["Title"] = product.Name;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-1">
+                <li class="breadcrumb-item">
+                    <a asp-area="User" asp-controller="Product" asp-action="Index" class="text-decoration-none">Products</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Details</li>
+            </ol>
+        </nav>
+        <h1 class="h2 mb-0 fw-bold">Product Details</h1>
+    </div>
+    <a asp-area="User" asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left me-1"></i> Back to products
+    </a>
+</div>
+
+<div class="row g-4 align-items-start">
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm overflow-hidden">
+            @if (!string.IsNullOrWhiteSpace(product.Image))
+            {
+                <img src="~/@product.Image" class="card-img-top" alt="@product.Name" style="height: 480px; object-fit: cover;" />
+            }
+            else
+            {
+                <img src="~/images/Products/Product_placeholder.avif" class="card-img-top" alt="@product.Name" style="height: 480px; object-fit: cover;" />
+            }
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body p-4 p-lg-5">
+                <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+                    <span class="badge text-bg-dark">Product #@product.Id</span>
+                    @if (hasDiscount)
+                    {
+                        <span class="badge text-bg-danger">@product.Discount.ToString("0.##")% off</span>
+                    }
+                </div>
+
+                <h2 class="display-6 fw-bold mb-3">@product.Name</h2>
+
+                <div class="mb-4">
+                    @if (hasDiscount)
+                    {
+                        <span class="text-muted text-decoration-line-through fs-5 me-2">@product.Price.ToString("c")</span>
+                        <span class="fs-3 fw-bold text-success">@discountedPrice.ToString("c")</span>
+                    }
+                    else
+                    {
+                        <span class="fs-3 fw-bold">@product.Price.ToString("c")</span>
+                    }
+                </div>
+
+                <div class="row g-3 align-items-end mb-4">
+                    <div class="col-sm-4">
+                        <label for="count" class="form-label fw-semibold">count</label>
+                        <input type="number" id="count" name="count" class="form-control" min="1" value="1" required />
+                    </div>
+                    <div class="col-sm-8">
+                        <button type="button" class="btn btn-dark w-100">
+                            <i class="bi bi-cart-plus me-1"></i> add to cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="border-top pt-4">
+                    <h3 class="h5 fw-bold mb-3"><i class="bi bi-card-text me-2"></i>Description</h3>
+                    <div class="text-body-secondary">
+                        @Html.Raw(string.IsNullOrWhiteSpace(product.Description) ? "No description available." : product.Description)
+                    </div>
+                </div>
+
+                <div class="border-top mt-4 pt-4">
+                    <h3 class="h5 fw-bold mb-3"><i class="bi bi-info-circle me-2"></i>Product information</h3>
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4 text-body-secondary">Product ID</dt>
+                        <dd class="col-sm-8">@product.Id</dd>
+
+                        <dt class="col-sm-4 text-body-secondary">Price</dt>
+                        <dd class="col-sm-8">@product.Price.ToString("c")</dd>
+
+                        <dt class="col-sm-4 text-body-secondary">Discount</dt>
+                        <dd class="col-sm-8">@(hasDiscount ? $"{product.Discount:0.##}%" : "No discount")</dd>
+
+                        <dt class="col-sm-4 text-body-secondary">Brand</dt>
+                        <dd class="col-sm-8">@(product.Brand?.Name ?? "Not specified")</dd>
+
+                        <dt class="col-sm-4 text-body-secondary">Categories</dt>
+                        <dd class="col-sm-8">
+                            @if (product.CategoryProducts.Any(cp => cp.Category is not null))
+                            {
+                                <div class="d-flex flex-wrap gap-2">
+                                    @foreach (var categoryProduct in product.CategoryProducts.Where(cp => cp.Category is not null))
+                                    {
+                                        <span class="badge text-bg-light border">@categoryProduct.Category!.Name</span>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <span>Not specified</span>
+                            }
+                        </dd>
+                    </dl>
+                </div>
+
+                @if (product.Brand is not null && !string.IsNullOrWhiteSpace(product.Brand.Description))
+                {
+                    <div class="border-top mt-4 pt-4">
+                        <h3 class="h5 fw-bold mb-3"><i class="bi bi-award me-2"></i>About @product.Brand.Name</h3>
+                        <div class="text-body-secondary">
+                            @Html.Raw(product.Brand.Description)
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

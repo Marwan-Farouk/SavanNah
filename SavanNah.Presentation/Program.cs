@@ -41,6 +41,11 @@ public class Program
             options.User.RequireUniqueEmail = true;
         }).AddEntityFrameworkStores<AppDbContext>();
 
+        builder.Services.AddSession(options =>
+        {
+            options.IdleTimeout = TimeSpan.FromDays(30);
+            options.Cookie.HttpOnly = true;
+        });
 
         builder.Services.ConfigureApplicationCookie(options =>
         {
