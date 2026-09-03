@@ -9,6 +9,7 @@ using System.Security.Claims;
 namespace SavanNah.Presentation.Areas.User.Controllers
 {
     [Area("User")]
+    [Authorize]
     public class CartController : Controller
     {
         private readonly IShoppingCartManager _shoppingCartManager;
@@ -52,8 +53,11 @@ namespace SavanNah.Presentation.Areas.User.Controllers
             return BadRequest();
         }
         [HttpGet]
-        public async Task<IActionResult> Index(Guid id)
+        public async Task<IActionResult> Index()
         {
+
+            var claimsIdentity = (ClaimsIdentity)User.Identity!;
+            var id = Guid.Parse(claimsIdentity!.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var userCartItems = await _shoppingCartManager.GetUserCart(id); // product object is included
             var cartItemVms = userCartItems.Select(item => new CartItemVm
             {
@@ -61,6 +65,22 @@ namespace SavanNah.Presentation.Areas.User.Controllers
                 count = item.Count,
             });
             return View(cartItemVms);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(int id, int newCount)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity!;
+            var userId = Guid.Parse(claimsIdentity!.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var item = await _shoppingCartManager.GetItem(sc => sc.ProductId == id && sc.UserId == userId, null);
+            item.Count = newCount;
+            var updatedItem = _shoppingCartManager.UpdateItem(item);
+            await _shoppingCartManager.Save();
+            if (updatedItem is not null)
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
     }
 }

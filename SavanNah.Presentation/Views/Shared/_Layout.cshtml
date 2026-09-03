@@ -31,9 +31,17 @@
 					<li class="nav-item">
 						<a class="nav-link" asp-area="User" asp-controller="Product" asp-action="Index">Products</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" asp-area="Admin" asp-controller="Account" asp-action="Login">Login</a>
-					</li>
+					@if (User.Identity.IsAuthenticated)
+					{
+						<li li class="nav-item">
+							<a class="nav-link" asp-area="Admin" asp-controller="Account" asp-action="Logout">@User.Identity.Name</a>
+						</li>
+					} else
+					{
+						<li class="nav-item">
+							<a class="nav-link" asp-area="Admin" asp-controller="Account" asp-action="Login">Login</a>
+						</li>						
+					}
 					<li class="nav-item">
 						<a class="nav-link" asp-area="User" asp-controller="Category" asp-action="Index">Categories</a>
 					</li>
@@ -42,13 +50,12 @@
 							Admin
 						</a>
 					</li>
-
-					@if (User.Identity.IsAuthenticated)
-					{
-						<li li class="nav-item">
-							<a class="nav-link" asp-area="Admin" asp-controller="Account" asp-action="Logout">@User.Identity.Name</a>
-						</li>
-					}
+					<li class="nav-item">
+						<a class="nav-link" asp-area="User" asp-controller="Cart" asp-action="Index">
+							Cart
+						</a>
+					</li>
+					
 				</ul>
 			</div>
 

@@ -1,1 +1,204 @@
-﻿
+﻿@model IEnumerable<CartItemVm>
+
+@{
+    var cartItems = Model?.ToList() ?? new List<CartItemVm>();
+    var totalQuantity = cartItems.Sum(item => item.count);
+    var subtotal = cartItems.Sum(item => item.Product.Price * item.count);
+    var cartTotal = cartItems.Sum(item =>
+        item.Product.Price * (1 - item.Product.Discount / 100m) * item.count);
+    var totalDiscount = subtotal - cartTotal;
+    var updateUrl = Url.Action("Update", "Cart", new { area = "User" });
+
+    ViewData["Title"] = "Shopping Cart";
+}
+
+<style>
+    .update-cart-btn {
+        max-width: 4.75rem;
+        min-width: 0;
+        opacity: 1;
+        overflow: hidden;
+        flex: 0 0 auto;
+        transition: 0.2s;
+    }
+
+    .update-cart-btn.is-hidden {
+        max-width: 0;
+        opacity: 0;
+        padding-left: 0;
+        padding-right: 0;
+        border-left-width: 0;
+        border-right-width: 0;
+        pointer-events: none;
+    }
+
+    .cart-count-group {
+        width: fit-content;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+    }
+
+    .cart-count-input {
+        flex: 0 0 4.5rem !important;
+        width: 4.5rem !important;
+    }
+</style>
+
+<div class="d-flex justify-content-between align-items-center gap-3 mb-4">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-1">
+                <li class="breadcrumb-item">
+                    <a asp-area="User" asp-controller="Product" asp-action="Index" class="text-decoration-none">Products</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Shopping Cart</li>
+            </ol>
+        </nav>
+        <h1 class="h2 fw-bold mb-1">Shopping Cart</h1>
+        <p class="text-body-secondary mb-0">
+            @totalQuantity item@(totalQuantity == 1 ? "" : "s") in your cart
+        </p>
+    </div>
+
+    <a asp-area="User" asp-controller="Product" asp-action="Index" class="btn btn-outline-dark">
+        <i class="bi bi-arrow-left me-1" aria-hidden="true"></i> Continue shopping
+    </a>
+</div>
+
+@if (cartItems.Count == 0)
+{
+    <section class="card border-0 shadow-sm">
+        <div class="card-body text-center p-5">
+            <i class="bi bi-cart-x display-3 text-body-secondary" aria-hidden="true"></i>
+            <h2 class="h4 fw-bold mt-3">Your cart is empty</h2>
+            <p class="text-body-secondary mb-4">Browse our products and add something you like to your cart.</p>
+            <a asp-area="User" asp-controller="Product" asp-action="Index" class="btn btn-dark">
+                <i class="bi bi-bag me-1" aria-hidden="true"></i> Browse products
+            </a>
+        </div>
+    </section>
+}
+else
+{
+    <div class="row g-4 align-items-start">
+        <div class="col-lg-8">
+            @foreach (var item in cartItems)
+            {
+                var product = item.Product;
+                var hasDiscount = product.Discount > 0;
+                var unitPrice = product.Price * (1 - product.Discount / 100m);
+                var lineTotal = unitPrice * item.count;
+
+                <article class="card border-0 shadow-sm mb-3 cart-item" data-product-id="@product.Id" data-update-url="@updateUrl">
+                    <div class="card-body p-3 p-md-4">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-4 col-sm-3 col-md-2">
+                                <a asp-area="User" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="d-block">
+                                    @if (!string.IsNullOrWhiteSpace(product.Image))
+                                    {
+                                        <img src="~/@product.Image" class="img-fluid rounded w-100" alt="@product.Name" style="height: 120px; object-fit: cover;" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/images/Products/Product_placeholder.avif" class="img-fluid rounded w-100" alt="@product.Name" style="height: 120px; object-fit: cover;" />
+                                    }
+                                </a>
+                            </div>
+
+                            <div class="col-8 col-sm-9 col-md-10">
+                                <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
+                                    <div class="min-w-0">
+                                        <div class="small text-uppercase text-body-secondary fw-semibold mb-1">
+                                            Product #@product.Id
+                                        </div>
+                                        <h2 class="h5 fw-bold mb-2 text-break">
+                                            <a asp-area="User" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="text-body text-decoration-none">
+                                                @product.Name
+                                            </a>
+                                        </h2>
+                                        @if (product.Brand is not null)
+                                        {
+                                            <div class="small text-body-secondary">
+                                                <i class="bi bi-award me-1" aria-hidden="true"></i>@product.Brand.Name
+                                            </div>
+                                        }
+                                    </div>
+
+                                    <div class="text-md-end">
+                                        <div class="small text-body-secondary mb-1">Unit price</div>
+                                        @if (hasDiscount)
+                                        {
+                                            <div>
+                                                <span class="small text-body-secondary text-decoration-line-through me-1">@product.Price.ToString("c")</span>
+                                                <span class="fw-bold text-success">@unitPrice.ToString("c")</span>
+                                            </div>
+                                            <span class="badge text-bg-danger mt-1">@product.Discount.ToString("0.##")% off</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="fw-bold">@unitPrice.ToString("c")</span>
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="row g-3 border-top mt-3 pt-3 align-items-end">
+                                    <div class="col-sm-4">
+                                        <label for="count-@product.Id" class="small text-body-secondary d-block mb-1">Count</label>
+                                        <div class="input-group input-group-sm cart-count-group">
+                                            <input type="number" id="count-@product.Id" class="form-control cart-count-input" min="1" step="1" value="@item.count" data-original-count="@item.count" aria-label="Count for @product.Name" />
+                                            <button type="button" class="btn btn-outline-primary btn-sm px-2 update-cart-btn is-hidden" aria-hidden="true">Update</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="small text-body-secondary">Total price</div>
+                                        <div class="fs-5 fw-bold">@lineTotal.ToString("c")</div>
+                                    </div>
+                                    <div class="col-sm-4 text-sm-end">
+                                        <button type="button" class="btn btn-outline-danger btn-sm remove-cart-btn" data-product-id="@product.Id">
+                                            <i class="bi bi-trash me-1" aria-hidden="true"></i> Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            }
+        </div>
+
+        <div class="col-lg-4">
+            <section class="card border-0 shadow-sm sticky-lg-top" style="top: 1rem;">
+                <div class="card-body p-4">
+                    <h2 class="h5 fw-bold mb-4">Order summary</h2>
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="text-body-secondary">Products (@totalQuantity)</span>
+                        <span>@subtotal.ToString("c")</span>
+                    </div>
+
+                    @if (totalDiscount > 0)
+                    {
+                        <div class="d-flex justify-content-between mb-3 text-success">
+                            <span>Discount</span>
+                            <span>-@totalDiscount.ToString("c")</span>
+                        </div>
+                    }
+
+
+                    <div class="border-top pt-3 mb-4 d-flex justify-content-between align-items-center">
+                        <span class="fw-bold">Total</span>
+                        <span class="fs-4 fw-bold">@cartTotal.ToString("c")</span>
+                    </div>
+
+                    <button type="button" class="btn btn-dark btn-lg w-100" disabled aria-disabled="true" title="Checkout is not available yet.">
+                        <i class="bi bi-credit-card me-1" aria-hidden="true"></i> Checkout
+                    </button>
+                    <p class="small text-body-secondary text-center mt-2 mb-0">Checkout will be available soon.</p>
+                </div>
+            </section>
+        </div>
+    </div>
+}
+@section Scripts {
+    <script src="~/js/Cart/index.js" asp-append-version="true"></script>
+}
