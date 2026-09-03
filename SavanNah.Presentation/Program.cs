@@ -2,11 +2,13 @@ using Microsoft.EntityFrameworkCore;
 using SavanNah.Business.Managers.BrandManager;
 using SavanNah.Business.Managers.CategoryManager;
 using SavanNah.Business.Managers.ProductManager;
+using SavanNah.Business.Managers.ShoppingCartManager;
 using SavanNah.DataAccess.Contexts;
 using SavanNah.DataAccess.Repositories.Brands;
 using SavanNah.DataAccess.Repositories.Categories;
 using SavanNah.DataAccess.Repositories.CategoryProducts;
 using SavanNah.DataAccess.Repositories.Products;
+using SavanNah.DataAccess.Repositories.ShoppingCarts;
 using SavanNah.Models.Models.RoleModel;
 using SavanNah.Models.Models.UserModel;
 
@@ -33,6 +35,8 @@ public class Program
         builder.Services.AddScoped<IProductManager, ProductManager>();
         builder.Services.AddScoped<IBrandManager, BrandManager>();
         builder.Services.AddScoped<ICategoryManager, CategoryManager>();
+        builder.Services.AddScoped<IShoppingCartManager, ShoppingCartManager>();
+        builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
 
 
         builder.Services.AddIdentity<User, Role>(options =>

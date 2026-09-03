@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SavanNah.Models.Models.BrandModel;
+using SavanNah.Models.Models.CartModel;
 using SavanNah.Models.Models.CategoryModel;
 using SavanNah.Models.Models.CategoryProductModel;
 using SavanNah.Models.Models.ProductModel;
@@ -15,6 +16,7 @@ namespace SavanNah.DataAccess.Contexts
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<CategoryProduct> CategoryProducts { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
