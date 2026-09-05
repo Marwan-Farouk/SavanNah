@@ -1,5 +1,5 @@
 ﻿const cartItems = document.querySelectorAll(".cart-item");
-const removeEndpoint = "";
+// const removeEndpoint = ;
 
 function syncUpdateButton(cartItem) {
     const countInput = cartItem.querySelector(".cart-count-input");
@@ -54,6 +54,8 @@ async function updateCartItem(cartItem) {
 }
 
 async function removeCartItem(cartItem) {
+    const removeEndpoint = cartItem.dataset.removeUrl;
+
     if (!removeEndpoint) {
         console.warn("The cart remove endpoint has not been configured yet.");
         return;
@@ -64,7 +66,7 @@ async function removeCartItem(cartItem) {
 
     try {
         const response = await fetch(removeUrl, {
-            method: "DELETE",
+            method: "POST",
             credentials: "same-origin",
             headers: {
                 Accept: "application/json"

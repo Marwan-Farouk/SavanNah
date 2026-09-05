@@ -8,7 +8,7 @@
         item.Product.Price * (1 - item.Product.Discount / 100m) * item.count);
     var totalDiscount = subtotal - cartTotal;
     var updateUrl = Url.Action("Update", "Cart", new { area = "User" });
-
+    var removeUrl = Url.Action("RemoveItem", "Cart", new { area = "User" });
     ViewData["Title"] = "Shopping Cart";
 }
 
@@ -89,7 +89,7 @@ else
                 var unitPrice = product.Price * (1 - product.Discount / 100m);
                 var lineTotal = unitPrice * item.count;
 
-                <article class="card border-0 shadow-sm mb-3 cart-item" data-product-id="@product.Id" data-update-url="@updateUrl">
+                <article class="card border-0 shadow-sm mb-3 cart-item" data-product-id="@product.Id" data-update-url="@updateUrl" data-remove-url="@removeUrl">
                     <div class="card-body p-3 p-md-4">
                         <div class="row g-3 align-items-center">
                             <div class="col-4 col-sm-3 col-md-2">

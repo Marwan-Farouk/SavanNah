@@ -53,7 +53,7 @@ public class Program
 
         builder.Services.ConfigureApplicationCookie(options =>
         {
-            options.ExpireTimeSpan = TimeSpan.FromHours(1);
+            options.ExpireTimeSpan = TimeSpan.FromDays(7);
             options.LoginPath = "/Admin/Account/Login";
             options.AccessDeniedPath = "/Admin/Account/DeniedAccess";
             options.LogoutPath = "/Home";

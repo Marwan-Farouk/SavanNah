@@ -82,5 +82,24 @@ namespace SavanNah.Presentation.Areas.User.Controllers
             }
             return BadRequest();
         }
+        [HttpPost]
+        public async Task<IActionResult> RemoveItem(int id)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity!;
+            var userId = Guid.Parse(claimsIdentity!.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            var cartItem = await _shoppingCartManager.GetItem(sc => sc.ProductId == id && sc.UserId == userId, null);
+
+            if (cartItem is not null)
+            {
+                bool success = await _shoppingCartManager.RemoveItem(cartItem);
+                if (success)
+                {
+                    await _shoppingCartManager.Save();
+                    return Ok();
+                }
+            }
+            return BadRequest();
+        }
     }
 }
