@@ -13,20 +13,18 @@ namespace SavanNah.Presentation.Areas.User.Controllers
     public class CartController : Controller
     {
         private readonly IShoppingCartManager _shoppingCartManager;
-        private readonly UserManager<Models.Models.UserModel.User> _userManager;
 
         public CartController(IShoppingCartManager shoppingCartManager, UserManager<SavanNah.Models.Models.UserModel.User> userManager)
         {
             this._shoppingCartManager = shoppingCartManager;
-            this._userManager = userManager;
+
         }
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Add([FromQuery] int id, [FromQuery] int count)
         {
-            var claimsIdentity = (ClaimsIdentity)User.Identity!;
-            var userId = claimsIdentity!.FindFirst(ClaimTypes.NameIdentifier)!.Value;
-            var cartItem = await _shoppingCartManager.GetItem(sc => sc.UserId.ToString() == userId && sc.ProductId == id, null);
+            var userId = GetUserId();
+            var cartItem = await _shoppingCartManager.GetItem(sc => sc.UserId == userId && sc.ProductId == id, null);
             bool success;
             if (cartItem is not null)
             {
@@ -41,7 +39,7 @@ namespace SavanNah.Presentation.Areas.User.Controllers
                 {
                     ProductId = id,
                     Count = count,
-                    UserId = Guid.Parse(userId)
+                    UserId = userId
                 };
                 success = await _shoppingCartManager.AddItem(item);
                 await _shoppingCartManager.Save();
@@ -55,10 +53,8 @@ namespace SavanNah.Presentation.Areas.User.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-
-            var claimsIdentity = (ClaimsIdentity)User.Identity!;
-            var id = Guid.Parse(claimsIdentity!.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            var userCartItems = await _shoppingCartManager.GetUserCart(id); // product object is included
+            var userId = GetUserId();
+            var userCartItems = await _shoppingCartManager.GetUserCart(userId); // product object is included
             var cartItemVms = userCartItems.Select(item => new CartItemVm
             {
                 Product = item.Product,
@@ -70,8 +66,7 @@ namespace SavanNah.Presentation.Areas.User.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(int id, int newCount)
         {
-            var claimsIdentity = (ClaimsIdentity)User.Identity!;
-            var userId = Guid.Parse(claimsIdentity!.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var userId = GetUserId();
             var item = await _shoppingCartManager.GetItem(sc => sc.ProductId == id && sc.UserId == userId, null);
             item.Count = newCount;
             var updatedItem = _shoppingCartManager.UpdateItem(item);
@@ -85,9 +80,7 @@ namespace SavanNah.Presentation.Areas.User.Controllers
         [HttpPost]
         public async Task<IActionResult> RemoveItem(int id)
         {
-            var claimsIdentity = (ClaimsIdentity)User.Identity!;
-            var userId = Guid.Parse(claimsIdentity!.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-
+            var userId = GetUserId();
             var cartItem = await _shoppingCartManager.GetItem(sc => sc.ProductId == id && sc.UserId == userId, null);
 
             if (cartItem is not null)
@@ -100,6 +93,12 @@ namespace SavanNah.Presentation.Areas.User.Controllers
                 }
             }
             return BadRequest();
+        }
+
+        private Guid GetUserId()
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity!;
+            return Guid.Parse(claimsIdentity!.FindFirst(ClaimTypes.NameIdentifier)!.Value);
         }
     }
 }

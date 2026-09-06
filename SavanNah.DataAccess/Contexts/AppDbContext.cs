@@ -4,6 +4,7 @@ using SavanNah.Models.Models.BrandModel;
 using SavanNah.Models.Models.CartModel;
 using SavanNah.Models.Models.CategoryModel;
 using SavanNah.Models.Models.CategoryProductModel;
+using SavanNah.Models.Models.OrderModel;
 using SavanNah.Models.Models.ProductModel;
 using SavanNah.Models.Models.RoleModel;
 using SavanNah.Models.Models.UserModel;
@@ -17,6 +18,8 @@ namespace SavanNah.DataAccess.Contexts
         public DbSet<Product> Products { get; set; }
         public DbSet<CategoryProduct> CategoryProducts { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderProduct> OrderProducts { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
