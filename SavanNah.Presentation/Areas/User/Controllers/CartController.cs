@@ -95,6 +95,20 @@ namespace SavanNah.Presentation.Areas.User.Controllers
             return BadRequest();
         }
 
+        public async Task<IActionResult> Clear()
+        {
+            var userId = GetUserId();
+
+            var success = await _shoppingCartManager.ClearUserCart(userId);
+            if (!success)
+            {
+                return BadRequest();
+            }
+            await _shoppingCartManager.Save();
+            return View(nameof(Index));
+
+        }
+
         private Guid GetUserId()
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity!;

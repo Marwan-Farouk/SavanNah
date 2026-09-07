@@ -1,5 +1,6 @@
 ﻿using SavanNah.DataAccess.Repositories.OrderProducts;
 using SavanNah.DataAccess.Repositories.Orders;
+using SavanNah.Models.DTOs.Order;
 using SavanNah.Models.Models.OrderModel;
 using System.Linq.Expressions;
 
@@ -15,9 +16,32 @@ namespace SavanNah.Business.Managers.OrderManager
             this._orderRepository = orderRepository;
             this._orderProductRepository = orderProductRepository;
         }
-        public async Task<Order> Create(Order entity)
+        public async Task<bool> Create(CreateOrderDTO Dto)
         {
-            return await _orderRepository.Create(entity);
+            var order = new Order
+            {
+                Id = Guid.NewGuid(),
+                OrderDate = DateTime.Now,
+                Status = "pending",
+                UserId = Dto.UserId,
+                TotalAmount = Dto.TotalAmount,
+            };
+            var created = await _orderRepository.Create(order);
+            if (created is not null)
+            {
+                await Save();
+
+                created.OrderProducts = Dto.OrderProducts.Select(op => new OrderProduct
+                {
+                    ProductId = op.ProductId,
+                    Count = op.Count,
+                    OrderId = created.Id
+                }).ToList();
+
+                await Save();
+                return true;
+            }
+            return false;
         }
 
         public async Task<bool> Delete(Order entity)

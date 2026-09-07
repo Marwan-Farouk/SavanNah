@@ -13,5 +13,5 @@ public class Product
     public int BrandId { get; set; }
     public BrandModel.Brand? Brand { get; set; }
     public ICollection<CategoryProductModel.CategoryProduct> CategoryProducts { get; set; } = [];
-    public ICollection<OrderProduct> OrderProducts { get; set; }
+    public ICollection<OrderProduct> OrderProducts { get; set; } = [];
 }

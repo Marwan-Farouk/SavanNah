@@ -8,6 +8,7 @@ namespace SavanNah.Business.Managers.ShoppingCartManager
         public Task<ShoppingCart> GetItem(Expression<Func<ShoppingCart, bool>> filter, string[]? includes);
         public Task<IEnumerable<ShoppingCart>> GetUserCart(Guid userId);
         public Task<bool> AddItem(ShoppingCart cartItem);
+        public Task<bool> ClearUserCart(Guid userId);
         public Task<bool> RemoveItem(ShoppingCart cartItem);
         public Task<bool> RemoveRange(Expression<Func<ShoppingCart, bool>> filter);
         public ShoppingCart UpdateItem(ShoppingCart cartItem);

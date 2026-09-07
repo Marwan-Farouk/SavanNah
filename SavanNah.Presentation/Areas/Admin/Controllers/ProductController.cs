@@ -123,13 +123,15 @@ public class ProductController : Controller
 
                 productVm.Product.Image = "images/products/" + fileName;
             }
-            productVm.Product.Image = string.Empty;
+            //productVm.Product.Image = string.Empty;
             var productDto = UpdateProductDTO.VmToDto(productVm);
             var updated = await _productManager.Update(productDto);
             if (updated is not null)
                 TempData["success"] = "Product Updated Successfuly";
             else
+            {
                 TempData["error"] = "Couldn't Update Product";
+            }
 
             return RedirectToAction(nameof(Index));
         }

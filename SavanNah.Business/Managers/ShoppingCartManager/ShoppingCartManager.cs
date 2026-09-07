@@ -30,6 +30,11 @@ namespace SavanNah.Business.Managers.ShoppingCartManager
             return await _shoppingCartRepository.GetAll(sc => sc.UserId == userId, ["Product"]);
         }
 
+        public async Task<bool> ClearUserCart(Guid userId)
+        {
+            return await _shoppingCartRepository.DeleteRange(sc => sc.UserId == userId);
+        }
+
         public async Task<bool> RemoveItem(ShoppingCart cartItem)
         {
             return await _shoppingCartRepository.Delete(cartItem);
