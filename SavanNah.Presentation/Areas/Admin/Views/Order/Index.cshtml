@@ -1,0 +1,36 @@
+﻿@model List<SavanNah.Models.Models.OrderModel.Order>
+
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<style>
+    th,td {
+        text-align:center !important;
+    }
+</style>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Orders</h2>
+</div>
+
+<table id="orderTable" 
+    class="table table-bordered table-hover w-100" 
+    style="width:100%">
+    <thead class="table-bordered table-primary table-active" style="width:100%">
+        <tr>
+            <th scope="col">Order ID</th>
+            <th scope="col">Customer</th>
+            <th scope="col">Order Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Total Amount</th>
+        </tr>
+    </thead>
+<tbody class="table-hover table-bordered"></tbody>
+</table>
+
+
+@section Scripts {
+    <script src="~/js/Order/OrderIndex.js"></script>
+
+}

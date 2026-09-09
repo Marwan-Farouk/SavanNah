@@ -84,21 +84,19 @@ namespace SavanNah.DataAccess.Repositories.Generic
 
         public async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>>? filter, string[]? includes)
         {
-            IQueryable<T> query;
-            if (filter is null)
-                return await _dbSet.ToListAsync();
-            else
+            IQueryable<T> query = _dbSet;
+            if (filter is not null)
             {
-
                 query = _dbSet.Where(filter);
-                if (includes is not null && includes.Length > 0)
+            }
+            if (includes is not null && includes.Length > 0)
+            {
+                foreach (var prop in includes)
                 {
-                    foreach (var prop in includes)
-                    {
-                        query = query.Include(prop);
-                    }
+                    query = query.Include(prop);
                 }
             }
+
             return await query.ToListAsync();
         }
 

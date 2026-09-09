@@ -49,12 +49,12 @@ namespace SavanNah.Business.Managers.OrderManager
             return await _orderRepository.Delete(entity);
         }
 
-        public async Task<Order> Get(Expression<Func<Order, bool>> filter, string[]? includes)
+        public async Task<Order> Get(Expression<Func<Order, bool>> filter, string[]? includes = null)
         {
             return await _orderRepository.Get(filter, includes);
         }
 
-        public async Task<IEnumerable<Order>> GetAll(Expression<Func<Order, bool>>? filter, string[]? includes)
+        public async Task<IEnumerable<Order>> GetAll(Expression<Func<Order, bool>>? filter = null, string[]? includes = null)
         {
             return await _orderRepository.GetAll(filter, includes);
         }
