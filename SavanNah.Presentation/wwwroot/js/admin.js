@@ -1,26 +1,45 @@
-/*!
-    * Start Bootstrap - SB Admin v7.0.7 (https://startbootstrap.com/template/sb-admin)
-    * Copyright 2013-2023 Start Bootstrap
-    * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-sb-admin/blob/master/LICENSE)
-    */
-    // 
-// Scripts
-// 
+// SavanNah — Admin JavaScript
 
-window.addEventListener('DOMContentLoaded', event => {
+window.addEventListener('DOMContentLoaded', function () {
+    // Sidebar toggle for mobile
+    var sidebarToggle = document.getElementById('sidebarToggle');
+    var sidebar = document.getElementById('adminSidebar');
 
-    // Toggle the side navigation
-    const sidebarToggle = document.body.querySelector('#sidebarToggle');
-    if (sidebarToggle) {
-        // Uncomment Below to persist sidebar toggle between refreshes
-        // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
-        //     document.body.classList.toggle('sb-sidenav-toggled');
-        // }
-        sidebarToggle.addEventListener('click', event => {
-            event.preventDefault();
-            document.body.classList.toggle('sb-sidenav-toggled');
-            localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
+    if (sidebarToggle && sidebar) {
+        sidebarToggle.addEventListener('click', function (e) {
+            e.preventDefault();
+            sidebar.classList.toggle('show');
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function (e) {
+            if (window.innerWidth < 992 && sidebar.classList.contains('show')) {
+                if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
+                    sidebar.classList.remove('show');
+                }
+            }
         });
     }
 
+    // Notification toast animation (admin uses same system)
+    var toast = document.getElementById("sv-toast");
+    if (toast) {
+        requestAnimationFrame(function () {
+            toast.classList.add("show");
+        });
+        setTimeout(function () {
+            toast.classList.remove("show");
+        }, 3000);
+    }
+
+    // Delete confirmation
+    var delBtns = document.querySelectorAll(".del-btn");
+    delBtns.forEach(function (delBtn) {
+        delBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            if (confirm("Are you sure you want to delete this item?")) {
+                this.closest("form").submit();
+            }
+        });
+    });
 });

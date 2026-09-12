@@ -6,17 +6,25 @@
 <link rel="stylesheet" href="~/css/product/Admin/product-form.css" asp-append-version="true"/>
 
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<style>
+    a,
+    button,
+    input[type='submit'] {
+        height: 100% !important;
+    }
+</style>
+
+<div class="d-flex mb-4 justify-content-between align-items-center">
     <div>
         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-1">
+            <ol class="mb-1 breadcrumb">
                 <li class="breadcrumb-item">
                     <a asp-area="User" asp-controller="Product" asp-action="Index" class="text-decoration-none">Products</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Edit</li>
             </ol>
         </nav>
-        <h2 class="mb-0 fw-bold">Edit Product</h2>
+        <h2 class="mb-0 fw-bold text-light">Edit Product</h2>
     </div>
 </div>
 
@@ -24,12 +32,12 @@
     <div class="col-lg-8 col-xl-7">
         <div class="card create-card">
             <div class="card-header">
-                <div class="d-flex align-items-center gap-3">
-                    <div class="bg-white bg-opacity-10 rounded-circle p-2">
-                        <i class="bi bi-pencil-square text-white fs-4"></i>
+                <div class="d-flex gap-3 align-items-center">
+                    <div class="p-2 bg-white bg-opacity-10 rounded-circle">
+                        <i class="text-white fs-4 bi bi-pencil-square"></i>
                     </div>
                     <div>
-                        <h5 class="text-white mb-0 fw-bold">Product Details</h5>
+                        <h5 class="mb-0 text-white fw-bold">Product Details</h5>
                         <small class="text-white-50">Update the information below to edit the product</small>
                     </div>
                 </div>
@@ -43,16 +51,16 @@
                     <input asp-for="Product.Id" type="hidden"/>
                     <input asp-for="Product.Image" type="hidden" value="@Model.Product.Image"/>
                     @* Global validation summary *@
-                    <div asp-validation-summary="All" class="alert alert-danger py-2 rounded-3"></div>
+                    <div asp-validation-summary="All" class="py-2 alert alert-danger rounded-3"></div>
 
                     @* — Basic Info — *@
                     <p class="section-divider">
-                        <i class="bi bi-info-circle me-1"></i> Basic Information
+                        <i class="me-1 bi bi-info-circle"></i> Basic Information
                     </p>
 
                     <div class="mb-3">
                         <label asp-for="Product.Name" class="form-label">
-                            <i class="bi bi-tag me-1 text-muted"></i> Product Name <span class="text-danger">*</span>
+                            <i class="me-1 text-muted bi bi-tag"></i> Product Name <span class="text-danger">*</span>
                         </label>
                         <input asp-for="Product.Name" id="Name" class="form-control" placeholder="e.g. Running Shoes Pro X" autocomplete="off"/>
                         <span asp-validation-for="Product.Name" class="text-danger small"></span>
@@ -60,7 +68,7 @@
 
                     <div class="mb-3">
                         <label asp-for="Product.Description" class="form-label">
-                            <i class="bi bi-card-text me-1 text-muted"></i> Description
+                            <i class="me-1 text-muted bi bi-card-text"></i> Description
                         </label>
                         <textarea asp-for="Product.Description" id="Description" class="form-control" rows="3"
                                   placeholder="Write a short product description…" maxlength="1000"></textarea>
@@ -71,8 +79,8 @@
                     </div>
 
                     @* — Pricing — *@
-                    <p class="section-divider mt-4">
-                        <i class="bi bi-currency-dollar me-1"></i> Pricing
+                    <p class="mt-4 section-divider">
+                        <i class="me-1 bi bi-currency-dollar"></i> Pricing
                     </p>
 
                     <div class="row g-3 mb-3">
@@ -101,13 +109,13 @@
                     </div>
 
                     @* — Classification — *@
-                    <p class="section-divider mt-4">
-                        <i class="bi bi-diagram-3 me-1"></i> Classification
+                    <p class="mt-4 section-divider">
+                        <i class="me-1 bi bi-diagram-3"></i> Classification
                     </p>
 
                     <div class="mb-3">
                         <label asp-for="Product.BrandId" class="form-label">
-                            <i class="bi bi-award me-1 text-muted"></i> Brand <span class="text-danger">*</span>
+                            <i class="me-1 text-muted bi bi-award"></i> Brand <span class="text-danger">*</span>
                         </label>
                         <select asp-for="Product.BrandId" id="BrandId" asp-items="Model.Brands" class="form-select">
                             <option value="" disabled>— Select a brand —</option>
@@ -117,7 +125,7 @@
 
                     <div class="mb-4">
                         <label asp-for="CategoryIds" class="form-label">
-                            <i class="bi bi-grid me-1 text-muted"></i> Categories <span class="text-danger">*</span>
+                            <i class="me-1 text-muted bi bi-grid"></i> Categories <span class="text-danger">*</span>
                         </label>
                         <select asp-for="CategoryIds" asp-items="@Model.Categories" class="form-select" id="CategoryIds" multiple></select>
                     </div>
@@ -125,7 +133,7 @@
                     @* — Image Preview — *@
                     <div class="mb-3">
                         <label class="form-label">
-                            <i class="bi bi-image me-1 text-muted"></i> Image
+                            <i class="me-1 text-muted bi bi-image"></i> Image
                         </label>
                         <div>
                             <input type="file" name="file" class="form-control" id="Image">
@@ -143,12 +151,12 @@
                     </div>
 
                     @* — Actions — *@
-                    <div class="d-flex gap-2 justify-content-end pt-2 border-top">
-                        <a id="btn-cancel" asp-area="Admin" asp-controller="Product" asp-action="Index" class="btn">
-                            <i class="bi bi-x-circle me-1"></i> Cancel
+                    <div class="d-flex gap-2 pt-2 justify-content-end border-top">
+                        <a id="btn-cancel" asp-area="Admin" asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary h-100">
+                            <i class="me-1 bi bi-x-circle"></i> Cancel
                         </a>
-                        <button id="btn-save" type="submit" class="btn btn-primary">
-                            <i class="bi bi-floppy me-1"></i> Save Changes
+                        <button id="btn-save" type="submit" class="btn btn-primary h-100">
+                            <i class="me-1 bi bi-floppy"></i> Save Changes
                         </button>
                     </div>
                 </form>

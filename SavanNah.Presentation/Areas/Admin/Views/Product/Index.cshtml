@@ -3,11 +3,25 @@
 }
 @model List<Product>
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="mb-0">Products</h2>
+<style>
+    label {
+        margin-left: 10px;
+    }
+    a,
+    button,
+    input[type='submit'] {
+        height: 100% !important;
+    }
+    h1, h2, h3, h4, th {
+        color: var(--sv-text-primary) !important;
+    }
+</style>
+
+<div class="d-flex mb-4 justify-content-between align-items-center">
+    <h2 class="mb-0 text-light">Products</h2>
     <div class="d-flex gap-2 justify-content-end align-items-center">
         <span class="badge bg-secondary fs-6">@Model.Count item@(Model.Count != 1 ? "s" : "")</span>
-        <a class="btn btn-success" asp-area="User" asp-controller="Product" asp-action="Create">
+        <a class="btn btn-success h-100" asp-area="User" asp-controller="Product" asp-action="Create">
             <i class="bi bi-plus-circle "></i>
             Add Product
         </a>
@@ -27,7 +41,7 @@
 else
 {
     <table id="myTable" class="table table-bordered table-hover" style="width:100%;">
-        <thead class="thead-dark">
+        <thead>
         <tr>
             <th>Name</th>
             <th>Price</th>
@@ -38,7 +52,7 @@ else
         </tr>
         </thead>
     </table>
-    <div class="partial-container d-flex justify-content-center" style="width: 100%;">
+    <div class="d-flex justify-content-center partial-container" style="width: 100%;">
 
     </div>
 }

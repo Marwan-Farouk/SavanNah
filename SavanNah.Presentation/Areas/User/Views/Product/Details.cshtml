@@ -1,136 +1,153 @@
-﻿@model ProductVM
+@model ProductVM
 
 @{
     var product = Model.Product;
     var hasDiscount = product.Discount > 0;
     var discountedPrice = product.Price * (1 - product.Discount / 100m);
-
     ViewData["Title"] = product.Name;
 }
 
-
-<div class="d-flex justify-content-between align-items-center mb-4">
+<!-- Breadcrumb & Header -->
+<div class="sv-page-header">
     <div>
         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-1">
+            <ol class="mb-1 breadcrumb">
                 <li class="breadcrumb-item">
-                    <a asp-area="User" asp-controller="Product" asp-action="Index" class="text-decoration-none">Products</a>
+                    <a asp-area="User" asp-controller="Product" asp-action="Index">Products</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Details</li>
+                <li class="breadcrumb-item active" aria-current="page">@product.Name</li>
             </ol>
         </nav>
-        <h1 class="h2 mb-0 fw-bold">Product Details</h1>
+        <h1 class="sv-page-title">Product Details</h1>
     </div>
-    <a asp-area="User" asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary">
-        <i class="bi bi-arrow-left me-1"></i> Back to products
+    <a asp-area="User" asp-controller="Product" asp-action="Index" class="btn-sv-secondary" style="height: 40px; font-size: 12px;">
+        <span class="material-symbols-outlined" style="font-size: 16px;">arrow_back</span>
+        Back to Products
     </a>
 </div>
 
 <div class="row g-4 align-items-start">
+    <!-- Product Image -->
     <div class="col-lg-6">
-        <div class="card border-0 shadow-sm overflow-hidden">
+        <div style="border: 1px solid var(--sv-light-border); overflow: hidden; background: var(--sv-light-surface);">
             @if (!string.IsNullOrWhiteSpace(product.Image))
             {
-                <img src="~/@product.Image" class="card-img-top" alt="@product.Name" style="height: 480px; object-fit: cover;" />
+                <img src="~/@product.Image" alt="@product.Name" style="width: 100%; height: 480px; object-fit: cover; display: block;"/>
             }
             else
             {
-                <img src="~/images/Products/Product_placeholder.avif" class="card-img-top" alt="@product.Name" style="height: 480px; object-fit: cover;" />
+                <img src="~/images/Products/Product_placeholder.avif" alt="@product.Name" style="width: 100%; height: 480px; object-fit: cover; display: block;"/>
             }
         </div>
     </div>
 
+    <!-- Product Info -->
     <div class="col-lg-6">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4 p-lg-5">
-                <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
-                    <span class="badge text-bg-dark">Product #@product.Id</span>
-                    @if (hasDiscount)
-                    {
-                        <span class="badge text-bg-danger">@product.Discount.ToString("0.##")% off</span>
-                    }
-                </div>
-
-                <h2 class="display-6 fw-bold mb-3">@product.Name</h2>
-
-                <div class="mb-4">
-                    @if (hasDiscount)
-                    {
-                        <span class="text-muted text-decoration-line-through fs-5 me-2">@product.Price.ToString("c")</span>
-                        <span class="fs-3 fw-bold text-success">@discountedPrice.ToString("c")</span>
-                    }
-                    else
-                    {
-                        <span class="fs-3 fw-bold">@product.Price.ToString("c")</span>
-                    }
-                </div>
-
-                <div class="row g-3 align-items-end mb-4">
-                    <div class="col-sm-4">
-                        <label for="count" class="form-label fw-semibold">count</label>
-                        <input type="number" id="count" name="count" class="form-control" min="1" value="1" required />
-                    </div>
-                    <div class="col-sm-8">
-                        <button type="button" class="btn btn-dark w-100" id="cartBtn" data-id="@product.Id">
-                            <i class="bi bi-cart-plus me-1"></i> add to cart
-                        </button>
-                    </div>
-                </div>
-
-                <div class="border-top pt-4">
-                    <h3 class="h5 fw-bold mb-3"><i class="bi bi-card-text me-2"></i>Description</h3>
-                    <div class="text-body-secondary">
-                        @Html.Raw(string.IsNullOrWhiteSpace(product.Description) ? "No description available." : product.Description)
-                    </div>
-                </div>
-
-                <div class="border-top mt-4 pt-4">
-                    <h3 class="h5 fw-bold mb-3"><i class="bi bi-info-circle me-2"></i>Product information</h3>
-                    <dl class="row mb-0">
-                        <dt class="col-sm-4 text-body-secondary">Product ID</dt>
-                        <dd class="col-sm-8">@product.Id</dd>
-
-                        <dt class="col-sm-4 text-body-secondary">Price</dt>
-                        <dd class="col-sm-8">@product.Price.ToString("c")</dd>
-
-                        <dt class="col-sm-4 text-body-secondary">Discount</dt>
-                        <dd class="col-sm-8">@(hasDiscount ? $"{product.Discount:0.##}%" : "No discount")</dd>
-
-                        <dt class="col-sm-4 text-body-secondary">Brand</dt>
-                        <dd class="col-sm-8">@(product.Brand?.Name ?? "Not specified")</dd>
-
-                        <dt class="col-sm-4 text-body-secondary">Categories</dt>
-                        <dd class="col-sm-8">
-                            @if (product.CategoryProducts.Any(cp => cp.Category is not null))
-                            {
-                                <div class="d-flex flex-wrap gap-2">
-                                    @foreach (var categoryProduct in product.CategoryProducts.Where(cp => cp.Category is not null))
-                                    {
-                                        <span class="badge text-bg-light border">@categoryProduct.Category!.Name</span>
-                                    }
-                                </div>
-                            }
-                            else
-                            {
-                                <span>Not specified</span>
-                            }
-                        </dd>
-                    </dl>
-                </div>
-
-                @if (product.Brand is not null && !string.IsNullOrWhiteSpace(product.Brand.Description))
+        <div style="background: var(--sv-light-surface); border: 1px solid var(--sv-light-border); padding: 2rem;">
+            <!-- Badges -->
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 1rem;">
+                <span class="badge sv-badge-category">Product #@product.Id</span>
+                @if (hasDiscount)
                 {
-                    <div class="border-top mt-4 pt-4">
-                        <h3 class="h5 fw-bold mb-3"><i class="bi bi-award me-2"></i>About @product.Brand.Name</h3>
-                        <div class="text-body-secondary">
-                            @Html.Raw(product.Brand.Description)
-                        </div>
-                    </div>
+                    <span class="badge sv-badge-discount">@product.Discount.ToString("0.##")% off</span>
                 }
             </div>
+
+            <!-- Title -->
+            <h2 style="font-family: var(--sv-font-display); font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1rem;">
+                @product.Name
+            </h2>
+
+            <!-- Price -->
+            <div style="margin-bottom: 1.5rem;">
+                @if (hasDiscount)
+                {
+                    <span style="color: var(--sv-text-dim); text-decoration: line-through; font-size: 18px; margin-right: 0.5rem;">@product.Price.ToString("c")</span>
+                    <span class="sv-price-display" style="color: var(--sv-terracotta);">@discountedPrice.ToString("c")</span>
+                }
+                else
+                {
+                    <span class="sv-price-display">@product.Price.ToString("c")</span>
+                }
+            </div>
+
+            <!-- Add to Cart -->
+            <div class="row g-3 align-items-end" style="margin-bottom: 1.5rem;">
+                <div class="col-sm-4">
+                    <label for="count" class="form-label">Quantity</label>
+                    <input type="number" id="count" name="count" class="form-control" min="1" value="1" required/>
+                </div>
+                <div class="col-sm-8">
+                    <button type="button" class="btn-sv-primary" id="cartBtn" data-id="@product.Id" style="width: 100%; height: 44px;">
+                        <span class="material-symbols-outlined" style="font-size: 18px;">add_shopping_cart</span>
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div style="border-top: 1px solid var(--sv-light-border); padding-top: 1.5rem; margin-bottom: 1.5rem;">
+                <h3 style="font-family: var(--sv-font-display); font-size: 16px; font-weight: 600; margin-bottom: 0.75rem;">
+                    <span class="material-symbols-outlined" style="font-size: 18px; vertical-align: middle; margin-right: 0.25rem;">description</span>
+                    Description
+                </h3>
+                <div style="color: var(--sv-light-text-muted); font-size: 14px; line-height: 1.7;">
+                    @Html.Raw(string.IsNullOrWhiteSpace(product.Description) ? "No description available." : product.Description)
+                </div>
+            </div>
+
+            <!-- Product Info Table -->
+            <div style="border-top: 1px solid var(--sv-light-border); padding-top: 1.5rem;">
+                <h3 style="font-family: var(--sv-font-display); font-size: 16px; font-weight: 600; margin-bottom: 0.75rem;">
+                    <span class="material-symbols-outlined" style="font-size: 18px; vertical-align: middle; margin-right: 0.25rem;">info</span>
+                    Specifications
+                </h3>
+                <dl class="row mb-0" style="font-size: 14px;">
+                    <dt class="col-sm-4" style="color: var(--sv-light-text-muted); font-weight: 500;">Product ID</dt>
+                    <dd class="col-sm-8 sv-tabular">@product.Id</dd>
+
+                    <dt class="col-sm-4" style="color: var(--sv-light-text-muted); font-weight: 500;">Price</dt>
+                    <dd class="col-sm-8 sv-tabular">@product.Price.ToString("c")</dd>
+
+                    <dt class="col-sm-4" style="color: var(--sv-light-text-muted); font-weight: 500;">Discount</dt>
+                    <dd class="col-sm-8">@(hasDiscount ? $"{product.Discount:0.##}%" : "No discount")</dd>
+
+                    <dt class="col-sm-4" style="color: var(--sv-light-text-muted); font-weight: 500;">Brand</dt>
+                    <dd class="col-sm-8">@(product.Brand?.Name ?? "Not specified")</dd>
+
+                    <dt class="col-sm-4" style="color: var(--sv-light-text-muted); font-weight: 500;">Categories</dt>
+                    <dd class="col-sm-8">
+                        @if (product.CategoryProducts.Any(cp => cp.Category is not null))
+                        {
+                            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                @foreach (var categoryProduct in product.CategoryProducts.Where(cp => cp.Category is not null))
+                                {
+                                    <span class="badge sv-badge-category">@categoryProduct.Category!.Name</span>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <span>Not specified</span>
+                        }
+                    </dd>
+                </dl>
+            </div>
+
+            @if (product.Brand is not null && !string.IsNullOrWhiteSpace(product.Brand.Description))
+            {
+                <div style="border-top: 1px solid var(--sv-light-border); margin-top: 1.5rem; padding-top: 1.5rem;">
+                    <h3 style="font-family: var(--sv-font-display); font-size: 16px; font-weight: 600; margin-bottom: 0.75rem;">
+                        <span class="material-symbols-outlined" style="font-size: 18px; vertical-align: middle; margin-right: 0.25rem;">verified</span>
+                        About @product.Brand.Name
+                    </h3>
+                    <div style="color: var(--sv-light-text-muted); font-size: 14px; line-height: 1.7;">
+                        @Html.Raw(product.Brand.Description)
+                    </div>
+                </div>
+            }
         </div>
     </div>
 </div>
-
 
 <script src="~/js/Product/User/Details.js"></script>

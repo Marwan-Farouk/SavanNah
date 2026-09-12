@@ -5,10 +5,20 @@
     Layout = "_admin";
 }
 
+<style>
+    a,
+    button,
+    input[type='submit'] {
+        height: 100% !important;
+    }
+    h1, h2, h3, h4, th {
+        color: var(--sv-text-primary) !important;
+    }
+</style>
+
 <div class="d-flex mb-4 mt-2 justify-content-between align-items-center">
-    <h1>Users</h1>
-    <a class="btn btn-success" asp-area="Admin" asp-controller="User" asp-action="Create">
-        @* <a class="btn btn-success" asp-area="Admin" asp-controller="Account" asp-action="Register"> *@
+    <h1 class="text-light">Users</h1>
+    <a class="btn btn-success h-100" asp-area="Admin" asp-controller="User" asp-action="Create">
         <i class="bi bi-plus-circle"></i> Create new User
     </a>
 </div>
@@ -35,17 +45,17 @@
                 <td class="align-middle">@user.Role</td>
                 <td class="align-middle">
                     <div class="d-flex justify-content-evenly">
-                    <form method="post" asp-area="Admin" asp-controller="User" asp-action="Delete" enctype="application/x-www-form-urlencoded" novalidate>
-                        <input type="hidden" name="id" value='@user.Id'>
-                        <button type="submit" class="btn btn-danger">
-                            <i class="bi bi-trash3-fill"></i>
-                            Delete
-                        </button>
-                    </form>
-                    <a class="btn btn-dark" asp-area="User" asp-controller="Customer" asp-action="Profile" asp-route-id="@user.Id.ToString()">
-                        <i class="bi bi-person-circle"></i>
-                         Profile
-                    </a>
+                        <form method="post" asp-area="Admin" asp-controller="User" asp-action="Delete" enctype="application/x-www-form-urlencoded" novalidate class="h-100">
+                            <input type="hidden" name="id" value='@user.Id'>
+                            <button type="submit" class="btn btn-danger w-100 h-100">
+                                <i class="bi bi-trash3-fill"></i>
+                                Delete
+                            </button>
+                        </form>
+                        <a class="btn btn-dark h-100" asp-area="User" asp-controller="Customer" asp-action="Profile" asp-route-id="@user.Id.ToString()">
+                            <i class="bi bi-person-circle"></i>
+                            Profile
+                        </a>
                     </div>
                 </td>
             </tr>

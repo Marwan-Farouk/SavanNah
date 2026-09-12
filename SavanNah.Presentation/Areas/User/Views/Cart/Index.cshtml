@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CartItemVm>
+@model IEnumerable<CartItemVm>
 
 @{
     var cartItems = Model?.ToList() ?? new List<CartItemVm>();
@@ -14,197 +14,167 @@
 
 <style>
     .update-cart-btn {
-        max-width: 4.75rem;
-        min-width: 0;
-        opacity: 1;
-        overflow: hidden;
-        flex: 0 0 auto;
-        transition: 0.2s;
+        max-width: 4.75rem; min-width: 0; opacity: 1; overflow: hidden;
+        flex: 0 0 auto; transition: 0.2s;
     }
-
     .update-cart-btn.is-hidden {
-        max-width: 0;
-        opacity: 0;
-        padding-left: 0;
-        padding-right: 0;
-        border-left-width: 0;
-        border-right-width: 0;
-        pointer-events: none;
+        max-width: 0; opacity: 0; padding-left: 0; padding-right: 0;
+        border-left-width: 0; border-right-width: 0; pointer-events: none;
     }
-
-    .cart-count-group {
-        width: fit-content;
-        flex-wrap: nowrap;
-        white-space: nowrap;
-    }
-
-    .cart-count-input {
-        flex: 0 0 4.5rem !important;
-        width: 4.5rem !important;
-    }
+    .cart-count-group { width: fit-content; flex-wrap: nowrap; white-space: nowrap; }
+    .cart-count-input { flex: 0 0 4.5rem !important; width: 4.5rem !important; }
 </style>
 
-<div class="d-flex justify-content-between align-items-center gap-3 mb-4">
+<div class="sv-page-header">
     <div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-1">
                 <li class="breadcrumb-item">
-                    <a asp-area="User" asp-controller="Product" asp-action="Index" class="text-decoration-none">Products</a>
+                    <a asp-area="User" asp-controller="Product" asp-action="Index">Products</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Shopping Cart</li>
             </ol>
         </nav>
-        <h1 class="h2 fw-bold mb-1">Shopping Cart</h1>
-        <p class="text-body-secondary mb-0">
+        <h1 class="sv-page-title">Shopping Cart</h1>
+        <p style="color: var(--sv-light-text-muted); font-size: 14px; margin: 0.25rem 0 0;">
             @totalQuantity item@(totalQuantity == 1 ? "" : "s") in your cart
         </p>
     </div>
-
-    <a asp-area="User" asp-controller="Product" asp-action="Index" class="btn btn-outline-dark">
-        <i class="bi bi-arrow-left me-1" aria-hidden="true"></i> Continue shopping
+    <a asp-area="User" asp-controller="Product" asp-action="Index" class="btn-sv-secondary" style="height: 40px; font-size: 12px;">
+        <span class="material-symbols-outlined" style="font-size: 16px;">arrow_back</span>
+        Continue Shopping
     </a>
 </div>
 
 @if (cartItems.Count == 0)
 {
-    <section class="card border-0 shadow-sm">
-        <div class="card-body text-center p-5">
-            <i class="bi bi-cart-x display-3 text-body-secondary" aria-hidden="true"></i>
-            <h2 class="h4 fw-bold mt-3">Your cart is empty</h2>
-            <p class="text-body-secondary mb-4">Browse our products and add something you like to your cart.</p>
-            <a asp-area="User" asp-controller="Product" asp-action="Index" class="btn btn-dark">
-                <i class="bi bi-bag me-1" aria-hidden="true"></i> Browse products
-            </a>
-        </div>
-    </section>
+    <div style="text-align: center; padding: 4rem 2rem; border: 1px solid var(--sv-light-border); background: var(--sv-light-surface);">
+        <span class="material-symbols-outlined" style="font-size: 48px; color: var(--sv-light-text-dim); margin-bottom: 1rem; display: block;">remove_shopping_cart</span>
+        <h3 style="font-family: var(--sv-font-display); font-weight: 600; margin-bottom: 0.5rem;">Your cart is empty</h3>
+        <p style="color: var(--sv-light-text-muted); font-size: 14px; margin-bottom: 1.5rem;">Browse our products and add something you like to your cart.</p>
+        <a asp-area="User" asp-controller="Product" asp-action="Index" class="btn-sv-primary" style="height: 44px;">
+            <span class="material-symbols-outlined" style="font-size: 18px;">shopping_bag</span>
+            Browse Products
+        </a>
+    </div>
 }
 else
-{     
+{
     <div class="row g-4 align-items-start">
         <div class="col-lg-8">
-                @for(int i=0; i< Model!.Count();i++)
-                {
-                    var item = cartItems[i];
-                    var product = item.Product;
-                    var hasDiscount = product.Discount > 0;
-                    var unitPrice = product.Price * (1 - product.Discount / 100m);
-                    var lineTotal = unitPrice * item.count;
-                    
-                    <article class="card border-0 shadow-sm mb-3 cart-item" data-product-id="@product.Id" data-update-url="@updateUrl" data-remove-url="@removeUrl">
-                        <div class="card-body p-3 p-md-4">
-                            <div class="row g-3 align-items-center">
-                                <div class="col-4 col-sm-3 col-md-2">
-                                    <a asp-area="User" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="d-block">
-                                        @if (!string.IsNullOrWhiteSpace(product.Image))
+            @for(int i=0; i< Model!.Count();i++)
+            {
+                var item = cartItems[i];
+                var product = item.Product;
+                var hasDiscount = product.Discount > 0;
+                var unitPrice = product.Price * (1 - product.Discount / 100m);
+                var lineTotal = unitPrice * item.count;
+
+                <article class="card mb-3 cart-item" data-product-id="@product.Id" data-update-url="@updateUrl" data-remove-url="@removeUrl"
+                         style="border: 1px solid var(--sv-light-border) !important; background: var(--sv-light-surface) !important;">
+                    <div class="card-body p-3 p-md-4">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-4 col-sm-3 col-md-2">
+                                <a asp-area="User" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">
+                                    @if (!string.IsNullOrWhiteSpace(product.Image))
+                                    {
+                                        <img src="~/@product.Image" alt="@product.Name" style="width: 100%; height: 100px; object-fit: cover;"/>
+                                    }
+                                    else
+                                    {
+                                        <img src="~/images/Products/Product_placeholder.avif" alt="@product.Name" style="width: 100%; height: 100px; object-fit: cover;"/>
+                                    }
+                                </a>
+                            </div>
+                            <div class="col-8 col-sm-9 col-md-10">
+                                <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
+                                    <div>
+                                        <span class="sv-label-micro" style="color: var(--sv-light-text-dim); font-size: 10px;">Product #@product.Id</span>
+                                        <h2 style="font-family: var(--sv-font-display); font-size: 16px; font-weight: 600; margin: 0.25rem 0 0;">
+                                            <a asp-area="User" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"
+                                               style="color: var(--sv-light-text); text-decoration: none;">@product.Name</a>
+                                        </h2>
+                                        @if (product.Brand is not null)
                                         {
-                                            <img src="~/@product.Image" class="img-fluid rounded w-100" alt="@product.Name" style="height: 120px; object-fit: cover;" />
+                                            <span style="font-size: 13px; color: var(--sv-light-text-muted);">@product.Brand.Name</span>
+                                        }
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <span style="font-size: 12px; color: var(--sv-light-text-muted); display: block;">Unit price</span>
+                                        @if (hasDiscount)
+                                        {
+                                            <span style="text-decoration: line-through; color: var(--sv-text-dim); font-size: 13px; margin-right: 0.25rem;">@product.Price.ToString("c")</span>
+                                            <span style="font-weight: 700; color: var(--sv-terracotta);">@unitPrice.ToString("c")</span>
+                                            <br/><span class="badge sv-badge-discount" style="font-size: 10px; margin-top: 0.25rem;">@product.Discount.ToString("0.##")% off</span>
                                         }
                                         else
                                         {
-                                            <img src="~/images/Products/Product_placeholder.avif" class="img-fluid rounded w-100" alt="@product.Name" style="height: 120px; object-fit: cover;" />
+                                            <span style="font-weight: 700;">@unitPrice.ToString("c")</span>
                                         }
-                                    </a>
+                                    </div>
                                 </div>
-
-                                <div class="col-8 col-sm-9 col-md-10">
-                                    <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
-                                        <div class="min-w-0">
-                                            <div class="small text-uppercase text-body-secondary fw-semibold mb-1">
-                                                Product #@product.Id
-                                            </div>
-                                            <h2 class="h5 fw-bold mb-2 text-break">
-                                                <a asp-area="User" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="text-body text-decoration-none">
-                                                    @product.Name
-                                                </a>
-                                            </h2>
-                                            @if (product.Brand is not null)
-                                            {
-                                                <div class="small text-body-secondary">
-                                                    <i class="bi bi-award me-1" aria-hidden="true"></i>@product.Brand.Name
-                                                </div>
-                                            }
-                                        </div>
-
-                                        <div class="text-md-end">
-                                            <div class="small text-body-secondary mb-1">Unit price</div>
-                                            @if (hasDiscount)
-                                            {
-                                                <div>
-                                                    <span class="small text-body-secondary text-decoration-line-through me-1">@product.Price.ToString("c")</span>
-                                                    <span class="fw-bold text-success">@unitPrice.ToString("c")</span>
-                                                </div>
-                                                <span class="badge text-bg-danger mt-1">@product.Discount.ToString("0.##")% off</span>
-                                            }
-                                            else
-                                            {
-                                                <span class="fw-bold">@unitPrice.ToString("c")</span>
-                                            }
+                                <div class="row g-3 mt-3 pt-3 align-items-end" style="border-top: 1px solid var(--sv-light-border);">
+                                    <div class="col-sm-4">
+                                        <label for="count-@product.Id" style="font-size: 12px; color: var(--sv-light-text-muted); display: block; margin-bottom: 0.25rem;">Count</label>
+                                        <div class="input-group input-group-sm cart-count-group">
+                                            <input type="number" id="count-@product.Id" class="form-control cart-count-input" min="1" step="1" value="@item.count" data-original-count="@item.count"/>
+                                            <button type="button" class="btn btn-outline-primary btn-sm px-2 update-cart-btn is-hidden">Update</button>
                                         </div>
                                     </div>
-
-                                    <div class="row g-3 border-top mt-3 pt-3 align-items-end">
-                                        <div class="col-sm-4">
-                                            <label for="count-@product.Id" class="small text-body-secondary d-block mb-1">Count</label>
-                                            <div class="input-group input-group-sm cart-count-group">
-                                                <input type="number" id="count-@product.Id" class="form-control cart-count-input" min="1" step="1" value="@item.count" data-original-count="@item.count" aria-label="Count for @product.Name" />
-                                                <button type="button" class="btn btn-outline-primary btn-sm px-2 update-cart-btn is-hidden" aria-hidden="true">Update</button>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="small text-body-secondary">Total price</div>
-                                            <div class="fs-5 fw-bold">@lineTotal.ToString("c")</div>
-                                        </div>
-                                        <div class="col-sm-4 text-sm-end">
-                                            <button type="button" class="btn btn-outline-danger btn-sm remove-cart-btn" data-product-id="@product.Id">
-                                                <i class="bi bi-trash me-1" aria-hidden="true"></i> Remove
-                                            </button>
-                                        </div>
+                                    <div class="col-sm-4">
+                                        <span style="font-size: 12px; color: var(--sv-light-text-muted); display: block;">Total</span>
+                                        <span class="sv-price-display" style="font-size: 18px;">@lineTotal.ToString("c")</span>
+                                    </div>
+                                    <div class="col-sm-4 text-sm-end">
+                                        <button type="button" class="btn-sv-danger remove-cart-btn" data-product-id="@product.Id" style="height: 36px; font-size: 12px;">
+                                            <span class="material-symbols-outlined" style="font-size: 16px;">delete</span>
+                                            Remove
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </article>
-                }
-
+                    </div>
+                </article>
+            }
         </div>
 
+        <!-- Order Summary -->
         <div class="col-lg-4">
-            <section class="card border-0 shadow-sm sticky-lg-top" style="top: 1rem;">
-                <div class="card-body p-4">
-                    <h2 class="h5 fw-bold mb-4">Order summary</h2>
+            <div class="sticky-lg-top" style="top: 5rem;">
+                <div style="background: var(--sv-light-surface); border: 1px solid var(--sv-light-border); padding: 1.5rem;">
+                    <h2 style="font-family: var(--sv-font-display); font-size: 18px; font-weight: 600; margin-bottom: 1.5rem;">Order Summary</h2>
 
-                    <div class="d-flex justify-content-between mb-3">
-                        <span class="text-body-secondary">Products (@totalQuantity)</span>
-                        <span>@subtotal.ToString("c")</span>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem; font-size: 14px;">
+                        <span style="color: var(--sv-light-text-muted);">Products (@totalQuantity)</span>
+                        <span class="sv-tabular">@subtotal.ToString("c")</span>
                     </div>
 
                     @if (totalDiscount > 0)
                     {
-                        <div class="d-flex justify-content-between mb-3 text-success">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem; font-size: 14px; color: var(--sv-green);">
                             <span>Discount</span>
-                            <span>-@totalDiscount.ToString("c")</span>
+                            <span class="sv-tabular">-@totalDiscount.ToString("c")</span>
                         </div>
                     }
 
-
-                    <div class="border-top pt-3 mb-4 d-flex justify-content-between align-items-center">
-                        <span class="fw-bold">Total</span>
-                        <span class="fs-4 fw-bold">@cartTotal.ToString("c")</span>
+                    <div style="border-top: 1px solid var(--sv-light-border); padding-top: 1rem; margin-top: 1rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: 600;">Total</span>
+                        <span class="sv-price-display">@cartTotal.ToString("c")</span>
                     </div>
 
                     <form method="post" asp-controller="Payment" asp-action="StartPaymentSession">
-                        <button type="submit" class="btn btn-dark btn-lg w-100" aria-disabled="true" title="Checkout is not available yet.">
-                            <i class="bi bi-credit-card me-1" aria-hidden="true"></i> Checkout
+                        <button type="submit" class="btn-sv-primary" style="width: 100%; height: 48px;">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">credit_card</span>
+                            Checkout
                         </button>
                     </form>
-                    <p class="small text-body-secondary text-center mt-2 mb-0">Checkout will be available soon.</p>
-
                 </div>
-            </section>
+            </div>
         </div>
     </div>
-        
 }
+
 @section Scripts {
     <script src="~/js/Cart/index.js" asp-append-version="true"></script>
 }

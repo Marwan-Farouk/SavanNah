@@ -1,13 +1,13 @@
 @if (TempData["success"] is not null)
 {
-    <div class="alert alert-success">
-        <strong>@TempData["success"] !</strong>
+    <div class="sv-notification sv-notification-success" id="sv-toast">
+        <strong>@TempData["success"]</strong>
     </div>
 }
 
 @if (TempData["error"] is not null)
 {
-    <div class="alert alert-danger">
-        <strong>@TempData["error"] !</strong>
+    <div class="sv-notification sv-notification-error" id="sv-toast">
+        <strong>@TempData["error"]</strong>
     </div>
 }

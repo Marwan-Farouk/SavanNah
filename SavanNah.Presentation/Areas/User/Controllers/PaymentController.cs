@@ -21,20 +21,21 @@ namespace SavanNah.Presentation.Areas.User.Controllers
         public IPaymentRepository _paymentRepository;
 
 
-
-
-        public PaymentController(IOrderManager orderManager, IShoppingCartManager shoppingCartManager, IProductManager productManager, IPaymentRepository paymentRepository)
+        public PaymentController(IOrderManager orderManager, IShoppingCartManager shoppingCartManager,
+            IProductManager productManager, IPaymentRepository paymentRepository)
         {
             this._orderManager = orderManager;
             _shoppingCartManager = shoppingCartManager;
             _productManager = productManager;
             _paymentRepository = paymentRepository;
         }
+
         private Guid GetUserId()
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity!;
             return Guid.Parse(claimsIdentity!.FindFirst(ClaimTypes.NameIdentifier)!.Value);
         }
+
         [HttpPost]
         public async Task<IActionResult> StartPaymentSession()
         {
@@ -43,10 +44,13 @@ namespace SavanNah.Presentation.Areas.User.Controllers
 
             var cartItems = await _shoppingCartManager.GetUserCart(userId);
 
-            var products = await _productManager.GetAll(prod => cartItems.Select(item => item.Product.Id).Contains(prod.Id), null);
+            var products =
+                await _productManager.GetAll(prod => cartItems.Select(item => item.Product.Id).Contains(prod.Id), null);
 
 
-            var total = products.Sum(prod => (prod.Price - (prod.Price * (prod.Discount / 100))) * (cartItems.First(item => item.Product.Id == prod.Id).Count));
+            var total = products.Sum(prod =>
+                (prod.Price - (prod.Price * (prod.Discount / 100))) *
+                (cartItems.First(item => item.Product.Id == prod.Id).Count));
 
             var orderProducts = cartItems.Select(item => new CreateOrderProductDTO
             {
@@ -65,18 +69,18 @@ namespace SavanNah.Presentation.Areas.User.Controllers
             if (created is not null)
             {
                 // 2- Create Session
-                var orderProductList = created.OrderProducts.Select(op => _productManager.Get(prod => prod.Id == op.ProductId, null).Result).ToList();
+                var orderProductList = created.OrderProducts
+                    .Select(op => _productManager.Get(prod => prod.Id == op.ProductId, null).Result).ToList();
                 var lineItems = orderProductList.Select(prod => new SessionLineItemOptions
                 {
                     PriceData = new SessionLineItemPriceDataOptions
                     {
-                        Currency = "egp",
-                        UnitAmountDecimal = (prod.Price - (prod.Price * (prod.Discount / 100))) * 100,
+                        Currency = "usd",
+                        UnitAmount = (long)Math.Round((prod.Price - (prod.Price * (prod.Discount / 100))) * 100),
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {
                             Name = prod.Name,
                             Description = prod.Description,
-
                         }
                     },
                     Quantity = created.OrderProducts.First(op => op.ProductId == prod.Id).Count
@@ -97,8 +101,8 @@ namespace SavanNah.Presentation.Areas.User.Controllers
                 Session session = await service.CreateAsync(options);
                 Response.Headers.Append("Location", session.Url);
                 return new StatusCodeResult(303);
-
             }
+
             TempData["error"] = "Failed to submit your order";
             return RedirectToAction("Index", "Cart");
         }
@@ -125,7 +129,6 @@ namespace SavanNah.Presentation.Areas.User.Controllers
                     OrderId = Guid.Parse(orderId),
                     UserId = GetUserId(),
                     PaymentDate = DateTime.Now,
-
                 };
                 var createdPayment = await _paymentRepository.Create(payment);
                 await _orderManager.Save();

@@ -1,16 +1,25 @@
 using Microsoft.AspNetCore.Mvc;
+using SavanNah.Business.Managers.ProductManager;
 using SavanNah.Models.Models.ErrorViewModel;
 using System.Diagnostics;
 
 namespace SavanNah.Presentation.Areas.User.Controllers;
 
 [Area("User")]
-//[Route("Home/[action]")]
 public class HomeController : Controller
 {
-    public IActionResult Index()
+    private readonly IProductManager _productManager;
+
+    public HomeController(IProductManager productManager)
     {
-        return View();
+        _productManager = productManager;
+    }
+
+    public async Task<IActionResult> Index()
+    {
+        var products = await _productManager.GetAll(p => true, ["Brand", "CategoryProducts.Category"]);
+        var featured = products.Take(8).ToList();
+        return View(featured);
     }
 
     public IActionResult Privacy()

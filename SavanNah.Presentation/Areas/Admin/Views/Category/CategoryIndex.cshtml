@@ -1,10 +1,22 @@
-﻿@model List<Category>
+@model List<Category>
 <link rel="stylesheet" href="~/css/Category/Admin/index.css"/>
 
+<style>
+    a,
+    button,
+    input[type='submit'] {
+        height: 100% !important;
+    }
 
-<div class="header-container w-75 col-12 d-flex justify-content-between align-items-center">
-    <h1 class="col-6 col-md-4">Categories</h1>
-    <a class="btn btn-success col-5 col-sm-3" asp-action="Create" asp-controller="Category">
+    h1, h2, h3, h4, tr>th>h4 {
+        --bs-text-opacity: 1;
+        color: var(--sv-text-primary) !important;
+    }
+</style>
+
+<div class="col-12 d-flex w-75 justify-content-between align-items-center header-container">
+    <h1 class="col-6 col-md-4 text-light">Categories</h1>
+    <a class="col-5 col-sm-3 btn btn-success h-100" asp-action="Create" asp-controller="Category">
         <i class="bi bi-plus-circle"></i>
         Add Categories
     </a>
@@ -32,14 +44,14 @@
                 <th scope="row">@cat.Name</th>
                 <th scope="row">@cat.Description</th>
                 <td class="text-center">
-                    <a asp-area="Admin" asp-controller="Category" asp-action="Edit" class="btn btn-primary" asp-route-id="@cat.Id">
+                    <a asp-area="Admin" asp-controller="Category" asp-action="Edit" class="btn btn-primary h-100" asp-route-id="@cat.Id">
                         <i class="bi bi-pencil-square"></i>
                         Edit
                     </a>
                 </td>
                 <td class="text-center">
                     <form asp-area="Admin" asp-controller="Category" asp-action="Delete" asp-route-id="@cat.Id" method="post">
-                        <button type="submit" class="btn btn-danger del-btn">
+                        <button type="submit" class="btn btn-danger h-100 del-btn">
                             <i class="bi bi-trash3"></i>
                             Delete
                         </button>
