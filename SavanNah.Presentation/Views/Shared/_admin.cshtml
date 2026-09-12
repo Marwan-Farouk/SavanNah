@@ -2,164 +2,160 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-    <link rel="icon" type="image/x-icon" href="~/favicon.ico" asp-append-version="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="SavanNah Admin — Catalog Administration Console"/>
+    <title>@ViewData["Title"] — SAVANNAH Admin</title>
 
-    <link
-        href="/css/admin.css"
-        rel="stylesheet"/>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="~/savannah-favicon.png" asp-append-version="true"/>
+
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
-          integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous">
-    <link href="https://cdn.datatables.net/3.0.3/css/dataTables.dataTables.min.css" rel="stylesheet">
+          integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous"/>
 
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/savannah-design-system.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true"/>
+    <link href="https://cdn.datatables.net/3.0.3/css/dataTables.dataTables.min.css" rel="stylesheet"/>
 </head>
 <body>
-<nav class="navbar navbar-expand navbar-dark bg-dark sb-topnav">
-    <!-- Navbar Brand-->
-    <a class="ps-3 navbar-brand" asp-controller="Admin" asp-action="Index">Admin</a>
-    <!-- Sidebar Toggle-->
-    <button
-        class="order-1 order-lg-0 me-4 me-lg-0 btn btn-link btn-sm"
-        id="sidebarToggle"
-        href="#!">
-        <i class="fas fa-bars"></i>
-    </button>
 
-    <!-- Navbar Search-->
-    @* <form
-        class="d-none d-md-inline-block me-0 me-md-3 my-2 my-md-0 form-inline ms-auto">
-        <div class="input-group">
-            <input
-                class="form-control"
-                type="text"
-                placeholder="Search for..."
-                aria-label="Search for..."
-                aria-describedby="btnNavbarSearch"/>
-            <button
-                class="btn btn-primary"
-                id="btnNavbarSearch"
-                type="button">
-                <i class="fas fa-search"></i>
-            </button>
-        </div>
-    </form>*@
-    <!-- Navbar-->
-    <ul class="ms-md-0 me-3 me-lg-4 navbar-nav ms-auto justify-content-end w-100">
-        <li class="nav-item">
-            <a
-                class="nav-link fs-5"
-                id="navbarDropdown"
-                role="button"
-                asp-area="User" asp-controller="Home" asp-action="Index">
-                <i class="bi bi-house-door-fill"></i>
-                <span>
-                    Home
-                </span>
-            </a>
+<!-- Top Navbar -->
+<nav class="sv-admin-topbar">
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <!-- Sidebar Toggle (mobile) -->
+        <button class="sv-sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
 
-        </li>
-    </ul>
+        <!-- Brand -->
+        <a class="sv-admin-topbar-brand" asp-area="Admin" asp-controller="Admin" asp-action="Index">
+            <span class="sv-brand-logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 40" fill="none">
+                    <g transform="translate(4, 6)">
+                        <circle cx="14" cy="14" r="13" stroke="#D4A373" stroke-width="2" fill="none" opacity="0.4"/>
+                        <path d="M14 6 C9 12 8 18 14 22 C20 18 19 12 14 6Z" fill="#D4A373"/>
+                        <path d="M7 16 C11 15 17 15 21 16" stroke="#FAEDCD" stroke-width="1.5" stroke-linecap="round"/>
+                        <circle cx="14" cy="14" r="2.5" fill="#FAEDCD"/>
+                    </g>
+                    <text x="42" y="26" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="20" letter-spacing="1.5" fill="#F4F1DE">SAVANNAH</text>
+                    <circle cx="168" cy="18" r="2.5" fill="#D4A373"/>
+                </svg>
+            </span>
+        </a>
+        <span class="sv-admin-topbar-label">Admin</span>
+    </div>
+
+    <!-- Right Actions -->
+    <div class="sv-admin-topbar-actions">
+        <a asp-area="User" asp-controller="Home" asp-action="Index">
+            <span class="material-symbols-outlined" style="font-size: 18px;">home</span>
+            <span>Storefront</span>
+        </a>
+    </div>
 </nav>
-<div id="layoutSidenav">
-    <div id="layoutSidenav_nav">
-        <nav
-            class="accordion sb-sidenav sb-sidenav-dark"
-            id="sidenavAccordion">
-            <div class="sb-sidenav-menu">
-                <div class="nav">
-                    <div class="sb-sidenav-menu-heading">Core</div>
-                    <a class="nav-link" asp-controller="Admin" asp-action="Index">
-                        <div class="sb-nav-link-icon">
-                            <i class="fas fa-tachometer-alt"></i>
-                        </div>
-                        Dashboard
-                    </a>
-                    <div class="sb-sidenav-menu-heading">User Configuration</div>
-                    <a class="nav-link" asp-controller="User" asp-action="Index">
-                        <div class="sb-nav-link-icon">
-                            <i class="bi bi-person-fill"></i>
-                        </div>
-                        Users
-                    </a>
-                    <a class="nav-link" asp-controller="Role" asp-action="Index">
-                        <div class="sb-nav-link-icon">
-                            <i class="bi bi-sliders2"></i>
-                        </div>
-                        Roles
-                    </a>
-                    <div class="sb-sidenav-menu-heading">Management</div>
-                    <a class="nav-link" asp-area="Admin" asp-controller="Product" asp-action="Index">
-                        <div class="sb-nav-link-icon">
-                            <i class="bi bi-bag-fill"></i>
-                        </div>
-                        Products
-                    </a>
-                    <a class="nav-link" asp-area="Admin" asp-controller="Category" asp-action="Index">
-                        <div class="sb-nav-link-icon">
-                            <i class="bi bi-shop"></i>
-                        </div>
-                        Categories
-                    </a>
-                    <a class="nav-link" asp-area="Admin" asp-controller="Brand" asp-action="Index">
-                        <div class="sb-nav-link-icon">
-                            <i class="bi bi-alexa"></i>
-                        </div>
-                        Brands
-                    </a>
-                    <a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="Index">
-                        <div class="sb-nav-link-icon">
-                            <i class="bi bi-receipt"></i>
-                        </div>
-                        Orders
-                    </a>
-                    <a class="nav-link" asp-area="Admin" asp-controller="Payment" asp-action="Index">
-                        <div class="sb-nav-link-icon">
-                            <i class="bi bi-credit-card-fill"></i>
-                        </div>
-                        Payments
-                    </a>
-                </div>
-            </div>
-        </nav>
-    </div>
-    <div id="layoutSidenav_content">
-        <main role="main">
-            <div class="container-fluid px-4">
-                <partial name="_NotificationPartial"/>
-                @RenderBody()
-            </div>
-        </main>
-        <footer class="py-4 mt-auto bg-light">
-            <div class="container-fluid px-4">
-                <div
-                    class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">
-                        Copyright &copy; SavanNah 2025
-                    </div>
-                    <div>
-                        <a href="#">Privacy Policy</a>
-                        &middot;
-                        <a href="#">Terms &amp; Conditions</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </div>
+
+<!-- Sidebar -->
+<aside class="sv-admin-sidebar sv-dark-scroll" id="adminSidebar">
+    <nav>
+        <!-- Core -->
+        <div class="sv-sidebar-section-heading">Core</div>
+        <ul class="sv-sidebar-nav">
+            <li>
+                <a asp-area="Admin" asp-controller="Admin" asp-action="Index">
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    Dashboard
+                </a>
+            </li>
+        </ul>
+
+        <!-- User Configuration -->
+        <div class="sv-sidebar-section-heading">User Configuration</div>
+        <ul class="sv-sidebar-nav">
+            <li>
+                <a asp-area="Admin" asp-controller="User" asp-action="Index">
+                    <i class="bi bi-person-fill"></i>
+                    Users
+                </a>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-controller="Role" asp-action="Index">
+                    <i class="bi bi-sliders2"></i>
+                    Roles
+                </a>
+            </li>
+        </ul>
+
+        <!-- Management -->
+        <div class="sv-sidebar-section-heading">Management</div>
+        <ul class="sv-sidebar-nav">
+            <li>
+                <a asp-area="Admin" asp-controller="Product" asp-action="Index">
+                    <i class="bi bi-bag-fill"></i>
+                    Products
+                </a>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-controller="Category" asp-action="Index">
+                    <i class="bi bi-shop"></i>
+                    Categories
+                </a>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-controller="Brand" asp-action="Index">
+                    <i class="bi bi-award-fill"></i>
+                    Brands
+                </a>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-controller="Order" asp-action="Index">
+                    <i class="bi bi-receipt"></i>
+                    Orders
+                </a>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-controller="Payment" asp-action="Index">
+                    <i class="bi bi-credit-card-fill"></i>
+                    Payments
+                </a>
+            </li>
+        </ul>
+    </nav>
+</aside>
+
+<!-- Main Content -->
+<div class="sv-admin-content">
+    <partial name="_NotificationPartial"/>
+    <main role="main">
+        @RenderBody()
+    </main>
 </div>
+
+<!-- Footer -->
+<footer class="sv-admin-footer">
+    <span>Copyright &copy; SAVANNAH @DateTime.Now.Year</span>
+    <div style="display: flex; gap: 1rem;">
+        <a href="#">Privacy Policy</a>
+        <span style="color: var(--sv-border);">&middot;</span>
+        <a href="#">Terms &amp; Conditions</a>
+    </div>
+</footer>
+
+<!-- Scripts -->
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="https://cdn.tiny.cloud/1/yu2fuakzhixci1g9b09y8g8o4ka1v1trmjc7lquf3z0kbk2f/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/3.0.3/js/dataTables.min.js"></script>
-<script src="~/js/admin.js"></script>
-<script
-    src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
-    crossorigin="anonymous"></script>
-@await RenderSectionAsync("Scripts", required: false)
+<script src="~/js/admin.js" asp-append-version="true"></script>
+<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

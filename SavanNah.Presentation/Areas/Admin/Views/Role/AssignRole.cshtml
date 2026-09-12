@@ -4,29 +4,37 @@
     Layout = "_admin";
 }
 
+<style>
+    a,
+    button,
+    input[type='submit'] {
+        height: 100% !important;
+    }
+</style>
+
 <div class="row">
     <div class="col-md-6 offset-md-3">
         <div class="mt-5 card shadow-sm">
             <div class="card-header bg-primary text-white">
-                <h4 class="mb-0">Assign Role to User</h4>
+                <h4 class="mb-0 text-light">Assign Role to User</h4>
             </div>
             <div class="card-body">
                 <form method="post" asp-action="AssignRole">
                     <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="mb-3">
                         <label class="form-label">Select User</label>
-                        <select asp-items="@Model.Users" class="form-select" asp-for="UserId">
+                        <select asp-items="@Model.Users" class="form-select h-100" asp-for="UserId">
                             <option disabled selected>-- Select a User --</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Select Role</label>
-                        <select asp-items="@Model.Roles" multiple class="form-select" asp-for="RoleNames" >
+                        <select asp-items="@Model.Roles" multiple class="form-select h-100" asp-for="RoleNames">
                             <option disabled selected>-- Select a Role --</option>
                         </select>
                     </div>
                     <div class="d-grid gap-2 mt-4">
-                        <button type="submit" class="btn btn-primary">Assign Role</button>
+                        <button type="submit" class="btn btn-primary h-100">Assign Role</button>
                     </div>
                 </form>
             </div>

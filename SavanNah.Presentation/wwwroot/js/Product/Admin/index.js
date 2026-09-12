@@ -28,7 +28,7 @@ function LoadDataTable() {
                     return `<div class="d-flex gap-2">
                             <a onClick="Details('${data}')" class="btn btn-outline-info btn-sm">Details</a>
                             <a href="/admin/product/Edit/${data}" class="btn btn-outline-warning btn-sm">Edit</a>
-                            <a onClick="Delete('/admin/product/Delete/${data}')" class="btn btn-danger btn-sm del-btn">Delete</a>
+                            <a onClick="Delete('/admin/product/Delete/${data}')" class="btn btn-danger btn-sm del-btn h-100">Delete</a>
                         </div>`;
                 },
             },

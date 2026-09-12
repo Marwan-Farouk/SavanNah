@@ -1,0 +1,294 @@
+/* ============================================================
+   SAVANNAH DESIGN SYSTEM — Core Tokens & Bootstrap Overrides
+   ============================================================
+   Nocturnal Savannah: Brutalist precision + equatorial earth tones
+   Zero-radius geometry · Space Grotesk + Geist typography
+   ============================================================ */
+
+/* --- CSS Custom Properties (Design Tokens) --- */
+:root {
+  /* Primary Palette */
+  --sv-primary: #1A1F16;
+  --sv-secondary: #E07A5F;
+  --sv-tertiary: #D97706;
+  --sv-neutral: #141812;
+
+  /* Surface Elevations */
+  --sv-surface-base: #141812;
+  --sv-surface-1: #1A1F16;
+  --sv-surface-2: #242C1F;
+  --sv-surface-3: #2E3827;
+  --sv-surface-alt-row: #1E241A;
+
+  /* Text */
+  --sv-text-primary: #F8FAFC;
+  --sv-text-muted: #9CA3AF;
+  --sv-text-dim: #6B7280;
+
+  /* Borders */
+  --sv-border: #2C3424;
+  --sv-border-strong: #3B4A3F;
+
+  /* Accent Colors */
+  --sv-terracotta: #E07A5F;
+  --sv-terracotta-hover: #D46346;
+  --sv-terracotta-active: #B94F35;
+  --sv-amber: #D97706;
+  --sv-green: #15803D;
+  --sv-green-light: #4ADE80;
+  --sv-red: #DC2626;
+
+  /* Light Theme (User Layout) */
+  --sv-light-bg: #FAF8F0;
+  --sv-light-bg-alt: #F4F1DE;
+  --sv-light-surface: #FFFFFF;
+  --sv-light-surface-hover: #F0EDE0;
+  --sv-light-text: #1A1F16;
+  --sv-light-text-muted: #5C6353;
+  --sv-light-text-dim: #8C9482;
+  --sv-light-border: #DDD9C4;
+  --sv-light-border-strong: #C4BFA6;
+
+  /* Spacing */
+  --sv-space-xs: 0.25rem;
+  --sv-space-sm: 0.5rem;
+  --sv-space-md: 1rem;
+  --sv-space-lg: 1.5rem;
+  --sv-space-xl: 2.5rem;
+  --sv-gutter: 1.5rem;
+  --sv-margin: 2rem;
+  --sv-margin-mobile: 1rem;
+
+  /* Typography */
+  --sv-font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --sv-font-body: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Shadows */
+  --sv-shadow-hard: 4px 4px 0px 0px #0E120D, 0 0 0 1px #3B4A3F;
+  --sv-shadow-light-hard: 4px 4px 0px 0px rgba(26, 31, 22, 0.12), 0 0 0 1px #DDD9C4;
+}
+
+
+/* ============================================================
+   GLOBAL BOOTSTRAP OVERRIDES
+   ============================================================ */
+
+/* Zero-radius everything */
+*,
+*::before,
+*::after {
+  border-radius: 0 !important;
+}
+
+/* Base body reset */
+body {
+  font-family: var(--sv-font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings use display font */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: var(--sv-font-display);
+}
+
+/* Links */
+a {
+  text-decoration: none;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+/* ============================================================
+   BOOTSTRAP BUTTON OVERRIDES
+   ============================================================ */
+
+.btn {
+  font-family: var(--sv-font-display);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: all 0.15s ease;
+}
+
+.btn:active {
+  transform: scale(0.99);
+}
+
+/* ============================================================
+   BOOTSTRAP FORM OVERRIDES
+   ============================================================ */
+
+.form-control,
+.form-select {
+  font-family: var(--sv-font-body);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-label {
+  font-family: var(--sv-font-display);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Checkbox & Radio */
+.form-check-input {
+  width: 18px !important;
+  height: 18px !important;
+  border-width: 1.5px !important;
+}
+
+/* ============================================================
+   BOOTSTRAP TABLE OVERRIDES
+   ============================================================ */
+
+.table {
+  font-family: var(--sv-font-body);
+  font-size: 0.875rem;
+}
+
+.table thead th {
+  font-family: var(--sv-font-display);
+  font-weight: 700;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ============================================================
+   BOOTSTRAP CARD OVERRIDES
+   ============================================================ */
+
+.card {
+  border-width: 1px;
+  border-style: solid;
+  transition: border-color 0.2s ease;
+}
+
+/* ============================================================
+   BOOTSTRAP BADGE OVERRIDES
+   ============================================================ */
+
+.badge {
+  font-family: var(--sv-font-display);
+  font-weight: 700;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+
+.sv-label-micro {
+  font-family: var(--sv-font-display);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sv-price-display {
+  font-family: var(--sv-font-display);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.sv-display-xl {
+  font-family: var(--sv-font-display);
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 52px;
+  letter-spacing: -0.03em;
+}
+
+.sv-display-lg {
+  font-family: var(--sv-font-display);
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 42px;
+  letter-spacing: -0.025em;
+}
+
+.sv-headline-md {
+  font-family: var(--sv-font-display);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 30px;
+  letter-spacing: -0.02em;
+}
+
+.sv-title-sm {
+  font-family: var(--sv-font-display);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+}
+
+.sv-tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Brand Logo SVG Container */
+.sv-brand-logo {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+}
+
+.sv-brand-logo svg {
+  height: 100%;
+  width: auto;
+}
+
+/* Responsive typography */
+@media (max-width: 767.98px) {
+  .sv-display-xl {
+    font-size: 32px;
+    line-height: 38px;
+    letter-spacing: -0.02em;
+  }
+
+  .sv-display-lg {
+    font-size: 26px;
+    line-height: 32px;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* ============================================================
+   SCROLLBAR STYLING (Dark Theme)
+   ============================================================ */
+.sv-dark-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sv-dark-scroll::-webkit-scrollbar-track {
+  background: var(--sv-neutral);
+}
+
+.sv-dark-scroll::-webkit-scrollbar-thumb {
+  background: var(--sv-border-strong);
+}
+
+.sv-dark-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--sv-text-muted);
+}

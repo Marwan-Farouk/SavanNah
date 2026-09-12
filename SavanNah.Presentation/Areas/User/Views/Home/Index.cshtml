@@ -1,8 +1,132 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@model List<Product>
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Hero Section -->
+<section class="sv-hero">
+    <div class="sv-hero-gradient"></div>
+    <div class="container-fluid position-relative" style="z-index: 1;">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem;">
+                    <span class="sv-hero-tag">Curated Collection</span>
+                    <span style="width: 32px; height: 1px; background: var(--sv-terracotta); opacity: 0.4;"></span>
+                    <span class="sv-hero-tag" style="color: var(--sv-light-text-dim);">@DateTime.Now.Year</span>
+                </div>
+
+                <h1 class="sv-hero-title">
+                    Wild Horizons.<br/>
+                    <em>Refined Goods.</em>
+                </h1>
+
+                <p class="sv-hero-subtitle">
+                    Architectural provisions and equatorial artisan creations curated for contemplative living — discover handcrafted goods built to endure.
+                </p>
+
+                <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
+                    <a asp-area="User" asp-controller="Product" asp-action="Index" class="btn-sv-primary">
+                        Browse Collection
+                        <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+                    </a>
+                    <a asp-area="User" asp-controller="Category" asp-action="Index" class="btn-sv-ghost">
+                        <span>View Categories</span>
+                        <span class="material-symbols-outlined" style="font-size: 15px;">arrow_forward</span>
+                    </a>
+                </div>
+
+                <div class="sv-hero-meta">
+                    <span>Curated Catalog</span>
+                    <span>Artisan Quality</span>
+                    <span>Secure Checkout</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products Section -->
+@if (Model.Any())
+{
+    <section style="padding: 3rem 0;">
+        <div class="sv-section-header">
+            <div>
+                <span class="sv-section-tag">Featured</span>
+                <h2 class="sv-section-title">Selected Works &amp; Provisions</h2>
+            </div>
+            <a asp-area="User" asp-controller="Product" asp-action="Index" class="btn-sv-ghost">
+                <span>View All</span>
+                <span class="material-symbols-outlined" style="font-size: 15px;">arrow_forward</span>
+            </a>
+        </div>
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4" style="--bs-gutter-x: 1.5rem; --bs-gutter-y: 2rem;">
+            @foreach (var product in Model)
+            {
+                var hasDiscount = product.Discount > 0;
+                var discountedPrice = product.Price * (1 - product.Discount / 100m);
+                var categoryName = product.CategoryProducts?.FirstOrDefault()?.Category?.Name;
+
+                <div class="col">
+                    <a asp-area="User" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"
+                       style="text-decoration: none; display: block;">
+                        <article class="sv-product-card">
+                            @if (!string.IsNullOrEmpty(product.Image))
+                            {
+                                <img src="~/@product.Image" alt="@product.Name" class="sv-card-img"/>
+                            }
+                            else
+                            {
+                                <img src="~/images/Products/Product_placeholder.avif" alt="@product.Name" class="sv-card-img"/>
+                            }
+                            <div class="sv-card-body">
+                                @if (!string.IsNullOrEmpty(categoryName))
+                                {
+                                    <div class="sv-card-category">@categoryName</div>
+                                }
+                                <h3 class="sv-card-title">@product.Name</h3>
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.75rem;">
+                                    @if (hasDiscount)
+                                    {
+                                        <span class="sv-card-price-old" style="font-size: 14px;">@product.Price.ToString("c")</span>
+                                        <span class="sv-card-price" style="font-size: 16px;">@discountedPrice.ToString("c")</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="sv-card-price" style="font-size: 16px;">@product.Price.ToString("c")</span>
+                                    }
+                                </div>
+                            </div>
+                        </article>
+                    </a>
+                </div>
+            }
+        </div>
+    </section>
+}
+
+<!-- Brand Story Section -->
+<section style="padding: 4rem 0; border-top: 1px solid var(--sv-light-border);">
+    <div class="row align-items-center">
+        <div class="col-lg-7">
+            <span class="sv-section-tag" style="display: block; margin-bottom: 1rem;">The Savannah Guild</span>
+            <h2 style="font-family: var(--sv-font-display); font-size: clamp(24px, 4vw, 42px); font-weight: 300; letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 1.5rem;">
+                Equatorial Craftsmanship.<br/>
+                <span style="color: var(--sv-light-text-muted);">Architectural Discipline.</span>
+            </h2>
+
+            <blockquote style="font-size: 1.1rem; font-weight: 300; color: var(--sv-light-text-muted); font-style: italic; line-height: 1.7; margin-bottom: 1.5rem; border-left: 3px solid var(--sv-terracotta); padding-left: 1.5rem; opacity: 0.9;">
+                "Every piece in our catalog represents a dialogue between traditional guildcraft and modern architectural precision — built to outlast, designed to endure."
+            </blockquote>
+
+            <p style="font-size: 0.875rem; color: var(--sv-light-text-muted); line-height: 1.7; max-width: 560px; margin-bottom: 2rem;">
+                SavanNah curates goods from artisan workshops across the equatorial belt — each item hand-finished, individually cataloged, and dispatched with care.
+            </p>
+
+            <a asp-area="User" asp-controller="Product" asp-action="Index" class="btn-sv-secondary">
+                Explore Full Catalog
+                <span class="material-symbols-outlined" style="font-size: 15px;">arrow_forward</span>
+            </a>
+        </div>
+    </div>
+</section>

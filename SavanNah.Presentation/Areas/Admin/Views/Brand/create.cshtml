@@ -1,9 +1,17 @@
-﻿@model Brand
+@model Brand
+
+<style>
+    a,
+    button,
+    input[type='submit'] {
+        height: 100% !important;
+    }
+</style>
 
 <form asp-action="Create" asp-controller="Brand" method="post" enctype="multipart/form-data">
     <div class="border p-3 mt4">
         <div class="row pb-2">
-            <h2 class="text-Dark">Create Brand</h2>
+            <h2 class="text-light">Create Brand</h2>
             <hr>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="mb-3">
@@ -17,12 +25,12 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
         </div>
-        <div class="row ">
+        <div class="row">
             <div class="col-6 col-md-3">
-                <input type="submit" class="btn btn-primary form-control" />
+                <input type="submit" class="btn btn-primary form-control h-100" />
             </div>
             <div class="col-6 col-md-3">
-                <a class="btn btn-outline-danger form-control" asp-controller="Brand" asp-action="Index">Cancel</a>
+                <a class="btn btn-outline-danger form-control h-100" asp-controller="Brand" asp-action="Index">Cancel</a>
             </div>
         </div>
     </div>

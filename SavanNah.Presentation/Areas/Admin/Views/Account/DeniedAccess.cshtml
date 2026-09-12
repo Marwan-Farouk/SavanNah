@@ -3,19 +3,20 @@
     Layout = "_Layout";
 }
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6 mt-5 text-center">
-            <h1 class="text-danger fw-bold display-1">403</h1>
-            <h2 class="mb-4">Access Denied</h2>
-            <p class="mb-5 text-muted lead">
-                Sorry, you do not have permission to access this page or perform this action. 
+<div class="sv-auth-page">
+    <div class="sv-content" style="margin-top: 0;">
+        <div style="text-align: center; padding: 4rem 0;">
+            <span class="material-symbols-outlined" style="font-size: 64px; color: var(--sv-red); margin-bottom: 1rem; display: block;">block</span>
+            <h1 style="font-family: var(--sv-font-display); font-size: 72px; font-weight: 700; color: var(--sv-red); margin-bottom: 0.5rem;">403</h1>
+            <h2 style="font-family: var(--sv-font-display); font-size: 24px; font-weight: 600; color: var(--sv-light-text); margin-bottom: 1rem;">Access Denied</h2>
+            <p style="color: var(--sv-light-text-muted); font-size: 15px; max-width: 400px; margin: 0 auto 2rem; line-height: 1.6;">
+                Sorry, you do not have permission to access this page or perform this action.
             </p>
-            <div class="d-flex gap-3 justify-content-center">
-                <button type="button" onclick="history.back()" class="px-4 btn btn-outline-secondary btn-lg">
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <button type="button" onclick="history.back()" class="btn-sv-secondary">
                     Go Back
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="px-4 btn btn-primary btn-lg">
+                <a asp-area="User" asp-controller="Home" asp-action="Index" class="btn-sv-primary">
                     Go to Home
                 </a>
             </div>
