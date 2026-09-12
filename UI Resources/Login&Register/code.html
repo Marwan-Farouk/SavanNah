@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-[#11140F] text-[#F4F1DE]" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Uniform Authentication — SavanNah Guild Archive</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            space: ["'Space Grotesk'", 'sans-serif'],
+          },
+          colors: {
+            savannah: {
+              void: '#11140F',
+              base: '#161A13',
+              card: '#1B2117',
+              surface: '#22291E',
+              border: '#2C3326',
+              borderHover: '#424C3A',
+              gold: '#D4A373',
+              goldHover: '#c49363',
+              cream: '#FAEDCD',
+              sand: '#E6DCB8',
+              muted: '#8C9482',
+            }
+          },
+          boxShadow: {
+            'gold-glow': '0 0 25px -4px rgba(212, 163, 115, 0.15)',
+            'gold-glow-focus': '0 0 0 1px #D4A373, 0 0 20px 2px rgba(212, 163, 115, 0.25)',
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom Styling -->
+<style data-purpose="typography">
+    body {
+      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    .tracking-savannah-wide {
+      letter-spacing: 0.12em;
+    }
+    .tracking-savannah-title {
+      letter-spacing: 0.05em;
+    }
+  </style>
+<style data-purpose="ambient-canvas">
+    /* Subtle topographic & equatorial dusk aura */
+    .bg-topo-overlay {
+      background-image: radial-gradient(circle at 50% -20%, rgba(212, 163, 115, 0.12) 0%, transparent 60%),
+                        radial-gradient(circle at 100% 60%, rgba(140, 148, 130, 0.04) 0%, transparent 50%),
+                        radial-gradient(circle at 0% 80%, rgba(212, 163, 115, 0.05) 0%, transparent 50%);
+    }
+    .topo-grid-pattern {
+      background-size: 60px 60px;
+      background-image: 
+        linear-gradient(to right, rgba(44, 51, 38, 0.3) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(44, 51, 38, 0.3) 1px, transparent 1px);
+    }
+  </style>
+<style data-purpose="form-controls">
+    /* Uniform input focus and bespoke checkmarks */
+    .savannah-input {
+      background-color: #141810;
+      border: 1px solid #2C3326;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .savannah-input:focus {
+      border-color: #D4A373;
+      box-shadow: 0 0 0 1px #D4A373, 0 0 18px rgba(212, 163, 115, 0.2);
+      outline: none;
+    }
+    .custom-checkbox:checked {
+      background-color: #D4A373;
+      border-color: #D4A373;
+      background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%2311140F' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+    }
+  </style>
+<!-- END: Custom Styling -->
+</head>
+<body class="min-h-full flex flex-col justify-between relative bg-savannah-void text-[#F4F1DE] selection:bg-savannah-gold selection:text-savannah-void">
+<!-- Ambient Topographic Layer -->
+<div class="fixed inset-0 pointer-events-none bg-topo-overlay topo-grid-pattern opacity-60 z-0"></div>
+<!-- BEGIN: MainHeader -->
+<header class="relative z-10 w-full pt-10 pb-6 px-6 lg:px-12 flex flex-col items-center text-center">
+<!-- Guild Sovereign Seal / Brand Logo -->
+<a aria-label="SavanNah Home" class="inline-flex items-center justify-center mb-4 transition-transform hover:scale-105 duration-300" href="#">
+<div class="w-48 h-12 flex items-center justify-center">
+<!-- SVG Brand Vector Replica of https://lh3.googleusercontent.com/aida/AEtjO1UGM4Toh1IL_TlQLlXSNaFROWMCW40REPfbmbB9jzfL-DO0B2mKLKYrtry3eMBrIfBQQFciCR9kGenMk8pXFEH9KDjBSco6cbFMftYl9lShDXezMSkfX5NA5XAB0dZYvEKPSNrq3NV2AMBs6YllWkCLBPuqKAVr3xYyMfgVUuXg1Oqgk7rgJjCTfTmnluzGLJXpnWxMwtGHRTqZNudGX6yFtojkoM3X4R5xlbf1Wj7jgW3v_ajzGAoRbSwH with crisp dark rendering -->
+<svg class="w-full h-full" fill="none" viewbox="0 0 160 40" xmlns="http://www.w3.org/2000/svg">
+<g transform="translate(4, 6)">
+<circle cx="14" cy="14" fill="none" opacity="0.45" r="13" stroke="#D4A373" stroke-width="1.75"></circle>
+<path d="M14 6 C9 12 8 18 14 22 C20 18 19 12 14 6Z" fill="#D4A373"></path>
+<path d="M7 16 C11 15 17 15 21 16" stroke="#FAEDCD" stroke-linecap="round" stroke-width="1.5"></path>
+<circle cx="14" cy="14" fill="#FAEDCD" r="2.5"></circle>
+</g>
+<text fill="#F4F1DE" font-family="'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif" font-size="19" font-weight="700" letter-spacing="2.2" x="40" y="26">SAVANNAH</text>
+<circle cx="154" cy="17" fill="#D4A373" r="2.2"></circle>
+</svg>
+</div>
+</a>
+<!-- Brand Subtitle / Lore Descriptor -->
+<div class="inline-flex items-center space-x-2">
+<span class="h-[1px] w-6 bg-savannah-gold/40"></span>
+<p class="text-xs uppercase font-medium text-savannah-gold tracking-savannah-wide">
+        The Expeditionary Marketplace &amp; Guild Archive
+      </p>
+<span class="h-[1px] w-6 bg-savannah-gold/40"></span>
+</div>
+<!-- Live Status / Archive Stamp -->
+<div class="mt-2 flex items-center space-x-2 text-[11px] text-savannah-muted">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500/80 animate-pulse"></span>
+<span class="font-mono">EQUATORIAL ACCESS GATE // STATION 04: MOMBASA-NAIROBI CORRIDOR</span>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: AuthenticationInterface -->
+<main class="relative z-10 w-full max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 flex flex-col justify-center">
+<!-- Active Mode Indicators for Responsive Displays / Context -->
+<div class="flex items-center justify-between max-w-5xl mx-auto w-full mb-6 px-1">
+<div class="text-xs font-mono uppercase tracking-wider text-savannah-muted flex items-center gap-2">
+<span class="text-savannah-gold">PROTOCOL</span> // UNIFIED IDENTITY VERIFICATION
+      </div>
+<div class="hidden sm:flex items-center gap-4 text-xs font-mono text-savannah-muted">
+<span>SECURITY: 256-BIT ELLIPTIC</span>
+<span class="text-savannah-border">•</span>
+<span class="text-savannah-cream">PASSPORT LEVEL: PATRON</span>
+</div>
+</div>
+<!-- Dual-Column Uniform Canvas Container -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto w-full">
+<!-- ========================================================================= -->
+<!-- BEGIN: PanelLeft_SignIn -->
+<!-- ========================================================================= -->
+<section class="relative rounded-xl border border-savannah-border bg-savannah-base/90 p-8 sm:p-10 shadow-2xl backdrop-blur-md flex flex-col justify-between" data-purpose="patron-login-panel">
+<!-- Subtle Card Ambient Accent -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-savannah-gold/5 blur-3xl pointer-events-none rounded-full"></div>
+<div>
+<!-- Panel Header -->
+<div class="flex items-center justify-between border-b border-savannah-border pb-5 mb-6">
+<div>
+<span class="text-[10px] font-mono uppercase tracking-savannah-wide text-savannah-gold block mb-1">
+                GATE 01 • ACCESS EXISTING CARTE
+              </span>
+<h2 class="text-2xl font-bold tracking-tight text-savannah-cream font-space">
+                Welcome Back, Patron
+              </h2>
+</div>
+<div class="h-10 w-10 rounded-lg bg-savannah-surface border border-savannah-border flex items-center justify-center text-savannah-gold">
+<!-- Key Icon -->
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.75" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+</div>
+<p class="text-sm text-savannah-muted mb-8 leading-relaxed">
+            Enter your credentials to access your allocations, order tracking, and archived expedition lots.
+          </p>
+<!-- Sign In Form -->
+<form class="space-y-5" id="patron-signin-form" onsubmit="event.preventDefault();">
+<!-- Email Field -->
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="block text-xs font-semibold uppercase tracking-savannah-wide text-[#E6DCB8]" for="signin-email">
+                  Email Address
+                </label>
+<span class="text-[10px] font-mono text-savannah-muted">REQ_FIELD</span>
+</div>
+<div class="relative rounded-md shadow-sm">
+<input class="savannah-input block w-full rounded-lg px-4 py-3 text-sm text-savannah-cream placeholder:text-savannah-muted/50 focus:ring-0" id="signin-email" name="email" placeholder="aminasenai@savannah.network" required="" type="email" value="aminasenai@savannah.network"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="block text-xs font-semibold uppercase tracking-savannah-wide text-[#E6DCB8]" for="signin-password">
+                  Password
+                </label>
+<a class="text-xs font-medium text-savannah-gold hover:text-savannah-cream transition-colors duration-150" href="#forgot-secret">
+                  Forgot Secret?
+                </a>
+</div>
+<div class="relative rounded-md shadow-sm">
+<input class="savannah-input block w-full rounded-lg pl-4 pr-11 py-3 text-sm text-savannah-cream placeholder:text-savannah-muted/50 focus:ring-0" id="signin-password" name="password" placeholder="••••••••••••••••" required="" type="password" value="EquatorPatron2025#"/>
+<button class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-savannah-muted hover:text-savannah-cream focus:outline-none transition-colors" data-purpose="password-visibility-toggle" id="toggle-signin-password" title="Toggle visibility" type="button">
+<!-- Eye Icon -->
+<svg class="h-4 w-4" fill="none" id="eye-icon-signin" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+<path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+</button>
+</div>
+</div>
+<!-- Remember Me & Trust Device -->
+<div class="flex items-center justify-between pt-1">
+<label class="relative flex items-center cursor-pointer select-none">
+<input checked="" class="custom-checkbox h-4 w-4 rounded bg-savannah-surface border-savannah-border text-savannah-gold focus:ring-0 focus:ring-offset-0 cursor-pointer" type="checkbox"/>
+<span class="ml-2.5 text-xs text-savannah-muted hover:text-savannah-cream transition-colors">
+                  Remember terminal for 30 cycles
+                </span>
+</label>
+</div>
+<!-- Submit Primary CTA -->
+<div class="pt-2">
+<button class="w-full flex items-center justify-center py-3.5 px-6 rounded-lg text-sm font-bold uppercase tracking-savannah-wide bg-savannah-gold hover:bg-savannah-cream text-savannah-void transition-all duration-200 shadow-gold-glow hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-savannah-gold focus:ring-offset-2 focus:ring-offset-savannah-void" type="submit">
+<span>Sign In to Savannah</span>
+<svg class="h-4 w-4 ml-2" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</form>
+</div>
+<!-- SSO & WebAuthn Divider -->
+<div class="mt-8 pt-6 border-t border-savannah-border/80">
+<p class="text-[11px] uppercase tracking-wider text-savannah-muted text-center mb-4">
+            Or Authenticate Via Passkey
+          </p>
+<div class="grid grid-cols-2 gap-3">
+<button class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg border border-savannah-border hover:border-savannah-gold/70 bg-savannah-surface/50 hover:bg-savannah-surface text-xs font-medium text-savannah-cream transition-all" type="button">
+<svg class="w-4 h-4 text-savannah-gold" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"></path>
+</svg>
+<span>Guild Key</span>
+</button>
+<button class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg border border-savannah-border hover:border-savannah-gold/70 bg-savannah-surface/50 hover:bg-savannah-surface text-xs font-medium text-savannah-cream transition-all" type="button">
+<svg class="w-4 h-4 text-savannah-gold" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.026.99-4.17.99-6.132A8 8 0 004 12" stroke-linecap="round"></path>
+</svg>
+<span>FIDO2 Passkey</span>
+</button>
+</div>
+</div>
+</section>
+<!-- END: PanelLeft_SignIn -->
+<!-- ========================================================================= -->
+<!-- BEGIN: PanelRight_Register -->
+<!-- ========================================================================= -->
+<section class="relative rounded-xl border border-savannah-border bg-savannah-base/90 p-8 sm:p-10 shadow-2xl backdrop-blur-md flex flex-col justify-between" data-purpose="guild-registration-panel">
+<!-- Subtle Card Ambient Accent -->
+<div class="absolute bottom-0 right-0 w-32 h-32 bg-savannah-cream/5 blur-3xl pointer-events-none rounded-full"></div>
+<div>
+<!-- Panel Header -->
+<div class="flex items-center justify-between border-b border-savannah-border pb-5 mb-6">
+<div>
+<span class="text-[10px] font-mono uppercase tracking-savannah-wide text-savannah-gold block mb-1">
+                GATE 02 • INITIATE PATRONAGE
+              </span>
+<h2 class="text-2xl font-bold tracking-tight text-savannah-cream font-space">
+                Join the Savannah Guild
+              </h2>
+</div>
+<div class="h-10 w-10 rounded-lg bg-savannah-surface border border-savannah-border flex items-center justify-center text-savannah-gold">
+<!-- Shield / Guild Emblem Icon -->
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.75" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+</div>
+<p class="text-sm text-savannah-muted mb-8 leading-relaxed">
+            Become a verified member of our equatorial patronage for bespoke access, artisan manifests, and rare botanicals.
+          </p>
+<!-- Register Form -->
+<form class="space-y-5" id="guild-register-form" onsubmit="event.preventDefault();">
+<!-- Full Name Field -->
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="block text-xs font-semibold uppercase tracking-savannah-wide text-[#E6DCB8]" for="register-name">
+                  Full Name
+                </label>
+<span class="text-[10px] font-mono text-savannah-muted">TITULAR RECORD</span>
+</div>
+<div class="relative rounded-md shadow-sm">
+<input class="savannah-input block w-full rounded-lg px-4 py-3 text-sm text-savannah-cream placeholder:text-savannah-muted/50 focus:ring-0" id="register-name" name="fullname" placeholder="Tariq Al-Mansoor" required="" type="text"/>
+</div>
+</div>
+<!-- Email Address Field -->
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="block text-xs font-semibold uppercase tracking-savannah-wide text-[#E6DCB8]" for="register-email">
+                  Email Address
+                </label>
+<span class="text-[10px] font-mono text-savannah-muted">OFFICIAL CORRESPONDENCE</span>
+</div>
+<div class="relative rounded-md shadow-sm">
+<input class="savannah-input block w-full rounded-lg px-4 py-3 text-sm text-savannah-cream placeholder:text-savannah-muted/50 focus:ring-0" id="register-email" name="email" placeholder="tariq.mansoor@savannah.network" required="" type="email"/>
+</div>
+</div>
+<!-- Create Password Field with Strength Indicator -->
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="block text-xs font-semibold uppercase tracking-savannah-wide text-[#E6DCB8]" for="register-password">
+                  Create Password
+                </label>
+<span class="text-[10px] font-mono text-savannah-gold">BIOMETRIC READY</span>
+</div>
+<div class="relative rounded-md shadow-sm">
+<input class="savannah-input block w-full rounded-lg px-4 py-3 text-sm text-savannah-cream placeholder:text-savannah-muted/50 focus:ring-0" id="register-password" name="new-password" placeholder="Minimum 8 characters &amp; numerals" required="" type="password"/>
+</div>
+<!-- Real-time Password Strength Meter Component -->
+<div class="pt-1.5 space-y-1.5" data-purpose="password-meter">
+<div class="grid grid-cols-4 gap-1.5 h-1">
+<div class="h-full rounded-full bg-savannah-gold"></div>
+<div class="h-full rounded-full bg-savannah-gold"></div>
+<div class="h-full rounded-full bg-savannah-gold"></div>
+<div class="h-full rounded-full bg-savannah-border"></div>
+</div>
+<div class="flex justify-between items-center text-[10px] font-mono text-savannah-muted">
+<span>STRENGTH: <span class="text-savannah-gold font-semibold">DEFENSIVE GRADE</span></span>
+<span>8+ CHARS REQUIRED</span>
+</div>
+</div>
+</div>
+<!-- Guild Charter Checkbox -->
+<div class="pt-1">
+<label class="relative flex items-start cursor-pointer select-none">
+<input class="custom-checkbox mt-0.5 h-4 w-4 rounded bg-savannah-surface border-savannah-border text-savannah-gold focus:ring-0 focus:ring-offset-0 cursor-pointer" required="" type="checkbox"/>
+<span class="ml-2.5 text-xs text-savannah-muted leading-relaxed">
+                  I accept the terms of the <a class="text-savannah-gold underline decoration-savannah-gold/50 hover:decoration-savannah-gold" href="#guild-charter">Savannah Guild Charter</a> and agree to uphold sustainable equatorial sourcing protocols.
+                </span>
+</label>
+</div>
+<!-- Submit Primary CTA -->
+<div class="pt-2">
+<button class="w-full flex items-center justify-center py-3.5 px-6 rounded-lg text-sm font-bold uppercase tracking-savannah-wide bg-savannah-surface hover:bg-savannah-gold text-savannah-cream hover:text-savannah-void border border-savannah-gold/50 hover:border-transparent transition-all duration-200 shadow-md hover:shadow-gold-glow focus:outline-none focus:ring-2 focus:ring-savannah-gold focus:ring-offset-2 focus:ring-offset-savannah-void" type="submit">
+<span>Create Account &amp; Join Guild</span>
+<svg class="h-4 w-4 ml-2" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</form>
+</div>
+<!-- Membership Assurance Note -->
+<div class="mt-8 pt-6 border-t border-savannah-border/80 text-center">
+<p class="text-[11px] text-savannah-muted flex items-center justify-center gap-1.5">
+<svg class="w-3.5 h-3.5 text-savannah-gold" fill="currentColor" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path>
+</svg>
+<span>Patron registrations receive immediate complimentary courier dispatch tokens.</span>
+</p>
+</div>
+</section>
+<!-- END: PanelRight_Register -->
+</div>
+</main>
+<!-- END: AuthenticationInterface -->
+<!-- BEGIN: MainFooter -->
+<footer class="relative z-10 w-full mt-12 py-8 border-t border-savannah-border bg-savannah-void/80 backdrop-blur-sm">
+<div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between text-xs text-savannah-muted gap-4">
+<!-- Security Credential Indicator -->
+<div class="flex items-center space-x-2">
+<svg class="w-4 h-4 text-savannah-gold" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="font-mono">VERIFIED ENCRYPTED ARCHIVE • SSL TLS 1.3</span>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-wrap justify-center items-center gap-6">
+<a class="hover:text-savannah-gold transition-colors duration-150" href="#charter">Equatorial Sourcing Charter</a>
+<span class="text-savannah-border hidden sm:inline">•</span>
+<a class="hover:text-savannah-gold transition-colors duration-150" href="#privacy">Patron Privacy Protocol</a>
+<span class="text-savannah-border hidden sm:inline">•</span>
+<a class="hover:text-savannah-gold transition-colors duration-150" href="#dispatch">Expedition Ledger</a>
+<span class="text-savannah-border hidden sm:inline">•</span>
+<a class="hover:text-savannah-gold transition-colors duration-150" href="#concierge">Archivist Concierge</a>
+</nav>
+<!-- Copyright Statement -->
+<div class="font-mono text-[11px] text-savannah-muted/70">
+        © 2025 SAVANNAH GUILD ALLIANCE.
+      </div>
+</div>
+</footer>
+<!-- END: MainFooter -->
+<!-- BEGIN: Interactivity Scripts -->
+<script data-purpose="password-visibility-handler">
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggleBtn = document.getElementById('toggle-signin-password');
+      const passwordInput = document.getElementById('signin-password');
+      const eyeIcon = document.getElementById('eye-icon-signin');
+
+      if (toggleBtn && passwordInput && eyeIcon) {
+        toggleBtn.addEventListener('click', () => {
+          const isPassword = passwordInput.type === 'password';
+          passwordInput.type = isPassword ? 'text' : 'password';
+          
+          // Switch SVG path to strike-through when revealed
+          if (isPassword) {
+            eyeIcon.innerHTML = `
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+            `;
+          } else {
+            eyeIcon.innerHTML = `
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            `;
+          }
+        });
+      }
+    });
+  </script>
+<!-- END: Interactivity Scripts -->
+</body></html>
