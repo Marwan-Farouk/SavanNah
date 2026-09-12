@@ -1,103 +1,113 @@
 # SavanNah 🛍️
 
-A modern, full-featured E-commerce Website built with .NET Core. SavanNah provides a robust and scalable platform for online retail, featuring a clean user interface for customers and a powerful administrative dashboard for store managers.
-
-## About The Project
-
-SavanNah is a showcase of modern web development practices using the .NET ecosystem. The project is built using a clean, layered architecture to ensure separation of concerns, maintainability, and scalability. It aims to provide a seamless shopping experience for users and an intuitive management system for administrators.
-
-This project serves as a practical example of building a real-world application with `ASP.NET Core` for the backend logic, `Entity Framework Core` for data access, and `ASP.NET Core Identity` for secure user management.
-
-### Key Features
-
-**For Customers:**
-
-- **Product Catalog:** Browse products by category, search with filters, and view detailed product pages.
-- **Shopping Cart:** Add/remove items and update quantities dynamically.
-- **User Authentication:** Secure registration and login for a personalized experience.
-- **Order Management:** View order history and track order status.
-- **Responsive Design:** A clean and modern UI that works on all devices, from desktops to mobile phones.
-- **Secure Checkout Process:** A straightforward, multi-step checkout process.
-
-**For Administrators:**
-
-- **Admin Dashboard:** An overview of sales, new orders, and key metrics.
-- **Product Management:** Full CRUD (Create, Read, Update, Delete) operations for products.
-- **Category Management:** Organize products into categories and subcategories.
-- **Order Processing:** View and manage customer orders.
-- **User Management:** View and manage registered customer accounts.
+A modern, full-featured E-Commerce web application built with **.NET 10 (ASP.NET Core MVC)** following Clean Layered Architecture principles. **SavanNah** delivers a seamless online shopping experience for customers and a powerful management dashboard for store administrators.
 
 ---
 
-## Technology Stack
+## 🚀 Recent Updates & Enhancements
 
-This project is built with a modern set of technologies:
-
-- **Backend:**
-    - **.NET 8 (or 7/6):** The core framework for building the application.
-    - **ASP.NET Core MVC:** For building the web application following the Model-View-Controller pattern.
-    - **Entity Framework Core:** As the Object-Relational Mapper (ORM) to interact with the database.
-    - **ASP.NET Core Identity:** For handling user authentication and authorization.
-- **Database:**
-    - **SQL Server:** The primary database for storing all application data.
-    - (Can be configured to work with other databases like `PostgreSQL` or `SQLite`).
-- **Frontend:**
-    - **Razor Pages/Views:** For server-side rendering of HTML.
-    - **Bootstrap 5:** For a responsive and mobile-first layout.
-    - **JavaScript & jQuery:** For client-side interactivity.
+- 🎨 **Savannah Design System & UI Overhaul:** Upgraded user interface with modern styling, brand resources, responsive layouts, and dynamic micro-interactions.
+- 💳 **Stripe Payment Gateway Integration:** Seamless checkout experience powered by `Stripe.net` for secure online payments and order processing.
+- 🛒 **Dynamic Shopping Cart:** AJAX-powered cart operations (add, remove, quantity update) with real-time total calculations and 7-day persistent sessions.
+- 📦 **Admin Order Management & DataTables:** Interactive order administration featuring DataTables integration (search, pagination, sorting) and order status workflow.
+- 👥 **Identity & Role Management:** Custom ASP.NET Core Identity implementation featuring role assignments, user management, admin user creation, and access controls.
 
 ---
 
-## Getting Started
+## 🏗️ Architecture & Project Structure
 
-To get a local copy up and running, follow these simple steps.
+The solution is built using a **Clean N-Tier Layered Architecture** to ensure separation of concerns, testability, and scalability:
+
+```
+SavanNah/
+├── SavanNah.Presentation/    # ASP.NET Core MVC Presentation Layer (User & Admin Areas, Razor Views, Controllers)
+├── SavanNah.Business/        # Business Logic Layer (Managers, Services, Domain Business Logic)
+├── SavanNah.DataAccess/      # Data Access Layer (EF Core, AppDbContext, Repositories, EF Migrations)
+└── SavanNah.Models/          # Core Domain Layer (Entities, DTOs, ViewModels, ActionRequests)
+```
+
+---
+
+## ✨ Features
+
+### 🛒 Customer Experience (User Area)
+- **Product Catalog:** Browse products by category and brand with search capabilities and detailed product pages.
+- **Dynamic Cart & Checkout:** AJAX-driven quantity updates, item removals, persistent shopping cart sessions, and streamlined multi-step checkout.
+- **Stripe Online Payments:** Secure checkout powered by Stripe API with automated order state updates.
+- **Order History & Tracking:** View personal order details, track payment statuses, and review order summaries.
+- **Account Management:** User registration, secure login, and profile management.
+
+### 🛡️ Store Administration (Admin Area)
+- **Admin Dashboard:** Central overview with key metrics and store navigation.
+- **Product Management:** Full CRUD operations for products including image management and category/brand associations.
+- **Category & Brand Management:** Complete CRUD management for store categories and brands.
+- **Order Processing & DataTables:** Interactive order table with DataTables integration (search, pagination, sorting), status updates, and payment details.
+- **User & Role Management:** Role management, permission control, admin user creation, and customer account oversight.
+
+---
+
+## 💻 Tech Stack
+
+- **Framework:** .NET 10.0 (ASP.NET Core MVC)
+- **Database & ORM:** SQL Server with Entity Framework Core 10.0
+- **Authentication & Authorization:** ASP.NET Core Identity (Custom `User` and `Role` models)
+- **Payment Processing:** Stripe API (`Stripe.net` v52.4.1)
+- **Frontend & UI:** Razor Views, Bootstrap 5, Custom CSS Savannah Design System, JavaScript/jQuery (AJAX), DataTables, Toastr & SweetAlert
+
+---
+
+## ⚙️ Getting Started
 
 ### Prerequisites
 
-- [.NET SDK](https://dotnet.microsoft.com/download) (Version 8.0 or later recommended)
-- [Visual Studio 2022](https://visualstudio.microsoft.com/) or another code editor like [VS Code](https://code.visualstudio.com/)
-- [SQL Server Express](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) or another SQL Server instance.
+- [.NET 10.0 SDK](https://dotnet.microsoft.com/download)
+- [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) (Express or Developer Edition)
+- Visual Studio 2022 / VS Code / Rider
 
-### Installation
+### Installation & Setup
 
-1.  **Clone the repository**
-    ```sh
-    git clone [https://github.com/Marwan-Farouk/SavanNah.git](https://github.com/Marwan-Farouk/SavanNah.git)
-    ```
-2.  **Navigate to the project directory**
-    ```sh
-    cd SavanNah
-    ```
-3.  **Configure Database Connection**
-    - Open `appsettings.json` in the main web project folder.
-    - Update the `ConnectionStrings` value to point to your local SQL Server instance.
-    ```json
-    "ConnectionStrings": {
-      "DefaultConnection": "Server=YOUR_SERVER_NAME;Database=SavanNahDB;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
-    }
-    ```
-4.  **Apply Database Migrations**
-    - Open a terminal in the root of the web project.
-    - Run the following command to create the database and apply the schema.
-    ```sh
-    dotnet ef database update
-    ```
-5.  **Run the application**
-    - You can run the project from Visual Studio by pressing `F5` or by using the .NET CLI:
-    ```sh
-    dotnet run
-    ```
-6.  **Navigate to the site**
-    - Open your browser and go to `https://localhost:7123` or `http://localhost:5123` (the port may vary; check the console output).
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Marwan-Farouk/SavanNah.git
+   cd SavanNah
+   ```
 
----
+2. **Configure Connection String & Stripe Keys:**
+   Open `SavanNah.Presentation/appsettings.Development.json` (or `appsettings.json`) and configure your local SQL Server connection string and Stripe API keys:
+   ```json
+   {
+     "ConnectionStrings": {
+       "Savanah": "Server=YOUR_SERVER_NAME;Database=Savanah_DB;Trusted_Connection=True;TrustServerCertificate=True;"
+     },
+     "Stripe": {
+       "SecretKey": "YOUR_STRIPE_SECRET_KEY",
+       "Publishablekey": "YOUR_STRIPE_PUBLISHABLE_KEY"
+     }
+   }
+   ```
 
-## Future Enhancements (Roadmap)
+3. **Apply Database Migrations:**
+   Run the following command from the repository root to create the database schema:
+   ```bash
+   dotnet ef database update --project SavanNah.DataAccess --startup-project SavanNah.Presentation
+   ```
 
-- [ ] Integrate a payment gateway (e.g., Stripe, PayPal).
-- [ ] Implement a product review and rating system.
-- [ ] Add more advanced product search and filtering capabilities.
-- [ ] Develop a RESTful API for potential mobile client consumption.
-- [ ] Containerize the application using Docker.
+4. **Run the Application:**
+   ```bash
+   dotnet run --project SavanNah.Presentation
+   ```
+   Open your browser and navigate to `https://localhost:7123` (or the URL displayed in the CLI output).
 
 ---
+
+## 🗺️ Roadmap
+
+- [x] Integrate Stripe Payment Gateway
+- [x] Modernize UI with Savannah Design System & Branding
+- [x] Implement Admin Order Management with DataTables
+- [x] Implement Dynamic Shopping Cart with Session Persistence
+- [ ] Product Reviews and Rating System
+- [ ] Advanced Product Search and Multi-Filter Facets
+- [ ] RESTful API endpoints for mobile integration
+- [ ] Containerize application with Docker
+
