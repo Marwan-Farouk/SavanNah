@@ -10,10 +10,12 @@ using SavanNah.DataAccess.Repositories.Categories;
 using SavanNah.DataAccess.Repositories.CategoryProducts;
 using SavanNah.DataAccess.Repositories.OrderProducts;
 using SavanNah.DataAccess.Repositories.Orders;
+using SavanNah.DataAccess.Repositories.Payments;
 using SavanNah.DataAccess.Repositories.Products;
 using SavanNah.DataAccess.Repositories.ShoppingCarts;
 using SavanNah.Models.Models.RoleModel;
 using SavanNah.Models.Models.UserModel;
+using Stripe;
 
 namespace SavanNah.Presentation;
 
@@ -21,7 +23,11 @@ public class Program
 {
     public static void Main(string[] args)
     {
+
+
         var builder = WebApplication.CreateBuilder(args);
+
+        StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
@@ -43,7 +49,7 @@ public class Program
         builder.Services.AddScoped<IOrderRepository, OrderRepository>();
         builder.Services.AddScoped<IOrderProductRepository, OrderProductRepository>();
         builder.Services.AddScoped<IOrderManager, OrderManager>();
-
+        builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 
 
         builder.Services.AddIdentity<User, Role>(options =>

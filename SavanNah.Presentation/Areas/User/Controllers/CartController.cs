@@ -19,6 +19,20 @@ namespace SavanNah.Presentation.Areas.User.Controllers
             this._shoppingCartManager = shoppingCartManager;
 
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var userId = GetUserId();
+            var userCartItems = await _shoppingCartManager.GetUserCart(userId); // product object is included
+            var cartItemVms = userCartItems.Select(item => new CartItemVm
+            {
+                Product = item.Product,
+                count = item.Count,
+            });
+            return View(cartItemVms);
+        }
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Add([FromQuery] int id, [FromQuery] int count)
@@ -49,18 +63,6 @@ namespace SavanNah.Presentation.Areas.User.Controllers
                 return Ok();
             }
             return BadRequest();
-        }
-        [HttpGet]
-        public async Task<IActionResult> Index()
-        {
-            var userId = GetUserId();
-            var userCartItems = await _shoppingCartManager.GetUserCart(userId); // product object is included
-            var cartItemVms = userCartItems.Select(item => new CartItemVm
-            {
-                Product = item.Product,
-                count = item.Count,
-            });
-            return View(cartItemVms);
         }
 
         [HttpPost]

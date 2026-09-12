@@ -1,5 +1,6 @@
 ﻿using SavanNah.DataAccess.Repositories.OrderProducts;
 using SavanNah.DataAccess.Repositories.Orders;
+using SavanNah.DataAccess.Repositories.Payments;
 using SavanNah.Models.DTOs.Order;
 using SavanNah.Models.Models.OrderModel;
 using System.Linq.Expressions;
@@ -10,13 +11,15 @@ namespace SavanNah.Business.Managers.OrderManager
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IOrderProductRepository _orderProductRepository;
+        public IPaymentRepository _paymentRepository;
 
-        public OrderManager(IOrderRepository orderRepository, IOrderProductRepository orderProductRepository)
+        public OrderManager(IOrderRepository orderRepository, IOrderProductRepository orderProductRepository, IPaymentRepository paymentRepository)
         {
             this._orderRepository = orderRepository;
             this._orderProductRepository = orderProductRepository;
+            this._paymentRepository = paymentRepository;
         }
-        public async Task<bool> Create(CreateOrderDTO Dto)
+        public async Task<Order?> Create(CreateOrderDTO Dto)
         {
             var order = new Order
             {
@@ -39,9 +42,9 @@ namespace SavanNah.Business.Managers.OrderManager
                 }).ToList();
 
                 await Save();
-                return true;
+                return created;
             }
-            return false;
+            return null;
         }
 
         public async Task<bool> Delete(Order entity)

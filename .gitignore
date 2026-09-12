@@ -61,6 +61,7 @@ node_modules/
 # Ignore environment files
 .env
 .env.*
+*.Development.json
 
 # Ignore local tools
 .localhistory/

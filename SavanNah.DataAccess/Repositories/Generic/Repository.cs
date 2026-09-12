@@ -106,7 +106,6 @@ namespace SavanNah.DataAccess.Repositories.Generic
             {
                 try
                 {
-
                     return _dbSet.Update(entity).Entity;
                 }
                 catch (Exception)

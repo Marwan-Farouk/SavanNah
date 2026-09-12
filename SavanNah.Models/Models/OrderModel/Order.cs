@@ -1,4 +1,5 @@
-﻿using SavanNah.Models.Models.UserModel;
+﻿using SavanNah.Models.Models.PaymentModel;
+using SavanNah.Models.Models.UserModel;
 
 namespace SavanNah.Models.Models.OrderModel
 {
@@ -11,6 +12,6 @@ namespace SavanNah.Models.Models.OrderModel
         public Guid UserId { get; set; }
         public User User { get; set; }
         public ICollection<OrderProduct> OrderProducts { get; set; }
-
+        public Payment Payment { get; set; }
     }
 }
