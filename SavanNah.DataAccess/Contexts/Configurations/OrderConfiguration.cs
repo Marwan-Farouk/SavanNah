@@ -12,6 +12,10 @@ namespace SavanNah.DataAccess.Contexts.Configurations
 
             builder.HasKey(o => o.Id);
 
+            builder.Property(o => o.TotalAmount)
+                .HasPrecision(18, 2)
+                .IsRequired();
+
             builder.HasMany(o => o.OrderProducts)
                 .WithOne(op => op.Order)
                 .HasForeignKey(op => op.OrderId);

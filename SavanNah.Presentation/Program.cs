@@ -34,7 +34,10 @@ public class Program
         builder.Services.AddDbContext<AppDbContext>(options =>
         {
             options
-                .UseSqlServer(builder.Configuration.GetConnectionString("Savanah"));
+                .UseSqlServer(builder.Configuration.GetConnectionString("Remote"), sqlServerOptions =>
+                {
+                    sqlServerOptions.EnableRetryOnFailure();
+                });
         });
 
         builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
