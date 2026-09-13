@@ -60,8 +60,10 @@ namespace SavanNah.Presentation.Areas.User.Controllers
             }
             if (success)
             {
-                return Ok();
+                TempData["success"] = "Product Added To Cart";
+                return StatusCode(200);
             }
+            TempData["error"] = "an Error hapened please try again";
             return BadRequest();
         }
 
