@@ -156,6 +156,8 @@
 <script src="~/js/admin.js" asp-append-version="true"></script>
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
+@await Html.PartialAsync("_NotificationPartial")
+
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

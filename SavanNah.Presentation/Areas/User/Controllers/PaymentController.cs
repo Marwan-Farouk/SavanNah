@@ -86,7 +86,7 @@ namespace SavanNah.Presentation.Areas.User.Controllers
                     Quantity = created.OrderProducts.First(op => op.ProductId == prod.Id).Count
                 }).ToList();
 
-                var domain = $"https://localhost:7225";
+                var domain = $"https://savannah.runasp.net";
                 var options = new SessionCreateOptions
                 {
                     PaymentMethodTypes = ["card"],
